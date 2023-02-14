@@ -191,7 +191,7 @@ public static class World
     {
         foreach (Location location in Locations)
         {
-            if (location.ID == id)
+            if (location.Id == id)
             {
                 return location;
             }
@@ -204,7 +204,7 @@ public static class World
     {
         foreach (Weapon item in Weapons)
         {
-            if (item.ID == id)
+            if (item.Id == id)
             {
                 return item;
             }
@@ -217,7 +217,7 @@ public static class World
     {
         foreach (Item item in Items)
         {
-            if (item.ID == id)
+            if (item.Id == id)
             {
                 return item;
             }
@@ -230,7 +230,7 @@ public static class World
     {
         foreach (Monster monster in Monsters)
         {
-            if (monster.ID == id)
+            if (monster.Id == id)
             {
                 return monster;
             }
@@ -243,7 +243,7 @@ public static class World
     {
         foreach (Quest quest in Quests)
         {
-            if (quest.ID == id)
+            if (quest.Id == id)
             {
                 return quest;
             }
