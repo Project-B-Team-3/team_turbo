@@ -5,9 +5,9 @@ public class PlayerQuest
     public Quest TheQuest;
     public bool IsCompleted;
 
-    public PlayerQuest()
+    public PlayerQuest(Quest quest)
     {
-        this.TheQuest = new Quest();
+        this.TheQuest = quest;
         this.IsCompleted = false;
     }
 }
