@@ -11,15 +11,15 @@ public class Quest {
     public Weapon? RewardWeapon;
     public readonly CountedItemList QuestCompletionItems;
 
-    public Quest(int id, string name, string description, int rewardexp, int rewardgold, Item? rewarditem, Weapon? rewardweapon)
+    public Quest(int id, string name, string description, int rewardExp, int rewardGold, Item? rewardItem, Weapon? rewardWeapon)
     {
         this.Id = id;
         this.Name = name;
         this.Description = description;
-        this.RewardExperiencePoints = rewardexp;
-        this.RewardGold = rewardgold;
-        this.RewardItem = rewarditem;
-        this.RewardWeapon = rewardweapon;
+        this.RewardExperiencePoints = rewardExp;
+        this.RewardGold = rewardGold;
+        this.RewardItem = rewardItem;
+        this.RewardWeapon = rewardWeapon;
         this.QuestCompletionItems = new CountedItemList();
     }
 
