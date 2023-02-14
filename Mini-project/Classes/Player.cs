@@ -1,4 +1,4 @@
-namespace Mini_project;
+namespace Mini_project.Classes;
 
 public class Player
 {
