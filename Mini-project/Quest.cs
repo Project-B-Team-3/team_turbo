@@ -9,14 +9,14 @@ public class Quest {
     public int RewardGold;
     public Item? RewardItem;
     public Weapon? RewardWeapon;
-    public CountedItemList QuestCompletionItems;
+    public readonly CountedItemList QuestCompletionItems;
 
     public Quest(int id, string name, string description, int rewardexp, int rewardgold, Item? rewarditem, Weapon? rewardweapon)
     {
         this.Id = id;
         this.Name = name;
         this.Description = description;
-        this.RewardExperiencePoints= rewardexp;
+        this.RewardExperiencePoints = rewardexp;
         this.RewardGold = rewardgold;
         this.RewardItem = rewarditem;
         this.RewardWeapon = rewardweapon;
