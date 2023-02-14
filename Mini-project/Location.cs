@@ -14,19 +14,14 @@ public class Location
     public Location? LocationToWest;
 
     public Location(int id, string name, string description, Item? itemrequiredtoenter,
-        Quest? questavailablehere, Monster? monsterlivinghere, Location? locationtonorth ,
-        Location? locationtoeast, Location? locationtosouth ,Location? locationtowest)
+        Quest? questavailablehere, Monster? monsterlivinghere)
     {
         this.Id = id;
         this.Name = name;
         this.Description = description;
-        this.ItemRequiredToEnter = itemrequiredtoenter;
-        this.QuestAvailableHere = questavailablehere;
-        this. MonsterLivingHere = monsterlivinghere;
-        this.LocationToNorth = locationtonorth;
-        this.LocationToEast = locationtoeast;
-        this.LocationToSouth = locationtosouth;
-        this.LocationToWest = locationtowest;
+        if(itemrequiredtoenter != null) this.ItemRequiredToEnter = itemrequiredtoenter;
+        if(questavailablehere != null) this.QuestAvailableHere = questavailablehere;
+        if(monsterlivinghere != null) this. MonsterLivingHere = monsterlivinghere;
 
     }
 }
