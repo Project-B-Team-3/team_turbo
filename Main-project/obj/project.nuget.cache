@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "pT1KpQh69lTHNEFStb2i3YfJpyTh7svnz5fGYzdW1ams6sO0wpaYbB6RQsyNTpqTr1SxAUmexRI/E7mrj5YAXQ==",
+  "success": true,
+  "projectFilePath": "/Users/luuk180/Documents/Code/team_turbo/Main-project/Main-project.csproj",
+  "expectedPackageFiles": [
+    "/Users/luuk180/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
