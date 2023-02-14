@@ -9,7 +9,7 @@ public class Quest {
     public int RewardGold;
     public Item? RewardItem;
     public Weapon? RewardWeapon;
-    public readonly CountedItemList QuestCompletionItems;
+    public CountedItemList QuestCompletionItems;
 
     public Quest(int id, string name, string description, int rewardExp, int rewardGold, Item? rewardItem, Weapon? rewardWeapon)
     {
