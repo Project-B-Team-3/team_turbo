@@ -8,11 +8,9 @@ internal class Program
 		while (gameRunning)
 		{
 			Console.WriteLine("What would you like to do? \n[Q] Quit\n[?] todo");
-			var choice = Console.ReadLine()?.ToUpper();
+			var choice = Console.ReadLine()!.ToUpper();
 			switch (choice)
 			{
-				case null:
-					throw new Exception("choice can't be null");
 				case "Q":
 					Console.WriteLine("Game has been quit");
 					gameRunning = false;
