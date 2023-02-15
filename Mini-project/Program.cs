@@ -1,4 +1,6 @@
-﻿namespace Mini_project;
+﻿using Mini_project.Classes;
+
+namespace Mini_project;
 
 internal class Program
 {
@@ -7,7 +9,13 @@ internal class Program
 		var gameRunning = true;
 		while (gameRunning)
 		{
-			var sAdventure = new SuperAdventure();
+			var sAdventure = new SuperAdventure
+			{
+				ThePlayer =
+				{
+					CurrentLocation = World.LocationByID(World.LOCATION_ID_HOME)
+				}
+			};
 			Console.WriteLine("What would you like to do? \n[Q] Quit\n[?] todo");
 			var choice = Console.ReadLine()!.ToUpper();
 			switch (choice)
