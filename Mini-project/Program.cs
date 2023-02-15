@@ -1,24 +1,26 @@
 ﻿namespace Mini_project;
 
-class Program
+internal class Program
 {
 	public static void Main()
 	{
-		bool GameRunning = true;
-		while (GameRunning == true) 
+		var gameRunning = true;
+		while (gameRunning)
 		{
 			Console.WriteLine("What would you like to do? \n[Q] Quit\n[?] todo");
-			string choice = Console.ReadLine();
-			if (choice == "Q")
+			var choice = Console.ReadLine()?.ToUpper();
+			switch (choice)
 			{
-				Console.WriteLine("Game has been quit");
-				GameRunning = false;
-			}
-			else
-			{
-				Console.WriteLine("Invalid option, Make sure to choose from the above.");
+				case null:
+					throw new Exception("choice can't be null");
+				case "Q":
+					Console.WriteLine("Game has been quit");
+					gameRunning = false;
+					break;
+				default:
+					Console.WriteLine("Invalid option, Make sure to choose from the above.");
+					break;
 			}
 		}
-		
 	}
 }
