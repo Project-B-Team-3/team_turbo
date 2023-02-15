@@ -4,6 +4,11 @@ namespace Mini_project;
 
 public class SuperAdventure
 {
-	public Player? ThePlayer;
+	public Player ThePlayer;
 	public Monster? CurrentMonster;
+
+	public SuperAdventure()
+	{
+		ThePlayer = new Player();
+	}
 }
