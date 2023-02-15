@@ -2,21 +2,21 @@ namespace Mini_project.Classes;
 
 public class CountedItemList
 {
-    public List<CountedItem> TheCountedItemList;
+	public List<CountedItem> TheCountedItemList;
 
-    public CountedItemList()
-    {
-        this.TheCountedItemList = new List<CountedItem>();
-    }
+	public CountedItemList()
+	{
+		TheCountedItemList = new List<CountedItem>();
+	}
 
-    public void AddCountedItem(CountedItem item)
-    {
-        this.TheCountedItemList.Add(item);
-    }
+	public void AddCountedItem(CountedItem item)
+	{
+		TheCountedItemList.Add(item);
+	}
 
-    //TODO Make it so that it adds 1 to the counter when an item is already in the list.
-    public void AddItem(Item item)
-    {
-        this.TheCountedItemList.Add(new CountedItem(item, 1));
-    }
+	//TODO Make it so that it adds 1 to the counter when an item is already in the list.
+	public void AddItem(Item item)
+	{
+		TheCountedItemList.Add(new CountedItem(item, 1));
+	}
 }
