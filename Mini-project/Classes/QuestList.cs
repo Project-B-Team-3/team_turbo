@@ -2,10 +2,10 @@ namespace Mini_project.Classes;
 
 public class QuestList
 {
-    public List<PlayerQuest> QuestLog;
+	public List<PlayerQuest> QuestLog;
 
-    public QuestList()
-    {
-        this.QuestLog = new List<PlayerQuest>();
-    }
+	public QuestList()
+	{
+		QuestLog = new List<PlayerQuest>();
+	}
 }
