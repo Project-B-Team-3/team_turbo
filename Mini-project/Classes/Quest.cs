@@ -1,26 +1,26 @@
 namespace Mini_project.Classes;
 
-public class Quest {
+public class Quest
+{
+	public int Id;
+	public string Name;
+	public string Description;
+	public int RewardExperiencePoints;
+	public int RewardGold;
+	public Item? RewardItem;
+	public Weapon? RewardWeapon;
+	public CountedItemList QuestCompletionItems;
 
-    public int Id;
-    public string Name;
-    public string Description;
-    public int RewardExperiencePoints;
-    public int RewardGold;
-    public Item? RewardItem;
-    public Weapon? RewardWeapon;
-    public CountedItemList QuestCompletionItems;
-
-    public Quest(int id, string name, string description, int rewardExp, int rewardGold, Item? rewardItem, Weapon? rewardWeapon)
-    {
-        this.Id = id;
-        this.Name = name;
-        this.Description = description;
-        this.RewardExperiencePoints = rewardExp;
-        this.RewardGold = rewardGold;
-        this.RewardItem = rewardItem;
-        this.RewardWeapon = rewardWeapon;
-        this.QuestCompletionItems = new CountedItemList();
-    }
-
+	public Quest(int id, string name, string description, int rewardExp, int rewardGold, Item? rewardItem,
+		Weapon? rewardWeapon)
+	{
+		Id = id;
+		Name = name;
+		Description = description;
+		RewardExperiencePoints = rewardExp;
+		RewardGold = rewardGold;
+		RewardItem = rewardItem;
+		RewardWeapon = rewardWeapon;
+		QuestCompletionItems = new CountedItemList();
+	}
 }
