@@ -8,12 +8,31 @@ public class Program
         World.WeaponByID(0), World.Locations[0], new QuestList(), new CountedItemList());
     public static void Main()
     {
-        Console.WriteLine("1. Move North");
-        Console.WriteLine("2. Move East");
-        Console.WriteLine("3. Move South");
-        Console.WriteLine("4. Move West");
-        Console.WriteLine("5. Load game");
-        Console.WriteLine("6. Quit");
+        var gameRunning = true;
+        while (gameRunning)
+        {
+            Console.WriteLine("What would you like to do? \n[M] Move\n[Q] Quit");
+            var choice = Console.ReadLine()!.ToUpper();
+            switch (choice)
+            {
+                case "M":
+                    Console.WriteLine("What direction do you want to move in?");
+                    Console.WriteLine("1. Move North");
+                    Console.WriteLine("2. Move East");
+                    Console.WriteLine("3. Move South");
+                    Console.WriteLine("4. Move West");
+                    Console.WriteLine("5. Go back");
+                    ActionsMenu(int.Parse(Console.ReadLine()!));
+                    break;
+                case "Q":
+                    Console.WriteLine("Game has been quit");
+                    gameRunning = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid option, Make sure to choose from the above.");
+                    break;
+            }
+        }
     }
     private static void ActionsMenu(int actions)
     {
@@ -56,25 +75,6 @@ public class Program
             // {
             //
             // }
-        }
-    }
-    private static void Quit()
-    {
-        var gameRunning = true;
-        while (gameRunning)
-        {
-            Console.WriteLine("What would you like to do? \n[Q] Quit\n[?] todo");
-            var choice = Console.ReadLine()!.ToUpper();
-            switch (choice)
-            {
-                case "Q":
-                    Console.WriteLine("Game has been quit");
-                    gameRunning = false;
-                    break;
-                default:
-                    Console.WriteLine("Invalid option, Make sure to choose from the above.");
-                    break;
-            }
         }
     }
 }
