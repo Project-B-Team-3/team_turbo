@@ -4,7 +4,7 @@ namespace Mini_project;
 
 public class Program
 {
-    private static Player _player = new Player("chosen one", 100, 100, 0, 0, 1,
+    private static Player _player = new ("chosen one", 100, 100, 0, 0, 1,
         World.WeaponByID(0), World.Locations[0], new QuestList(), new CountedItemList());
     public static void Main()
     {
@@ -20,44 +20,16 @@ public class Program
         switch (actions)
         {
             case 1:
-                if (_player.CurrentLocation.LocationToNorth != null)
-                {
-                    MoveToLocation(_player.CurrentLocation.LocationToNorth);
-                }
-                else
-                {
-                    Console.WriteLine("No location to the north");
-                }
+                MoveToLocation(_player.CurrentLocation.LocationToNorth);
                 break;
             case 2:
-                if (_player.CurrentLocation.LocationToEast != null)
-                {
-                    MoveToLocation(_player.CurrentLocation.LocationToEast);
-                }
-                else
-                {
-                    Console.WriteLine("No location to the east");
-                }
+                MoveToLocation(_player.CurrentLocation.LocationToEast);
                 break;
             case 3:
-                if (_player.CurrentLocation.LocationToSouth != null)
-                {
-                    MoveToLocation(_player.CurrentLocation.LocationToSouth);
-                }
-                else
-                {
-                    Console.WriteLine("No location to the south");
-                }
+                MoveToLocation(_player.CurrentLocation.LocationToSouth);
                 break;
             case 4:
-                if (_player.CurrentLocation.LocationToWest != null)
-                {
-                    MoveToLocation(_player.CurrentLocation.LocationToWest);
-                }
-                else
-                {
-                    Console.WriteLine("No location to the west");
-                }
+                MoveToLocation(_player.CurrentLocation.LocationToWest);
                 break;
             case 5:
                 return;
