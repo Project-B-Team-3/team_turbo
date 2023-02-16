@@ -26,5 +26,10 @@ public class Player
 		QuestLog = questLog;
 		Inventory = inventory;
 	}
+
+	public override string ToString()
+	{
+		return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
+	}
 }
 
