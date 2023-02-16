@@ -14,9 +14,13 @@ public class CountedItemList
 		TheCountedItemList.Add(item);
 	}
 
-	//TODO Make it so that it adds 1 to the counter when an item is already in the list.
 	public void AddItem(Item item)
 	{
-		TheCountedItemList.Add(new CountedItem(item, 1));
+		if (TheCountedItemList.Any(h => item == h.TheItem))
+		{
+			TheCountedItemList.First(h => item == h.TheItem).Quantity += 1;
+		}else{
+			TheCountedItemList.Add(new CountedItem(item, 1));
+		}
 	}
 }
