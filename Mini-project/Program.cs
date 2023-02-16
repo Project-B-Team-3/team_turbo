@@ -4,10 +4,12 @@ namespace Mini_project;
 
 public class Program
 {
-    private static Player _player = new ("chosen one", 100, 100, 0, 0, 1,
+    private static readonly Player ThePlayer = new ("Placeholder", 100, 100, 0, 0, 1,
         World.WeaponByID(0), World.Locations[0], new QuestList(), new CountedItemList());
     public static void Main()
     {
+        Console.WriteLine("What do you want your name to be?");
+        ThePlayer.Name = Console.ReadLine()!;
         var gameRunning = true;
         while (gameRunning)
         {
@@ -16,7 +18,7 @@ public class Program
             switch (choice)
             {
                 case "S":
-                    //TODO show stats
+                    Console.WriteLine(ThePlayer.ToString());
                     break;
                 case "M":
                     Console.WriteLine("What direction do you want to move in?");
@@ -28,7 +30,14 @@ public class Program
                     ActionsMenu(int.Parse(Console.ReadLine()!));
                     break;
                 case "F":
-                    //TODO open fight dialog
+                    if (ThePlayer.CurrentLocation.MonsterLivingHere != null)
+                    {
+                        //TODO open fight dialog
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no monster to fight!");
+                    }
                     break;
                 case "Q":
                     Console.WriteLine("Game has been quit");
@@ -45,16 +54,16 @@ public class Program
         switch (actions)
         {
             case 1:
-                MoveToLocation(_player.CurrentLocation.LocationToNorth);
+                MoveToLocation(ThePlayer.CurrentLocation.LocationToNorth);
                 break;
             case 2:
-                MoveToLocation(_player.CurrentLocation.LocationToEast);
+                MoveToLocation(ThePlayer.CurrentLocation.LocationToEast);
                 break;
             case 3:
-                MoveToLocation(_player.CurrentLocation.LocationToSouth);
+                MoveToLocation(ThePlayer.CurrentLocation.LocationToSouth);
                 break;
             case 4:
-                MoveToLocation(_player.CurrentLocation.LocationToWest);
+                MoveToLocation(ThePlayer.CurrentLocation.LocationToWest);
                 break;
             case 5:
                 return;
@@ -63,21 +72,18 @@ public class Program
 
     private static void MoveToLocation(Location? location)
     {
-        if (location == null)
+        if (location == null ||
+            ThePlayer.Inventory.TheCountedItemList.Any(h => h.TheItem == location.ItemRequiredToEnter))
         {
             Console.WriteLine("You cannot move in that direction.");
         }
         else
         {
-            _player.CurrentLocation = location;
+            ThePlayer.CurrentLocation = location;
             Console.WriteLine("You have moved to " + location.Name);
             Console.WriteLine(location.Description);
             
             // if (location.QuestAvailableHere != null && !Player.HasQuest(location.QuestAvailableHere))
-            // {
-            //
-            // }
-            // if (location.MonsterLivingHere != null)
             // {
             //
             // }
