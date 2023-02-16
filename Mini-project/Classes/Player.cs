@@ -12,4 +12,19 @@ public class Player
 	public Location CurrentLocation;
 	public QuestList QuestLog;
 	public CountedItemList Inventory;
+
+	public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level, Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
+	{
+		Name = name;
+		CurrentHitPoints = currentHitPoints;
+		MaximumHitPoints = maximumHitPoints;
+		Gold = gold;
+		ExperiencePoints = experiencePoints;
+		Level = level;
+		CurrentWeapon = currentWeapon;
+		CurrentLocation = currentLocation;
+		QuestLog = questLog;
+		Inventory = inventory;
+	}
 }
+
