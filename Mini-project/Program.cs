@@ -2,10 +2,12 @@
 
 namespace Mini_project;
 
-public class Program {
+public class Program
+{
+    private static Player _player = new Player("chosen one", 100, 100, 0, 0, 1,
+        World.WeaponByID(0), World.Locations[0], new QuestList(), new CountedItemList());
     public static void Main()
     {
-        Player player = new Player("chosen one", 100, 100, 0, 0, 1, null, World.Locations[0], null, null);
         Console.WriteLine("1. Move North");
         Console.WriteLine("2. Move East");
         Console.WriteLine("3. Move South");
@@ -13,29 +15,56 @@ public class Program {
         Console.WriteLine("5. Load game");
         Console.WriteLine("6. Quit");
     }
-    public static void ActionsMenu(int actions, Player player)
+    private static void ActionsMenu(int actions)
     {
         switch (actions)
         {
             case 1:
-                MoveToLocation(player, player.CurrentLocation.LocationToNorth);
+                if (_player.CurrentLocation.LocationToNorth != null)
+                {
+                    MoveToLocation(_player.CurrentLocation.LocationToNorth);
+                }
+                else
+                {
+                    Console.WriteLine("No location to the north");
+                }
                 break;
             case 2:
-                MoveToLocation(player, player.CurrentLocation.LocationToEast);
+                if (_player.CurrentLocation.LocationToEast != null)
+                {
+                    MoveToLocation(_player.CurrentLocation.LocationToEast);
+                }
+                else
+                {
+                    Console.WriteLine("No location to the east");
+                }
                 break;
             case 3:
-                MoveToLocation(player, player.CurrentLocation.LocationToSouth);
+                if (_player.CurrentLocation.LocationToSouth != null)
+                {
+                    MoveToLocation(_player.CurrentLocation.LocationToSouth);
+                }
+                else
+                {
+                    Console.WriteLine("No location to the south");
+                }
                 break;
             case 4:
-                MoveToLocation(player, player.CurrentLocation.LocationToWest);
+                if (_player.CurrentLocation.LocationToWest != null)
+                {
+                    MoveToLocation(_player.CurrentLocation.LocationToWest);
+                }
+                else
+                {
+                    Console.WriteLine("No location to the west");
+                }
                 break;
             case 5:
-                Quit();
-                break;
+                return;
         }
     }
 
-    public static void MoveToLocation(Player player, Location location)
+    private static void MoveToLocation(Location? location)
     {
         if (location == null)
         {
@@ -43,7 +72,7 @@ public class Program {
         }
         else
         {
-            player.CurrentLocation = location;
+            _player.CurrentLocation = location;
             Console.WriteLine("You have moved to " + location.Name);
             Console.WriteLine(location.Description);
             
@@ -57,7 +86,7 @@ public class Program {
             // }
         }
     }
-    public static void Quit()
+    private static void Quit()
     {
         var gameRunning = true;
         while (gameRunning)
