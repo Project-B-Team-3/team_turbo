@@ -11,10 +11,13 @@ public class Program
         var gameRunning = true;
         while (gameRunning)
         {
-            Console.WriteLine("What would you like to do? \n[M] Move\n[Q] Quit");
+            Console.WriteLine("What would you like to do? \n[S] See stats\n[M] Move\n[F] Fight\n[Q] Quit");
             var choice = Console.ReadLine()!.ToUpper();
             switch (choice)
             {
+                case "S":
+                    //TODO show stats
+                    break;
                 case "M":
                     Console.WriteLine("What direction do you want to move in?");
                     Console.WriteLine("1. Move North");
@@ -23,6 +26,9 @@ public class Program
                     Console.WriteLine("4. Move West");
                     Console.WriteLine("5. Go back");
                     ActionsMenu(int.Parse(Console.ReadLine()!));
+                    break;
+                case "F":
+                    //TODO open fight dialog
                     break;
                 case "Q":
                     Console.WriteLine("Game has been quit");
