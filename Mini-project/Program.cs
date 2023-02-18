@@ -10,6 +10,10 @@ public class Program
     {
         Console.WriteLine("What do you want your name to be?");
         ThePlayer.Name = Console.ReadLine()!;
+        if (ThePlayer.Name == "")
+        {
+            ThePlayer.Name = "The chosen one";
+        }
         var gameRunning = true;
         while (gameRunning)
         {
