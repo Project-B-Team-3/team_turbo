@@ -29,6 +29,7 @@ public class Player
         Inventory = inventory;
     }
 
+<<<<<<< HEAD
     public override string ToString()
     {
         return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
@@ -77,11 +78,7 @@ public class Player
                     Console.WriteLine($"You have defeated the {monster.Name}!");
                     Gold += monster.RewardGold ?? 0;
                     ExperiencePoints += monster.RewardExperience ?? 0;
-<<<<<<< HEAD
                     Inventory.AddItems(monster.Loot.TheCountedItemList);
-=======
-                    Inventory.AddItem(monster.Loot);
->>>>>>> 38cbc77 (Update Player.cs)
                     LevelUpCheck();
                     return;
                 }
@@ -185,4 +182,14 @@ public class Player
         item.UseEffect.Use(this);
         RemoveItem(item);
     }
+
+	public bool HasQuest(Quest quest)
+	{
+		return QuestLog.QuestLog.Any(h => h.TheQuest == quest);
+	}
+
+	public override string ToString()
+	{
+		return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
+	}
 }
