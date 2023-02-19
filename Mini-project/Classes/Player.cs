@@ -12,6 +12,7 @@ public class Player
     public Location CurrentLocation;
     public QuestList QuestLog;
     public CountedItemList Inventory;
+    private Random _random = new Random();
 
     public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level, Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
     {
@@ -40,5 +41,10 @@ public class Player
         {
             CurrentHitPoints = MaximumHitPoints;
         }
+    }
+
+    public int Attack()
+    {
+        return _random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
     }
 }
