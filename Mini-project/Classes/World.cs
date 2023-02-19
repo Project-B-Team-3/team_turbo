@@ -69,16 +69,16 @@ public static class World
 	public static void PopulateMonsters()
 	{
 		var rat = new Monster(MONSTER_ID_RAT, "rat", "rats", 5, 3, 10, 3, 3);
-		rat.Loot.AddItem(ItemByID(ITEM_ID_RAT_TAIL));
-		rat.Loot.AddItem(ItemByID(ITEM_ID_PIECE_OF_FUR));
+		rat.Loot.AddItem(player, ItemByID(ITEM_ID_RAT_TAIL));
+		rat.Loot.AddItem(player, ItemByID(ITEM_ID_PIECE_OF_FUR));
 
 		var snake = new Monster(MONSTER_ID_SNAKE, "snake", "snakes", 5, 4, 20, 7, 7);
-		snake.Loot.AddItem(ItemByID(ITEM_ID_SNAKE_FANG));
-		snake.Loot.AddItem(ItemByID(ITEM_ID_SNAKESKIN));
+		snake.Loot.AddItem(player, ItemByID(ITEM_ID_SNAKE_FANG));
+		snake.Loot.AddItem(player, ItemByID(ITEM_ID_SNAKESKIN));
 
 		var giantSpider = new Monster(MONSTER_ID_GIANT_SPIDER, "giant spider", "giant spiders", 5, 5, 30, 10, 10);
-		giantSpider.Loot.AddItem(ItemByID(ITEM_ID_SPIDER_FANG));
-		giantSpider.Loot.AddItem(ItemByID(ITEM_ID_SPIDER_SILK));
+		giantSpider.Loot.AddItem(player, ItemByID(ITEM_ID_SPIDER_FANG));
+		giantSpider.Loot.AddItem(player, ItemByID(ITEM_ID_SPIDER_SILK));
 
 		Monsters.Add(rat);
 		Monsters.Add(snake);
