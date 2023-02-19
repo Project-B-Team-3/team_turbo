@@ -9,16 +9,16 @@ public class CountedItemList
         TheCountedItemList = new List<CountedItem>();
     }
 
-    public void AddCountedItem(CountedItem item)
+    public void AddCountedItem(CountedItem item) // Adds CountedItem object to the list
     {
         TheCountedItemList.Add(item);
     }
 
-    public void AddItem(Player player, Item item)
+    public void AddItem(Player player, Item item) // Checks if the item already exists in the list and updates the player's inventory accordingly
     {
-        if (TheCountedItemList.Any(h => item == h.TheItem))
+        if (TheCountedItemList.Any(itemInStock => item == itemInStock.TheItem))
         {
-            TheCountedItemList.First(h => item == h.TheItem).Quantity += 1;
+            TheCountedItemList.First(itemInStock => item == itemInStock.TheItem).Quantity += 1;
         }
         else
         {
@@ -26,12 +26,12 @@ public class CountedItemList
         }
 
         // Add item to player's inventory
-        player.AddItem(item);
+        player.Inventory = new CountedItemList(TheCountedItemList);
     }
 
     public void RemoveItem(Player player, Item item)
     {
-        var itemToRemove = TheCountedItemList.FirstOrDefault(h => item == h.TheItem);
+        var itemToRemove = TheCountedItemList.FirstOrDefault(itemInStock => item == itemInStock.TheItem);
 
         if (itemToRemove != null)
         {
@@ -42,7 +42,7 @@ public class CountedItemList
             }
 
             // Remove item from player's inventory
-            player.RemoveItem(item);
+            player.Inventory.RemoveItem(item);
         }
     }
 }
