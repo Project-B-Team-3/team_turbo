@@ -77,7 +77,11 @@ public class Player
                     Console.WriteLine($"You have defeated the {monster.Name}!");
                     Gold += monster.RewardGold ?? 0;
                     ExperiencePoints += monster.RewardExperience ?? 0;
+<<<<<<< HEAD
                     Inventory.AddItems(monster.Loot.TheCountedItemList);
+=======
+                    Inventory.AddItem(monster.Loot);
+>>>>>>> 38cbc77 (Update Player.cs)
                     LevelUpCheck();
                     return;
                 }
