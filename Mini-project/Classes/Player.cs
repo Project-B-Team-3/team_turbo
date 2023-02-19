@@ -41,4 +41,9 @@ public class Player
             CurrentHitPoints = MaximumHitPoints;
         }
     }
+
+    public int Attack()
+    {
+        return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
+    }
 }
