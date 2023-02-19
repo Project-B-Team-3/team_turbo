@@ -11,7 +11,6 @@ public class Monster
     public int? RewardGold;
     public CountedItemList Loot;
     public int CurrentHitPoints;
-    private Random _random = new Random();
 
     public Monster(int id, string name, string nameplural, int maximumdamage, int minimumdamage, int rewardexperience,
         int rewardgold, int currenthitpoints)
@@ -30,6 +29,6 @@ public class Monster
 
     public int Attack()
     {
-        return _random.Next(MaximumDamage + 1);
+        return World.RandomGenerator.Next(MaximumDamage + 1);
     }
 }
