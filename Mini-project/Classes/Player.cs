@@ -28,6 +28,11 @@ public class Player
         Inventory = inventory;
     }
 
+	  public bool HasQuest(Quest quest)
+	  {
+		  return QuestLog.QuestLog.Any(h => h.TheQuest == quest);
+	  }
+
     public override string ToString()
     {
         return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
