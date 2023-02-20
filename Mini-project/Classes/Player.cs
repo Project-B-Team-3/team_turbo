@@ -12,7 +12,6 @@ public class Player
     public Location CurrentLocation;
     public QuestList QuestLog;
     public CountedItemList Inventory;
-    private Random _random = new Random();
 
     public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level, Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
     {
@@ -50,7 +49,7 @@ public class Player
 
     public int Attack()
     {
-        return _random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
+        return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
     }
 
     public void GoToHouse()
@@ -71,76 +70,81 @@ public class Player
             Console.WriteLine("2. Flee");
             Console.WriteLine("3. Use Healing Potion");
 
-            string input = Console.ReadLine()!;
-            if (input == "1")
+            var input = Console.ReadLine()!;
+            switch (input)
             {
-                int monsterRemainingHitPoints = monster.CurrentHitPoints - Attack();
-
-                if (monsterRemainingHitPoints <= 0)
+                case "1":
                 {
-                    Console.WriteLine($"You have defeated the {monster.Name}!");
-                    Gold += monster.RewardGold ?? 0;
-                    ExperiencePoints += monster.RewardExperience ?? 0;
-                    Inventory.AddItem(monster.Loot);
-                    LevelUpCheck();
-                    return;
+                    var monsterRemainingHitPoints = monster.CurrentHitPoints - Attack();
+
+                    if (monsterRemainingHitPoints <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {monster.Name}!");
+                        Gold += monster.RewardGold ?? 0;
+                        ExperiencePoints += monster.RewardExperience ?? 0;
+                        Inventory.AddItems(monster.Loot);
+                        LevelUpCheck();
+                        return;
+                    }
+
+                    var playerRemainingHitPoints = CurrentHitPoints - monster.Attack();
+
+                    if (playerRemainingHitPoints <= 0)
+                    {
+                        Console.WriteLine($"You have been defeated by the {monster.Name}!");
+                        GoToHouse();
+
+                        // Get a list of all the items in the inventory, excluding the Adventurer's Pass
+                        var itemsToRemove = Inventory.TheCountedItemList.Where(item => item.TheItem.Name != "Adventurer's Pass").ToList();
+
+                        if (itemsToRemove.Count > 0)
+                        {
+                            // Randomly select an item from the list of items to remove
+                            var indexToRemove = World.RandomGenerator.Next(0, itemsToRemove.Count);
+
+                            // Remove the selected item from the inventory
+                            var itemToRemove = Inventory.TheCountedItemList.ElementAt(indexToRemove);
+                            Inventory.TheCountedItemList.RemoveAt(indexToRemove);
+                            Console.WriteLine($"The {monster.Name} took your {itemToRemove.TheItem.Name}!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("The monster didn't find anything of value to take from you.");
+                        }
+
+                        return;
+                    }
+
+                    monster.CurrentHitPoints = monsterRemainingHitPoints;
+                    CurrentHitPoints = playerRemainingHitPoints;
+                    break;
                 }
-
-                int playerRemainingHitPoints = CurrentHitPoints - monster.Attack();
-
-                if (playerRemainingHitPoints <= 0)
-                {
-                    Console.WriteLine($"You have been defeated by the {monster.Name}!");
-                    GoToHouse();
-
-                    // Get a list of all the items in the inventory, excluding the Adventurer's Pass
-                    List<Item> itemsToRemove = Inventory.Items.Where(item => item.Name != "Adventurer's Pass").ToList();
-
-                    if (itemsToRemove.Count > 0)
-                    {
-                        // Randomly select an item from the list of items to remove
-                        int indexToRemove = _random.Next(0, itemsToRemove.Count);
-
-                        // Remove the selected item from the inventory
-                        Inventory.RemoveItem(indexToRemove);
-                        Console.WriteLine($"The {monster.Name} took your {itemsToRemove[indexToRemove].Name}!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("The monster didn't find anything of value to take from you.");
-                    }
-
+                case "2":
+                    Console.WriteLine("You flee from the fight!");
                     return;
-                }
-
-                monster.CurrentHitPoints = monsterRemainingHitPoints;
-                CurrentHitPoints = playerRemainingHitPoints;
-            }
-            else if (input == "2")
-            {
-                Console.WriteLine("You flee from the fight!");
-                return;
-            }
-            else if (input == "3")
-            {
-                List<Item> healingPotions = Inventory.Items.Where(item => item is HealingPotion).ToList();
-
-                if (healingPotions.Count > 0)
+                case "3":
                 {
-                    Console.WriteLine("Select a healing potion to use:");
+                    var healingPotions = Inventory.TheCountedItemList.Where(item => item is Item).ToList();
 
-                    for (int i = 0; i < healingPotions.Count; i++)
+                    if (healingPotions.Count > 0)
                     {
-                        Console.WriteLine($"{i + 1}. {healingPotions[i].Name}");
+                        Console.WriteLine("Select a healing potion to use:");
+
+                        for (int i = 0; i < healingPotions.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {healingPotions[i].TheItem.Name}");
+                        }
+
+                        var potionInput = Console.ReadLine()!;
+                        if (int.TryParse(potionInput, out int potionIndex) && potionIndex > 0 && potionIndex <= healingPotions.Count)
+                        {
+                            var potion = healingPotions[potionIndex - 1];
+                            Inventory.TheCountedItemList.RemoveAt(potion.TheItem.Id);
+                            Heal(potion.TheItem.Id);
+                        }
                     }
 
-                    string potionInput = Console.ReadLine()!;
-                    if (int.TryParse(potionInput, out int potionIndex) && potionIndex > 0 && potionIndex <= healingPotions.Count)
-                    {
-                        HealingPotion potion = (HealingPotion)healingPotions[potionIndex - 1];
-                        Inventory.RemoveItem(potion);
-                        Heal(potion.Amount);
-                    }
+                    break;
                 }
             }
         }
