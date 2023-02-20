@@ -10,6 +10,10 @@ public class Program
     {
         Console.WriteLine("What do you want your name to be?");
         ThePlayer.Name = Console.ReadLine()!;
+        if (ThePlayer.Name == "")
+        {
+            ThePlayer.Name = "The chosen one";
+        }
         var gameRunning = true;
         while (gameRunning)
         {
@@ -82,11 +86,17 @@ public class Program
             ThePlayer.CurrentLocation = location;
             Console.WriteLine("You have moved to " + location.Name);
             Console.WriteLine(location.Description);
-            
-            // if (location.QuestAvailableHere != null && !Player.HasQuest(location.QuestAvailableHere))
-            // {
-            //
-            // }
+            if (location.QuestAvailableHere == null || ThePlayer.HasQuest(location.QuestAvailableHere)) return;
+            Console.WriteLine($"Do you want to pickup the {location.QuestAvailableHere.Name} quest?");
+            if (Console.ReadLine()!.ToLower() == "yes")
+            {
+                ThePlayer.QuestLog.QuestLog.Add(new PlayerQuest(location.QuestAvailableHere));
+                Console.WriteLine("Picked up the quest!");
+            }
+            else
+            {
+                Console.WriteLine("Didn't pick up the quest.");
+            }
         }
     }
 }
