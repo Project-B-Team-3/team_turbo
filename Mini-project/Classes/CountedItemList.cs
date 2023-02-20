@@ -23,4 +23,12 @@ public class CountedItemList
 			TheCountedItemList.Add(new CountedItem(item, 1));
 		}
 	}
+
+	public void AddItems(CountedItemList list)
+	{
+		foreach (var countedItem in list.TheCountedItemList)
+		{
+			TheCountedItemList.Add(countedItem);
+		}
+	}
 }
