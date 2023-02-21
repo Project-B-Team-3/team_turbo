@@ -50,10 +50,6 @@ public class Player
 		if (CurrentHitPoints > MaximumHitPoints) CurrentHitPoints = MaximumHitPoints;
 	}
 
-    public int Attack()
-    {
-        return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
-    }
 
     public void GoToHouse()
     {
@@ -203,10 +199,9 @@ public class Player
 		return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
 	}
 }
-=======
 	public int Attack()
 	{
-		return _random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
+		return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
 	}
 
 	public void GoToHouse()
@@ -245,7 +240,7 @@ public class Player
 						return;
 					}
 
-					var playerRemainingHitPoints = CurrentHitPoints - monster.Attack();
+					var playerRemainingHitPoints = CurrentHitPoints - World.RandomGenerator.Next(monster.MaximumDamage + 1);
 
 					if (playerRemainingHitPoints <= 0)
 					{
