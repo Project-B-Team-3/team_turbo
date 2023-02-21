@@ -27,8 +27,9 @@ public class Monster
 		Loot = new CountedItemList();
 	}
 
-	public int Attack()
+	public void Attack()
 	{
-		return World.RandomGenerator.Next(MaximumDamage + 1);
+		var damage = World.RandomGenerator.Next(MaximumDamage + 1);
+		CurrentHitPoints -= MaximumDamage;
 	}
 }

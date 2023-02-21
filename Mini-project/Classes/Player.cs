@@ -12,7 +12,6 @@ public class Player
 	public Location CurrentLocation;
 	public QuestList QuestLog;
 	public CountedItemList Inventory;
-	private Random _random = new();
 
 	public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level,
 		Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
@@ -48,7 +47,7 @@ public class Player
 
 	public int Attack()
 	{
-		return _random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
+		return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
 	}
 
 	public void GoToHouse()
@@ -87,7 +86,7 @@ public class Player
 						return;
 					}
 
-					var playerRemainingHitPoints = CurrentHitPoints - monster.Attack();
+					var playerRemainingHitPoints = CurrentHitPoints - World.RandomGenerator.Next(monster.MaximumDamage + 1);
 
 					if (playerRemainingHitPoints <= 0)
 					{
