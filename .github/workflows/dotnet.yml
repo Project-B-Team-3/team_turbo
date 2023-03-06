@@ -7,11 +7,11 @@ on:
   push:
     branches: [ "master" ]
     paths:
-    - "Mini-project/**"
+    - "Main-project/**"
   pull_request:
     branches: [ "master" ]
     paths:
-    - "Mini-project/**"
+    - "Main-project/**"
 
 defaults:
   run:
