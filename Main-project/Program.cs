@@ -1,3 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Main_project;
 
-Console.WriteLine("Hello, World!");
+public class Program
+{
+	public static void Main()
+	{
+		Console.WriteLine("Herro");
+	}
+}
+
