@@ -1,10 +1,3 @@
-﻿namespace Main_project;
-
-public class Program
-{
-	public static void Main()
-	{
-		Console.WriteLine("Herro");
-	}
-}
-
+﻿// See https://aka.ms/new-console-template for more information
+Console.WriteLine("Welcome to this amazing program");
+Menu.Start();
