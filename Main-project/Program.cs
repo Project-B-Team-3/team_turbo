@@ -1,10 +1,14 @@
-﻿namespace Main_project;
+﻿using System;
 
-public class Program
+namespace Main_project
 {
-	public static void Main()
-	{
-		Console.WriteLine("Herro");
-	}
+    public class Program
+    {
+        public static void Main()
+        {
+            
+                
+            
+        }
+    }
 }
-
