@@ -4,24 +4,29 @@ namespace Main_project.Logic
 {
     public class BookingLogic
     {
-        private readonly string _jsonPath;
+        private const string _jsonPath = "Flight.json";
 
-        public BookingLogic(string jsonPath)
+        public BookingLogic()
         {
-            _jsonPath = jsonPath;
         }
 
         public List<Flight> GetFlights()
         {
-            List<Flight> flights;
 
             using (StreamReader reader = new StreamReader(_jsonPath))
             {
+                List<Flight> flights;
                 string json = reader.ReadToEnd();
-                flights = JsonConvert.DeserializeObject<List<Flight>>(json);
+                if (json != null)
+                {
+                    flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
+                    return flights;
+                }else{
+                    return new List<Flight>();
+                }
             }
 
-            return flights;
+
         }
 
         public void UpdateFlight(Flight flight)

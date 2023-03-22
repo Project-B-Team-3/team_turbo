@@ -14,7 +14,7 @@ namespace Main_project.Presentation
 
         public void DisplayFlights()
         {
-            List<Flight> flights = _bookingLogic.GetAllFlights();
+            List<Flight> flights = _bookingLogic.GetFlights();
             foreach (Flight flight in flights)
             {
                 Console.WriteLine(flight.ToString());
@@ -23,6 +23,7 @@ namespace Main_project.Presentation
 
         public int GetFlightSelection()
         {
+            List<Flight> flights = _bookingLogic.GetFlights();
             int selection = 0;
             do
             {
@@ -30,12 +31,5 @@ namespace Main_project.Presentation
             } while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > flights.Count);
             return selection;
         }
-
-        public void BookFlight(int selection)
-        {
-            _bookingLogic.BookFlight(selection);
-        }
-
-        // other methods for handling user input/output
     }
 }
