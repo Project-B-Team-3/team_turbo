@@ -1,3 +1,4 @@
+namespace Main_project.Presentation;
 static class Menu
 {
 
