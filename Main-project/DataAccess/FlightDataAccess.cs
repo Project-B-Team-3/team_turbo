@@ -18,7 +18,7 @@ namespace Main_project.DataAccess
             using (StreamReader reader = new StreamReader(_jsonPath))
             {
                 string json = reader.ReadToEnd();
-                flights = JsonConvert.DeserializeObject<List<Flight>>(json);
+                flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
             }
 
             return flights;
