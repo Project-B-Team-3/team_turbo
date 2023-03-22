@@ -17,10 +17,13 @@ public class CountedItemList
 	public void AddItem(Item item)
 	{
 		if (TheCountedItemList.Any(h => item == h.TheItem))
-		{
 			TheCountedItemList.First(h => item == h.TheItem).Quantity += 1;
-		}else{
+		else
 			TheCountedItemList.Add(new CountedItem(item, 1));
-		}
+	}
+
+	public void AddItems(CountedItemList list)
+	{
+		foreach (var countedItem in list.TheCountedItemList) TheCountedItemList.Add(countedItem);
 	}
 }

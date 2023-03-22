@@ -1,184 +1,174 @@
 namespace Mini_project.Classes;
-using Mini_project.Classes.Items;
 
 public class Player
 {
-    public string Name;
-    public int CurrentHitPoints;
-    public int MaximumHitPoints;
-    public int Gold;
-    public int ExperiencePoints;
-    public int Level;
-    public Weapon CurrentWeapon;
-    public Location CurrentLocation;
-    public QuestList QuestLog;
-    public CountedItemList Inventory;
-    private Random _random = new Random();
+	public string Name;
+	public int CurrentHitPoints;
+	public int MaximumHitPoints;
+	public int Gold;
+	public int ExperiencePoints;
+	public int Level;
+	public Weapon CurrentWeapon;
+	public Location CurrentLocation;
+	public QuestList QuestLog;
+	public CountedItemList Inventory;
 
-    public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level, Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
-    {
-        Name = name;
-        CurrentHitPoints = currentHitPoints;
-        MaximumHitPoints = maximumHitPoints;
-        Gold = gold;
-        ExperiencePoints = experiencePoints;
-        Level = level;
-        CurrentWeapon = currentWeapon;
-        CurrentLocation = currentLocation;
-        QuestLog = questLog;
-        Inventory = inventory;
-    }
+	public Player(string name, int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level,
+		Weapon currentWeapon, Location currentLocation, QuestList questLog, CountedItemList inventory)
+	{
+		Name = name;
+		CurrentHitPoints = currentHitPoints;
+		MaximumHitPoints = maximumHitPoints;
+		Gold = gold;
+		ExperiencePoints = experiencePoints;
+		Level = level;
+		CurrentWeapon = currentWeapon;
+		CurrentLocation = currentLocation;
+		QuestLog = questLog;
+		Inventory = inventory;
+	}
 
-    public override string ToString()
-    {
-        return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
-    }
+	public bool HasQuest(Quest quest)
+	{
+		return QuestLog.QuestLog.Any(h => h.TheQuest == quest);
+	}
 
-    public void Heal(int amount)
-    {
-        CurrentHitPoints += amount;
+	public override string ToString()
+	{
+		return $"Your name is {Name} and you have {CurrentHitPoints} lives left!";
+	}
 
-        if (CurrentHitPoints > MaximumHitPoints)
-        {
-            CurrentHitPoints = MaximumHitPoints;
-        }
-    }
+	public void Heal(int amount)
+	{
+		CurrentHitPoints += amount;
 
-    public int Attack()
-    {
-        return _random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
-    }
+		if (CurrentHitPoints > MaximumHitPoints) CurrentHitPoints = MaximumHitPoints;
+	}
 
-    public void GoToHouse()
-    {
-        CurrentHitPoints = MaximumHitPoints;
-        Console.WriteLine("You have returned home and regained your health.");
-    }
+	public int Attack()
+	{
+		return World.RandomGenerator.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximumDamage + 1);
+	}
 
-    public void Fight(Monster monster)
-    {
-        Console.WriteLine($"You are fighting a {monster.Name}!");
+	public void GoToHouse()
+	{
+		CurrentHitPoints = MaximumHitPoints;
+		Console.WriteLine("You have returned home and regained your health.");
+	}
 
-        while (CurrentHitPoints > 0 && monster.CurrentHitPoints > 0)
-        {
-            Console.WriteLine($"Your hit points: {CurrentHitPoints} | {monster.Name}'s hit points: {monster.CurrentHitPoints}");
-            Console.WriteLine("Choose an action:");
-            Console.WriteLine("1. Attack");
-            Console.WriteLine("2. Flee");
-            Console.WriteLine("3. Use Healing Potion");
+	public void Fight(Monster monster)
+	{
+		Console.WriteLine($"You are fighting a {monster.Name}!");
 
-            string input = Console.ReadLine()!;
-            if (input == "1")
-            {
-                int monsterRemainingHitPoints = monster.CurrentHitPoints - Attack();
+		while (CurrentHitPoints > 0 && monster.CurrentHitPoints > 0)
+		{
+			Console.WriteLine(
+				$"Your hit points: {CurrentHitPoints} | {monster.Name}'s hit points: {monster.CurrentHitPoints}");
+			Console.WriteLine("Choose an action:");
+			Console.WriteLine("1. Attack");
+			Console.WriteLine("2. Flee");
+			Console.WriteLine("3. Use Healing Potion");
 
-                if (monsterRemainingHitPoints <= 0)
-                {
-                    Console.WriteLine($"You have defeated the {monster.Name}!");
-                    Gold += monster.RewardGold ?? 0;
-                    ExperiencePoints += monster.RewardExperience ?? 0;
-                    Inventory.AddItems(monster.Loot.TheCountedItemList);
-                    LevelUpCheck();
-                    return;
-                }
+			var input = Console.ReadLine()!;
+			switch (input)
+			{
+				case "1":
+				{
+					var monsterRemainingHitPoints = monster.CurrentHitPoints - Attack();
 
-                int playerRemainingHitPoints = CurrentHitPoints - monster.Attack();
+					if (monsterRemainingHitPoints <= 0)
+					{
+						Console.WriteLine($"You have defeated the {monster.Name}!");
+						Gold += monster.RewardGold ?? 0;
+						ExperiencePoints += monster.RewardExperience ?? 0;
+						Inventory.AddItems(monster.Loot);
+						LevelUpCheck();
+						return;
+					}
 
-                if (playerRemainingHitPoints <= 0)
-                {
-                    Console.WriteLine($"You have been defeated by the {monster.Name}!");
-                    GoToHouse();
+					var playerRemainingHitPoints = CurrentHitPoints - World.RandomGenerator.Next(monster.MaximumDamage + 1);
 
-                    // Get a list of all the items in the inventory, excluding the Adventurer's Pass
-                    List<Item> itemsToRemove = Inventory.Items.Where(item => item.Name != "Adventurer's Pass").ToList();
+					if (playerRemainingHitPoints <= 0)
+					{
+						Console.WriteLine($"You have been defeated by the {monster.Name}!");
+						GoToHouse();
 
-                    if (itemsToRemove.Count > 0)
-                    {
-                        // Randomly select an item from the list of items to remove
-                        int indexToRemove = _random.Next(0, itemsToRemove.Count);
+						// Get a list of all the items in the inventory, excluding the Adventurer's Pass
+						var itemsToRemove = Inventory.TheCountedItemList
+							.Where(item => item.TheItem.Name != "Adventurer's Pass").ToList();
 
-                        // Remove the selected item from the inventory
-                        Inventory.RemoveItem(indexToRemove);
-                        Console.WriteLine($"The {monster.Name} took your {itemsToRemove[indexToRemove].Name}!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("The monster didn't find anything of value to take from you.");
-                    }
+						if (itemsToRemove.Count > 0)
+						{
+							// Randomly select an item from the list of items to remove
+							var indexToRemove = World.RandomGenerator.Next(0, itemsToRemove.Count);
 
-                    return;
-                }
+							// Remove the selected item from the inventory
+							var itemToRemove = Inventory.TheCountedItemList.ElementAt(indexToRemove);
+							Inventory.TheCountedItemList.RemoveAt(indexToRemove);
+							Console.WriteLine($"The {monster.Name} took your {itemToRemove.TheItem.Name}!");
+						}
+						else
+						{
+							Console.WriteLine("The monster didn't find anything of value to take from you.");
+						}
 
-                monster.CurrentHitPoints = monsterRemainingHitPoints;
-                CurrentHitPoints = playerRemainingHitPoints;
-            }
-            else if (input == "2")
-            {
-                Console.WriteLine("You flee from the fight!");
-                return;
-            }
-            else if (input == "3")
-            {
-                List<Item> healingPotions = Inventory.Items.Where(item => item is HealingPotion).ToList();
+						return;
+					}
 
-                if (healingPotions.Count > 0)
-                {
-                    Console.WriteLine("Select a healing potion to use:");
+					monster.CurrentHitPoints = monsterRemainingHitPoints;
+					CurrentHitPoints = playerRemainingHitPoints;
+					break;
+				}
+				case "2":
+					Console.WriteLine("You flee from the fight!");
+					return;
+				case "3":
+				{
+					var healingPotions = Inventory.TheCountedItemList.Where(item => item is Item).ToList();
 
-                    for (int i = 0; i < healingPotions.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {healingPotions[i].Name}");
-                    }
+					if (healingPotions.Count > 0)
+					{
+						Console.WriteLine("Select a healing potion to use:");
 
-                    string potionInput = Console.ReadLine()!;
-                    if (int.TryParse(potionInput, out int potionIndex) && potionIndex > 0 && potionIndex <= healingPotions.Count)
-                    {
-                        HealingPotion potion = (HealingPotion)healingPotions[potionIndex - 1];
-                        Inventory.RemoveItem(potion);
-                        Heal(potion.Amount);
-                    }
-                }
-            }
-        }
-    }
+						for (var i = 0; i < healingPotions.Count; i++)
+							Console.WriteLine($"{i + 1}. {healingPotions[i].TheItem.Name}");
 
-    public void LevelUpCheck()
-    {
-        int experienceNeededForLevelUp = 100 * Level;
+						var potionInput = Console.ReadLine()!;
+						if (int.TryParse(potionInput, out var potionIndex) && potionIndex > 0 &&
+						    potionIndex <= healingPotions.Count)
+						{
+							var potion = healingPotions[potionIndex - 1];
+							Inventory.TheCountedItemList.RemoveAt(potion.TheItem.Id);
+							Heal(potion.TheItem.Id);
+						}
+					}
 
-        if (ExperiencePoints >= experienceNeededForLevelUp)
-        {
-            Level++;
-            Console.WriteLine($"Congratulations! You've reached level {Level}!");
-            ExperiencePoints -= experienceNeededForLevelUp;
+					break;
+				}
+			}
+		}
+	}
 
-            // Increase the player's maximum hit points and restore their current hit points to full
-            MaximumHitPoints += 10;
-            CurrentHitPoints = MaximumHitPoints;
+	public void LevelUpCheck()
+	{
+		var experienceNeededForLevelUp = 100 * Level;
 
-            // Increase the player's attack power by 1
-            CurrentWeapon.MaximumDamage++;
+		if (ExperiencePoints >= experienceNeededForLevelUp)
+		{
+			Level++;
+			Console.WriteLine($"Congratulations! You've reached level {Level}!");
+			ExperiencePoints -= experienceNeededForLevelUp;
 
-            // Inform the player of their new stats
-            Console.WriteLine($"Your maximum hit points have increased to {MaximumHitPoints} and your attack power has increased to {CurrentWeapon.MaximumDamage}!");
-        }
-    }
+			// Increase the player's maximum hit points and restore their current hit points to full
+			MaximumHitPoints += 10;
+			CurrentHitPoints = MaximumHitPoints;
 
-    public void UseItem(Item item)
-    {
-        if (item == null)
-        {
-            Console.WriteLine("Invalid item");
-            return;
-        }
+			// Increase the player's attack power by 1
+			CurrentWeapon.MaximumDamage++;
 
-        if (item.UseEffect == null)
-        {
-            Console.WriteLine("This item cannot be used");
-            return;
-        }
-
-        item.UseEffect.Use(this);
-        RemoveItem(item);
-    }
+			// Inform the player of their new stats
+			Console.WriteLine(
+				$"Your maximum hit points have increased to {MaximumHitPoints} and your attack power has increased to {CurrentWeapon.MaximumDamage}!");
+		}
+	}
 }
