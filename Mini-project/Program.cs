@@ -9,9 +9,7 @@ public class Program
     public static void Main()
     {
         Console.WriteLine("What do you want your name to be?");
-
         ThePlayer.Name = Console.ReadLine()!;
-        
         if (ThePlayer.Name == "")
         {
             ThePlayer.Name = "The chosen one";
@@ -38,43 +36,7 @@ public class Program
                 case "F":
                     if (ThePlayer.CurrentLocation.MonsterLivingHere != null)
                     {
-                        Console.WriteLine($"You have encountered a {ThePlayer.CurrentLocation.MonsterLivingHere.Name}");
-                        Console.WriteLine($"You currently have {ThePlayer.CurrentHitPoints} HP");
-                        Console.WriteLine("What do you wish to do?\n[F] Fight the animal \n[R] Run ");
-                        var combatchoice = Console.ReadLine()!.ToUpper();
-                        switch (combatchoice)
-                        {
-                            case "F":
-                                ThePlayer.CurrentLocation.MonsterLivingHere.Attack();
-                                Console.WriteLine($"You have attacked the {ThePlayer.CurrentLocation.MonsterLivingHere.Name} and dealt 100 Damage");
-                                if (ThePlayer.CurrentLocation.MonsterLivingHere.CurrentHitPoints <= 0) {
-                                    Console.WriteLine($"You killed {ThePlayer.CurrentLocation.MonsterLivingHere.Name}!");
-                                    switch(ThePlayer.CurrentLocation.MonsterLivingHere.Name) {
-                                        case "rat":
-                                            Console.Write($"You have obtained a Rat tail\n");
-                                            ThePlayer.Inventory.AddItem(World.ItemByID(1));
-                                            break;
-                                        case "snake":
-                                            Console.Write($"You have obtained a Snake fang\n");
-                                            ThePlayer.Inventory.AddItem(World.ItemByID(3));
-                                            break;
-                                        case "giant spider":
-                                            Console.Write($"You have obtained a Spider silk\n");
-                                            ThePlayer.Inventory.AddItem(World.ItemByID(6));
-                                            break;
-                                    }
-                                }
-
-                                break;
-
-                            case "R":
-                                Console.WriteLine($"You ran away from the {ThePlayer.CurrentLocation.MonsterLivingHere.Name}");
-                                break;
-                        }
-                        
-
-
-                        
+                        //TODO open fight dialog
                     }
                     else
                     {
@@ -124,17 +86,11 @@ public class Program
             ThePlayer.CurrentLocation = location;
             Console.WriteLine("You have moved to " + location.Name);
             Console.WriteLine(location.Description);
-            if (location.QuestAvailableHere == null || ThePlayer.HasQuest(location.QuestAvailableHere)) return;
-            Console.WriteLine($"Do you want to pickup the {location.QuestAvailableHere.Name} quest?");
-            if (Console.ReadLine()!.ToLower() == "yes")
-            {
-                ThePlayer.QuestLog.QuestLog.Add(new PlayerQuest(location.QuestAvailableHere));
-                Console.WriteLine("Picked up the quest!");
-            }
-            else
-            {
-                Console.WriteLine("Didn't pick up the quest.");
-            }
+            
+            // if (location.QuestAvailableHere != null && !Player.HasQuest(location.QuestAvailableHere))
+            // {
+            //
+            // }
         }
     }
 }

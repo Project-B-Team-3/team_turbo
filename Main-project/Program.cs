@@ -1,4 +1,4 @@
-using Main_project.Presentation;
+﻿using Main_project.Presentation;
 
 namespace Main_project
 {
@@ -7,8 +7,6 @@ namespace Main_project
         public static void Main()
         {
             Menu.Start();
-                
-            
         }
     }
 }
