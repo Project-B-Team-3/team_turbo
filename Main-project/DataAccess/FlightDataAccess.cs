@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Main_project
+namespace Main_project.DataAccess
 {
     public class FlightDataAccess
     {

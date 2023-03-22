@@ -1,12 +1,12 @@
 using Newtonsoft.Json;
 
-namespace Main_project.DataAccess
+namespace Main_project.Logic
 {
-    public class FlightDataAccess
+    public class BookingLogic
     {
         private readonly string _jsonPath;
 
-        public FlightDataAccess(string jsonPath)
+        public BookingLogic(string jsonPath)
         {
             _jsonPath = jsonPath;
         }
