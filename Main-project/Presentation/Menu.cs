@@ -1,29 +1,54 @@
+<<<<<<< HEAD
 namespace Main_project.Presentation;
 static class Menu
+=======
+namespace Main_project.Presentation
+>>>>>>> 82afdee (Shi mooie menu gebouwd)
 {
-
-    //This shows the menu. You can call back to this method to show the menu again
-    //after another presentation method is completed.
-    //You could edit this to show different menus depending on the user's role
-    static public void Start()
+    public class Menu
     {
-        Console.WriteLine("Enter 1 to login");
-        Console.WriteLine("Enter 2 to do something else in the future");
+        public static void Start()
+        {
+            bool x = false;
+            ConsoleKeyInfo key = new ConsoleKeyInfo();
+            while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
+            {
+                Console.Clear();
+                Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Quit\n");
+                key = Console.ReadKey(true);
+                    //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.D1:
+                            Console.WriteLine("Viewing all upcoming flights");
+                            break;
+                        case ConsoleKey.D2:
+                            Console.WriteLine("Book a flight");
+                            break;
 
-        string input = Console.ReadLine();
-        if (input == "1")
-        {
-            UserLogin.Start();
-        }
-        else if (input == "2")
-        {
-            Console.WriteLine("This feature is not yet implemented");
-        }
-        else
-        {
-            Console.WriteLine("Invalid input");
-            Start();
-        }
+                        case ConsoleKey.D3:
+                            Console.WriteLine("Cancel a flight");
+                            break;
 
+                        case ConsoleKey.D4:
+                            Console.WriteLine("Program has been quit");
+                            x = true;
+                            break;
+
+                        default:
+                            // Checks for capslock/numlock
+                            if (Console.CapsLock && Console.NumberLock)
+                            {
+                                Console.WriteLine(key.KeyChar);
+                                Console.Write("Invalid option");
+                            }
+                            break;
+                            {
+                                
+                            }
+                    }
+            }
+            
+        }
     }
 }
