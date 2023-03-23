@@ -30,6 +30,20 @@ namespace Main_project.Presentation
             }
         }
 
+		public void DisplayAllFlights()
+        {
+            foreach (var flight in _bookingLogic.GetAllFlights())
+            {
+                Console.WriteLine($"Flight number: {flight.FlightNumber}");
+                Console.WriteLine($"Departure: {flight.Departure}");
+                Console.WriteLine($"Destination: {flight.Destination}");
+                Console.WriteLine($"Departure time: {flight.DepartureTime}");
+                Console.WriteLine($"Seats available: {flight.SeatsAvailable}");
+                Console.WriteLine($"Price: {flight.Price}");
+                Console.WriteLine();
+            }
+        }
+
         // public int GetFlightSelection()
         // {
         //     int selection = 0;
