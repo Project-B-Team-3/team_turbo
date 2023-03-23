@@ -1,3 +1,4 @@
+using Main_project.DataAccess;
 using Newtonsoft.Json;
 using Main_project.DataModels;
 
@@ -5,47 +6,17 @@ namespace Main_project.Logic
 {
     public class BookingLogic
     {
-        private const string _jsonPath = "Flight.json";
-
+        private FlightDataAccess flightData;
         public BookingLogic()
         {
+            flightData = new FlightDataAccess();
         }
 
-        public List<Flight> GetFlights()
-        {
-
-            using (StreamReader reader = new StreamReader(_jsonPath))
-            {
-                List<Flight> flights;
-                string json = reader.ReadToEnd();
-                if (json != null)
-                {
-                    flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
-                    return flights;
-                }else{
-                    return new List<Flight>();
-                }
-            }
-
-
+        public IEnumerable<Flight> UpComingFlights(){
+            var displayedFlights = flightData.GetFlights().Where(f => f.DepartureTime > DateTime.Now)
+                .Where(f => f.DepartureTime < DateTime.Now + TimeSpan.FromDays(28));
+            return displayedFlights;
         }
 
-        public void UpdateFlight(Flight flight)
-        {
-            List<Flight> flights = GetFlights();
-
-            int index = flights.FindIndex(f => f.FlightNumber == flight.FlightNumber);
-
-            if (index != -1)
-            {
-                flights[index] = flight;
-
-                using (StreamWriter writer = new StreamWriter(_jsonPath))
-                {
-                    string json = JsonConvert.SerializeObject(flights, Formatting.Indented);
-                    writer.Write(json);
-                }
-            }
-        }
     }
 }

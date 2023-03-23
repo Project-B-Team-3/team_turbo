@@ -3,6 +3,7 @@ public class Menu
 {
     public static void Start()
     {
+        var consoleview = new ConsoleView();
         bool x = false;
         ConsoleKeyInfo key = new ConsoleKeyInfo();
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
@@ -14,7 +15,7 @@ public class Menu
                 switch (key.Key)
                 {
                     case ConsoleKey.D1:
-                        Console.WriteLine("Viewing all upcoming flights");
+                        consoleview.DisplayFlights();
                         break;
                     case ConsoleKey.D2:
                         Console.WriteLine("Book a flight");
@@ -37,9 +38,6 @@ public class Menu
                             Console.Write("Invalid option");
                         }
                         break;
-                        {
-
-                        }
                 }
         }
 
