@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Newtonsoft.Json;
 using Main_project.DataModels;
 
@@ -7,22 +8,27 @@ namespace Main_project.DataAccess
     {
         private readonly string _jsonPath;
 
-        public FlightDataAccess(string jsonPath)
+        public FlightDataAccess()
         {
-            _jsonPath = jsonPath;
+            _jsonPath = "./DataSources/Flights.json";
         }
 
         public List<Flight> GetFlights()
         {
-            List<Flight> flights;
-
-            using (StreamReader reader = new StreamReader(_jsonPath))
+            try
             {
-                string json = reader.ReadToEnd();
-                flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
+                var reader = new StreamReader(_jsonPath);
+                var json = reader.ReadToEnd();
+                var flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
+                return flights;
             }
-
-            return flights;
+            catch (Exception e)
+            {
+                Console.Clear();
+                Console.WriteLine(e);
+                Environment.Exit(1);
+                return new List<Flight>();
+            }
         }
 
         public void UpdateFlight(Flight flight)
