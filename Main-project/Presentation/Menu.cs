@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-namespace Main_project.Presentation;
-static class Menu
-=======
 namespace Main_project.Presentation
->>>>>>> 82afdee (Shi mooie menu gebouwd)
 {
     public class Menu
     {
@@ -16,39 +11,35 @@ namespace Main_project.Presentation
                 Console.Clear();
                 Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Quit\n");
                 key = Console.ReadKey(true);
-                    //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.D1:
-                            Console.WriteLine("Viewing all upcoming flights");
-                            break;
-                        case ConsoleKey.D2:
-                            Console.WriteLine("Book a flight");
-                            break;
+                //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
+                switch (key.Key)
+                {
+                    case ConsoleKey.D1:
+                        Console.WriteLine("Viewing all upcoming flights");
+                        break;
+                    case ConsoleKey.D2:
+                        Console.WriteLine("Book a flight");
+                        break;
 
-                        case ConsoleKey.D3:
-                            Console.WriteLine("Cancel a flight");
-                            break;
+                    case ConsoleKey.D3:
+                        Console.WriteLine("Cancel a flight");
+                        break;
 
-                        case ConsoleKey.D4:
-                            Console.WriteLine("Program has been quit");
-                            x = true;
-                            break;
+                    case ConsoleKey.D4:
+                        Console.WriteLine("Program has been quit");
+                        x = true;
+                        break;
 
-                        default:
-                            // Checks for capslock/numlock
-                            if (Console.CapsLock && Console.NumberLock)
-                            {
-                                Console.WriteLine(key.KeyChar);
-                                Console.Write("Invalid option");
-                            }
-                            break;
-                            {
-                                
-                            }
-                    }
+                    default:
+                        // Checks for capslock/numlock
+                        if (Console.CapsLock && Console.NumberLock)
+                        {
+                            Console.WriteLine(key.KeyChar);
+                            Console.Write("Invalid option");
+                        }
+                        break;
+                }
             }
-            
         }
     }
 }

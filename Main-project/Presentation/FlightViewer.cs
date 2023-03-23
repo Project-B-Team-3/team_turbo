@@ -5,7 +5,7 @@ namespace Main_project.Presentation
 {
     public class ConsoleView
     {
-        private BookingLogic _bookingLogic;
+        private readonly BookingLogic _bookingLogic;
 
         public ConsoleView()
         {
@@ -14,22 +14,30 @@ namespace Main_project.Presentation
 
         public void DisplayFlights()
         {
-            List<Flight> flights = _bookingLogic.GetFlights();
-            foreach (Flight flight in flights)
+            if (!_bookingLogic.UpComingFlights().Any())
             {
-                Console.WriteLine(flight.ToString());
+                Console.WriteLine("No upcoming flights!");
+                Console.ReadKey();
+            }
+            else
+            {
+                foreach (var flight in _bookingLogic.UpComingFlights())
+                {
+                    Console.WriteLine(flight);
+                }
+
+                Console.ReadKey();
             }
         }
 
-        public int GetFlightSelection()
-        {
-            List<Flight> flights = _bookingLogic.GetFlights();
-            int selection = 0;
-            do
-            {
-                Console.Write("Enter the number of the flight you want to book: ");
-            } while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > flights.Count);
-            return selection;
-        }
+        // public int GetFlightSelection()
+        // {
+        //     int selection = 0;
+        //     do
+        //     {
+        //         Console.Write("Enter the number of the flight you want to book: ");
+        //     } while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > flights.Count);
+        //     return selection;
+        // }
     }
 }
