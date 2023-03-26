@@ -5,26 +5,30 @@ namespace Main_project.DataModels
     public class Flight
     {
         public string FlightNumber { get; set; }
-        public string Departure { get; set; }
-        public string Destination { get; set; }
+        public string DepartureAirportCode { get; set; } 
+        public string DestinationAirportCode { get; set; }
         public DateTime DepartureTime { get; set; }
         public List<Seat> Seats { get; set; }
         public decimal Price { get; set; }
+        public string DepartureCity { get; set; }
+        public string DestinationCity { get; set; }
 
-        public Flight(string number, string departure, string destination, DateTime departuretime, int seatCount, int premiumCount, decimal price)
+        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int seatCount, int premiumCount, decimal price, string departurecity, string destinationcity)
         {
-            FlightNumber = number;
-            Departure = departure;
-            Destination = destination;
+            FlightNumber = flightnumber;
+            DepartureAirportCode = departureairportcode;
+            DestinationAirportCode = destinationairportcode;
             DepartureTime = departuretime;
             Seats = FlightDataAccess.GenerateSeats(seatCount, premiumCount);
             Price = price;
+            DepartureCity = departurecity;
+            DestinationCity = destinationcity;
         }
 
         // Formatting class data
         public override string ToString()
         {
-            return $"{Departure} to {Destination} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
+            return $"{DepartureCity} to {DestinationCity} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
         }
     }
 }
