@@ -1,9 +1,11 @@
+using Main_project.DataAccess;
+using Main_project.DataModels;
+
 namespace Main_project.Presentation;
 public class Menu
 {
     public static void Start()
     {
-        var consoleview = new ConsoleView();
         bool x = false;
         ConsoleKeyInfo key = new ConsoleKeyInfo();
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
@@ -15,7 +17,7 @@ public class Menu
                 switch (key.Key)
                 {
                     case ConsoleKey.D1:
-                        consoleview.DisplayFlights();
+                        ConsoleView.DisplayFlights();
                         break;
                     case ConsoleKey.D2:
                         Console.WriteLine("Book a flight");
@@ -28,6 +30,11 @@ public class Menu
                     case ConsoleKey.D4:
                         Console.WriteLine("Program has been quit");
                         x = true;
+                        break;
+                    
+                    case ConsoleKey.A:
+                        FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
+                            new DateTime(1999, 7, 10), 150, 20, 150.99m));
                         break;
 
                     default:
