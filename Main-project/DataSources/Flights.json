@@ -1,26 +1,26 @@
 [
-    {
-      "FlightNumber": "ROT01",
-      "Departure": "ROT",
-      "Destination": "LAX",
-      "DepartureTime": "2023-04-01T08:30:00",
-      "SeatsAvailable": 100,
-      "Price": 650.00
-    },
-    {
-      "FlightNumber": "LAX01",
-      "Departure": "LAX",
-      "Destination": "ROT",
-      "DepartureTime": "2023-04-01T12:45:00",
-      "SeatsAvailable": 50,
-      "Price": 300.00
-    },
-    {
-      "FlightNumber": "LAX02",
-      "Departure": "ROT",
-      "Destination": "HEL",
-      "DepartureTime": "2023-04-02T10:15:00",
-      "SeatsAvailable": 50,
-      "Price": 200.00
-    }
-]
+  {
+    "FlightNumber": "ROT01",
+    "Departure": "ROT",
+    "Destination": "LAX",
+    "DepartureTime": "2023-04-01T08:30:00",
+    "Seats": [],
+    "Price": 650.00
+  },
+  {
+    "FlightNumber": "LAX01",
+    "Departure": "LAX",
+    "Destination": "ROT",
+    "DepartureTime": "2023-04-01T12:45:00",
+    "Seats": [],
+    "Price": 300.00
+  },
+  {
+    "FlightNumber": "LAX02",
+    "Departure": "ROT",
+    "Destination": "HEL",
+    "DepartureTime": "2023-04-02T10:15:00",
+    "Seats": [],
+    "Price": 200.00
+  }
+  ]

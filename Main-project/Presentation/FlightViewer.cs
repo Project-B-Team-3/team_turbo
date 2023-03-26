@@ -5,23 +5,16 @@ namespace Main_project.Presentation
 {
     public class ConsoleView
     {
-        private readonly BookingLogic _bookingLogic;
-
-        public ConsoleView()
+        public static void DisplayFlights()
         {
-            _bookingLogic = new BookingLogic();
-        }
-
-        public void DisplayFlights()
-        {
-            if (!_bookingLogic.UpComingFlights().Any())
+            if (!BookingLogic.UpComingFlights().Any())
             {
                 Console.WriteLine("No upcoming flights!");
                 Console.ReadKey();
             }
             else
             {
-                foreach (var flight in _bookingLogic.UpComingFlights())
+                foreach (var flight in BookingLogic.UpComingFlights())
                 {
                     Console.WriteLine(flight);
                 }
