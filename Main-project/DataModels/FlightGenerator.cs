@@ -1,9 +1,3 @@
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace Main_project.DataModels
 {
     public class FlightGenerator
@@ -11,7 +5,6 @@ namespace Main_project.DataModels
         int flightNumberCounter = 1;
         List<Flight> flights = new List<Flight>();
         Random rand = new Random();
-        int daysToGenerate = 30; // Generate flights for 30 days
 
         // Airport locations stored in a dictionary
         Dictionary<string, string> airportCodes = new Dictionary<string, string>() {
@@ -44,16 +37,16 @@ namespace Main_project.DataModels
                         for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
                         {
                             var flight = new Flight
-                            {
-                                FlightNumber = $"ROT{flightNumberCounter:D3}", //:D3 formats int as string with at least 3 digits
-                                DepartureAirportCode = departureAirport.Key,
-                                DestinationAirportCode = destinationAirport.Key,
-                                DepartureTime = new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0, 0), // Likely won't be random at end product, was ez to implement for now
-                                SeatsAvailable = rand.Next(50, 200), // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
-                                Price = rand.Next(100, 1000), // Was ez to implement, waiting for this user story to be picked up in either sprint 2 or 3 to finalize this piece of code
-                                DepartureCity = departureAirport.Value,
-                                DestinationCity = destinationAirport.Value
-                            };
+                            (
+                                $"ROT{flightNumberCounter:D3}", //:D3 formats int as string with at least 3 digits
+                                departureAirport.Key,
+                                destinationAirport.Key,
+                                new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0, 0), // Likely won't be random at end product, was ez to implement for now
+                                rand.Next(50, 200), // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
+                                rand.Next(100, 1000), // Was ez to implement, waiting for this user story to be picked up in either sprint 2 or 3 to finalize this piece of code
+                                departureAirport.Value,
+                                destinationAirport.Value
+                            );
                             flights.Add(flight);
                             flightNumberCounter++;
                         }
