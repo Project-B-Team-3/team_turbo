@@ -11,9 +11,9 @@ namespace Main_project.Logic
             return displayedFlights;
         }
 
-        public static List<Seat> FlightSeats()
+        public static List<Seat> FlightSeats(string flightNumber)
         {
-            return FlightDataAccess.GetFlights().Select(h => h.Seats).Last();
+            return FlightDataAccess.GetFlights().Where(h => h.FlightNumber == flightNumber).Select(h => h.Seats).First();
         }
     }
 }
