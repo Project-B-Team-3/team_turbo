@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using Main_project.DataAccess;
 using Main_project.DataModels;
 
@@ -34,15 +35,18 @@ public class Menu
                     
                     case ConsoleKey.A:
                         FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
-                            new DateTime(1999, 7, 10), 150, 20, 150.99m));
+                            new DateTime(1999, 7, 10), 160, 20, 150.99m));
                         break;
 
                     default:
                         // Checks for capslock/numlock
-                        if (Console.CapsLock && Console.NumberLock)
+                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                         {
-                            Console.WriteLine(key.KeyChar);
-                            Console.Write("Invalid option");
+                            if (Console.CapsLock && Console.NumberLock)
+                            {
+                                Console.WriteLine(key.KeyChar);
+                                Console.Write("Invalid option");
+                            }
                         }
                         break;
                 }
