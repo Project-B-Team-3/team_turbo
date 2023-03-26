@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using Main_project.DataAccess;
 using Main_project.DataModels;
 
@@ -27,25 +28,28 @@ public class Menu
                     Console.WriteLine("Cancel a flight");
                     break;
 
-                case ConsoleKey.D4:
-                    Console.WriteLine("Program has been quit");
-                    x = true;
-                    break;
-                
-                case ConsoleKey.A:
-                    FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
-                        new DateTime(1999, 7, 10), 150, 20, 150.99m));
-                    break;
+                    case ConsoleKey.D4:
+                        Console.WriteLine("Program has been quit");
+                        x = true;
+                        break;
+                    
+                    case ConsoleKey.A:
+                        FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
+                            new DateTime(1999, 7, 10), 160, 20, 150.99m));
+                        break;
 
-                default:
-                    // Checks for capslock/numlock
-                    if (Console.CapsLock && Console.NumberLock)
-                    {
-                        Console.WriteLine(key.KeyChar);
-                        Console.Write("Invalid option");
-                    }
-                    break;
-            }
+                    default:
+                        // Checks for capslock/numlock
+                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                        {
+                            if (Console.CapsLock && Console.NumberLock)
+                            {
+                                Console.WriteLine(key.KeyChar);
+                                Console.Write("Invalid option");
+                            }
+                        }
+                        break;
+                }
         }
     }
 }
