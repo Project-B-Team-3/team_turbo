@@ -13,14 +13,16 @@ namespace Main_project.DataModels
         public string DepartureCity { get; set; }
         public string DestinationCity { get; set; }
 
-        public Flight(string number, string departure, string destination, DateTime departuretime, int seatCount, int premiumCount, decimal price)
+        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int seats, decimal price, string departurecity, string destinationcity)
         {
-            FlightNumber = number;
-            Departure = departure;
-            Destination = destination;
+            FlightNumber = flightnumber;
+            DepartureAirportCode = departureairportcode;
+            DestinationAirportCode = destinationairportcode;
             DepartureTime = departuretime;
             Seats = FlightDataAccess.GenerateSeats(seatCount, premiumCount);
             Price = price;
+            DepartureCity = departurecity;
+            DestinationCity = destinationcity;
         }
 
         // Formatting class data
