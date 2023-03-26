@@ -1,16 +1,41 @@
+using System.Drawing;
 using Main_project.Logic;
+using Console = System.Console;
 
 namespace Main_project.Presentation;
 
 public class SeatSelector
 {
-	public static void SelectSeat()
+	public static void SelectSeat(string flightNumber)
 	{
 		Console.Clear();
-		Console.WriteLine("You can select your seat under here:");
-		foreach (var seat in BookingLogic.FlightSeats())
+		Console.WriteLine("The white seats are available:");
+		foreach (var seat in BookingLogic.FlightSeats(flightNumber))
 		{
-			Console.WriteLine(seat.Number);
+			Console.ForegroundColor = !seat.Available ? ConsoleColor.Red : ConsoleColor.White;
+
+			switch (seat.Number.ToCharArray()[0])
+			{
+				case 'D':
+					Console.Write(seat.Available ? $"{seat.Number}\n" : "##\n", Color.Red);
+					break;
+				case 'B':
+					Console.Write(seat.Available ? $"{seat.Number}   " : "##   ", Color.Red);
+					break;
+				default:
+					Console.Write(seat.Available ? $"{seat.Number} " : "## ", Color.Red);
+					break;
+			}
+		}
+
+		Console.Write("Which seat do you want? ");
+		var chairNumber = Console.ReadLine();
+		while (!BookingLogic.FlightSeats(flightNumber).Exists(h => h.Number == chairNumber) ||
+		    !BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available)
+		{
+			Console.WriteLine("Invalid choice, please choose again.");
+			Console.Write("Which seat do you want? ");
+			chairNumber = Console.ReadLine();
 		}
 	}
 }

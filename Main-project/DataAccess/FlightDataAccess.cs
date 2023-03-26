@@ -67,11 +67,11 @@ namespace Main_project.DataAccess
             return returnSeats;
         }
 
-        public static async void CreateFlight(Flight flight)
+        public static void CreateFlight(Flight flight)
         {
             var flights = GetFlights();
             flights.Add(flight);
-            await FlightsWriter().WriteAsync(JsonConvert.SerializeObject(flights, Formatting.Indented));
+            FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
         }
 
         public static void UpdateFlight(Flight flight)

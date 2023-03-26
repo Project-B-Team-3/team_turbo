@@ -3,7 +3,7 @@ using Main_project.DataModels;
 
 namespace Main_project.Presentation
 {
-    public class ConsoleView
+    public static class ConsoleView
     {
         public static void DisplayFlights()
         {
