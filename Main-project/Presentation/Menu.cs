@@ -28,7 +28,7 @@ public class Menu
                         Console.WriteLine("Cancel a flight");
                         break;
 
-                    case ConsoleKey.D4:
+                    case ConsoleKey.D4: case ConsoleKey.Q:
                         Console.WriteLine("Program has been quit");
                         x = true;
                         break;

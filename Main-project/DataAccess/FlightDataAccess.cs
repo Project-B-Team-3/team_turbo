@@ -19,11 +19,17 @@ namespace Main_project.DataAccess
         {
             if (File.Exists("./DataSources/Flights.json"))
             {
-                return new StreamWriter("./DataSources/Flights.json");
+                var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.AutoFlush = true;
+                return streamWriter;
             }
-
-            File.Create("./DataSources/Flights.json");
-            return new StreamWriter("./DataSources/Flights.json");
+            else
+            {
+                File.Create("./DataSources/Flights.json");
+                var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.AutoFlush = true;
+                return streamWriter;
+            }
         }
 
         public static List<Flight> GetFlights()
@@ -31,8 +37,8 @@ namespace Main_project.DataAccess
             try
             {
                 var json = FlightsReader().ReadToEnd();
-                var flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
-                return flights;
+                var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
+                return flights ?? new List<Flight>();
             }
             catch (Exception e)
             {
@@ -45,14 +51,15 @@ namespace Main_project.DataAccess
 
         public static List<Seat> GenerateSeats(int seatCount, int businessCount)
         {
+            var rows = "ABCDEFGHJKL".ToCharArray();
             var returnSeats = new List<Seat>();
-            for (var i = 1; i <= seatCount; i++)
+            for (var i = 0; i < seatCount; i++)
             {
                 returnSeats.Add(new Seat
                     {
-                        Number = Convert.ToString(Convert.ToChar(i % 4)) + i % 4,
+                        Number = rows[i % 4] + (i / 4 + 1).ToString(),
                         Available = true,
-                        Class = i <= businessCount ? "Business Class" : "Economy Class"
+                        Class = i < businessCount ? "Business Class" : "Economy Class"
                     }
                 );
             }
@@ -60,11 +67,11 @@ namespace Main_project.DataAccess
             return returnSeats;
         }
 
-        public static void CreateFlight(Flight flight)
+        public static async void CreateFlight(Flight flight)
         {
             var flights = GetFlights();
             flights.Add(flight);
-            FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
+            await FlightsWriter().WriteAsync(JsonConvert.SerializeObject(flights, Formatting.Indented));
         }
 
         public static void UpdateFlight(Flight flight)
