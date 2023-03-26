@@ -83,9 +83,7 @@ namespace Main_project.DataAccess
             if (index != -1)
             {
                 flights[index] = flight;
-
-                string json = JsonConvert.SerializeObject(flights, Formatting.Indented);
-                FlightsWriter().Write(json);
+                FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
     }

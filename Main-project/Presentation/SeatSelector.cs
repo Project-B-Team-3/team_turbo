@@ -6,7 +6,7 @@ namespace Main_project.Presentation;
 
 public class SeatSelector
 {
-	public static void SelectSeat(string flightNumber)
+	public static string SelectSeat(string flightNumber)
 	{
 		Console.Clear();
 		Console.WriteLine("The white seats are available:");
@@ -31,11 +31,14 @@ public class SeatSelector
 		Console.Write("Which seat do you want? ");
 		var chairNumber = Console.ReadLine();
 		while (!BookingLogic.FlightSeats(flightNumber).Exists(h => h.Number == chairNumber) ||
-		    !BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available)
+		       !BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available ||
+				chairNumber == null)
 		{
 			Console.WriteLine("Invalid choice, please choose again.");
 			Console.Write("Which seat do you want? ");
 			chairNumber = Console.ReadLine();
 		}
+
+		return chairNumber;
 	}
 }
