@@ -1,7 +1,3 @@
-using System.Runtime.Versioning;
-using Main_project.DataAccess;
-using Main_project.DataModels;
-
 namespace Main_project.Presentation;
 
 public class Menu
@@ -41,21 +37,18 @@ public class Menu
                         break;
 
                     case ConsoleKey.S:
-                        adminpanelrunning = true;
+                        AdminPanel.Admin();
                         break;
 
                     default:
                         // Checks for capslock/numlock
-                        if (Console.CapsLock && Console.NumberLock)
+                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                         {
                             Console.WriteLine(key.KeyChar);
 
                         }
 
                         break;
-                    {
-
-                    }
                 }
 
                 while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape && adminpanelrunning == true)
