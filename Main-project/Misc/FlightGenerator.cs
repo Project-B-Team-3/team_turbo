@@ -46,7 +46,8 @@ namespace Main_project.Misc
                                 new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0,
                                     0), // Likely won't be random at end product, was ez to implement for now
                                 rand.Next(50,
-                                        200), // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
+                                    200), // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
+                                rand.Next(5, 20),
                                 rand.Next(100,
                                     1000), // Was ez to implement, waiting for this user story to be picked up in either sprint 2 or 3 to finalize this piece of code
                                 departureAirport.Value,

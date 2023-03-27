@@ -32,11 +32,6 @@ public class Menu
                         Console.WriteLine("Program has been quit");
                         x = true;
                         break;
-                    
-                    case ConsoleKey.A:
-                        FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
-                            new DateTime(1999, 7, 10), 160, 20, 150.99m));
-                        break;
 
                     default:
                         // Checks for capslock/numlock
