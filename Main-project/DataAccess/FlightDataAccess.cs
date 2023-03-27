@@ -3,23 +3,42 @@ using Main_project.DataModels;
 
 namespace Main_project.DataAccess
 {
-    public class FlightDataAccess
+    public static class FlightDataAccess
     {
-        private readonly string _jsonPath;
-
-        public FlightDataAccess()
+        private static StreamReader FlightsReader()
         {
-            _jsonPath = "./DataSources/Flights.json";
+            if (File.Exists("./DataSources/Flights.json"))
+            {
+                return new StreamReader("./DataSources/Flights.json");
+            }
+            File.Create("./DataSources/Flights.json");
+            return new StreamReader("./DataSources/Flights.json");
         }
 
-        public List<Flight> GetFlights()
+        private static StreamWriter FlightsWriter()
+        {
+            if (File.Exists("./DataSources/Flights.json"))
+            {
+                var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.AutoFlush = true;
+                return streamWriter;
+            }
+            else
+            {
+                File.Create("./DataSources/Flights.json");
+                var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.AutoFlush = true;
+                return streamWriter;
+            }
+        }
+
+        public static List<Flight> GetFlights()
         {
             try
             {
-                var reader = new StreamReader(_jsonPath);
-                var json = reader.ReadToEnd();
-                var flights = JsonConvert.DeserializeObject<List<Flight>>(json)!;
-                return flights;
+                var json = FlightsReader().ReadToEnd();
+                var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
+                return flights ?? new List<Flight>();
             }
             catch (Exception e)
             {
@@ -30,7 +49,32 @@ namespace Main_project.DataAccess
             }
         }
 
-        public void UpdateFlight(Flight flight)
+        public static List<Seat> GenerateSeats(int seatCount, int businessCount)
+        {
+            var rows = "ABCDEFGHJKL".ToCharArray();
+            var returnSeats = new List<Seat>();
+            for (var i = 0; i < seatCount; i++)
+            {
+                returnSeats.Add(new Seat
+                    {
+                        Number = rows[i % 4] + (i / 4 + 1).ToString(),
+                        Available = true,
+                        Class = i < businessCount ? "Business Class" : "Economy Class"
+                    }
+                );
+            }
+
+            return returnSeats;
+        }
+
+        public static void CreateFlight(Flight flight)
+        {
+            var flights = GetFlights();
+            flights.Add(flight);
+            FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
+        }
+
+        public static void UpdateFlight(Flight flight)
         {
             List<Flight> flights = GetFlights();
 
@@ -39,12 +83,7 @@ namespace Main_project.DataAccess
             if (index != -1)
             {
                 flights[index] = flight;
-
-                using (StreamWriter writer = new StreamWriter(_jsonPath))
-                {
-                    string json = JsonConvert.SerializeObject(flights, Formatting.Indented);
-                    writer.Write(json);
-                }
+                FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
     }
