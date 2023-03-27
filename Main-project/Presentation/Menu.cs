@@ -11,9 +11,15 @@ public class Menu
         ConsoleKeyInfo key = new ConsoleKeyInfo();
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
         {
-            Console.Clear();
-            Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Quit\n");
-            key = Console.ReadKey(true);
+            bool adminpanelrunning = false;
+            bool x = false;
+            ConsoleKeyInfo key = new ConsoleKeyInfo();
+            while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
+            {
+                Console.Clear();
+                Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Quit\n");
+                
+                key = Console.ReadKey(true);
                 //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
                 switch (key.Key)
                 {
@@ -33,6 +39,10 @@ public class Menu
                         x = true;
                         break;
 
+                    case ConsoleKey.S:
+                        AdminPanel.Admin();
+                        break;
+                        
                     default:
                         // Checks for capslock/numlock
                         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -45,7 +55,7 @@ public class Menu
                         }
                         break;
                 }
+            }
         }
-
     }
 }
