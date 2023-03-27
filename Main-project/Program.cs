@@ -12,9 +12,3 @@ namespace Main_project
         }
     }
 }
-
-using Main_project.Presentation;
-
-var consoleview = new ConsoleView();
-consoleview.DisplayAllFlights();
-
