@@ -22,15 +22,15 @@ namespace Main_project.Presentation
             }
         }
 
-		public void DisplayAllFlights()
+		public static void DisplayAllFlights()
         {
-            foreach (var flight in _bookingLogic.GetAllFlights())
+            foreach (var flight in BookingLogic.GetAllFlights())
             {
                 Console.WriteLine($"Flight number: {flight.FlightNumber}");
-                Console.WriteLine($"Departure: {flight.Departure}");
-                Console.WriteLine($"Destination: {flight.Destination}");
+                Console.WriteLine($"Departure: {flight.DepartureCity}");
+                Console.WriteLine($"Destination: {flight.DestinationCity}");
                 Console.WriteLine($"Departure time: {flight.DepartureTime}");
-                Console.WriteLine($"Seats available: {flight.SeatsAvailable}");
+                Console.WriteLine($"Seats available: {flight.Seats.Count}");
                 Console.WriteLine($"Price: {flight.Price}");
                 Console.WriteLine();
             }
