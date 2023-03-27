@@ -1,8 +1,15 @@
-namespace Main_project.Presentation
+using System.Runtime.Versioning;
+using Main_project.DataAccess;
+using Main_project.DataModels;
+
+namespace Main_project.Presentation;
+public class Menu
 {
-    public class Menu
+    public static void Start()
     {
-        public static void Start()
+        bool x = false;
+        ConsoleKeyInfo key = new ConsoleKeyInfo();
+        while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
         {
             bool adminpanelrunning = false;
             bool x = false;
@@ -17,7 +24,7 @@ namespace Main_project.Presentation
                 switch (key.Key)
                 {
                     case ConsoleKey.D1:
-                        Console.WriteLine("Viewing all upcoming flights");
+                        ConsoleView.DisplayFlights();
                         break;
                     case ConsoleKey.D2:
                         Console.WriteLine("Book a flight");
@@ -49,7 +56,6 @@ namespace Main_project.Presentation
                         break;
                 }
             }
-            
         }
     }
 }

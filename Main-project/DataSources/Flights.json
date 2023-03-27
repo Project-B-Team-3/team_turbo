@@ -1,0 +1,90 @@
+[
+  {
+    "FlightNumber": "ROT01",
+    "Departure": "ROT",
+    "Destination": "LAX",
+    "DepartureTime": "2023-04-01T08:30:00",
+    "Seats": [],
+    "Price": 650.00
+  },
+  {
+    "FlightNumber": "LAX01",
+    "Departure": "LAX",
+    "Destination": "ROT",
+    "DepartureTime": "2023-04-01T12:45:00",
+    "Seats": [],
+    "Price": 300
+  },
+  {
+    "FlightNumber": "HEL01",
+    "Departure": "HEL",
+    "Destination": "LON",
+    "DepartureTime": "2023-04-03T09:30:00",
+    "Seats": [],
+    "Price": 450
+  },
+  {
+    "FlightNumber": "LON01",
+    "Departure": "LON",
+    "Destination": "SYD",
+    "DepartureTime": "2023-04-04T16:15:00",
+    "Seats": [],
+    "Price": 950
+  },
+  {
+    "FlightNumber": "SYD01",
+    "Departure": "SYD",
+    "Destination": "LAX",
+    "DepartureTime": "2023-04-05T11:45:00",
+    "Seats": [],
+    "Price": 1200
+  },
+  {
+    "FlightNumber": "LAX02",
+    "Departure": "ROT",
+    "Destination": "HEL",
+    "DepartureTime": "2023-04-02T10:15:00",
+    "Seats": [],
+    "Price": 200
+  },
+  {
+    "FlightNumber": "ABC01",
+    "Departure": "ABC",
+    "Destination": "XYZ",
+    "DepartureTime": "2023-03-28T08:00:00",
+    "Seats": [],
+    "Price": 450
+  },
+  {
+    "FlightNumber": "XYZ01",
+    "Departure": "XYZ",
+    "Destination": "ABC",
+    "DepartureTime": "2023-03-28T13:00:00",
+    "Seats": [],
+    "Price": 550
+  },
+  {
+    "FlightNumber": "ROT01",
+    "Departure": "ROT",
+    "Destination": "LAX",
+    "DepartureTime": "2023-04-01T08:30:00",
+    "Seats": [],
+    "Price": 650
+  },
+  {
+    "FlightNumber": "LAX01",
+    "Departure": "LAX",
+    "Destination": "ROT",
+    "DepartureTime": "2023-04-01T12:45:00",
+    "Seats": [],
+    "Price": 300.00
+  },
+  {
+    "FlightNumber": "LAX02",
+    "Departure": "ROT",
+    "Destination": "HEL",
+    "DepartureTime": "2023-04-02T10:15:00",
+    "Seats": [],
+    "Price": 200.00
+  }
+]

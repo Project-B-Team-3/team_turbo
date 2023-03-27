@@ -1,4 +1,3 @@
-﻿using System;
 using Main_project.Presentation;
 
 namespace Main_project
