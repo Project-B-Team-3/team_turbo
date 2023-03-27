@@ -4,15 +4,15 @@
     "Departure": "ROT",
     "Destination": "LAX",
     "DepartureTime": "2023-04-01T08:30:00",
-    "SeatsAvailable": 100,
-    "Price": 650
+    "Seats": [],
+    "Price": 650.00
   },
   {
     "FlightNumber": "LAX01",
     "Departure": "LAX",
     "Destination": "ROT",
     "DepartureTime": "2023-04-01T12:45:00",
-    "SeatsAvailable": 50,
+    "Seats": [],
     "Price": 300
   },
   {
@@ -20,7 +20,7 @@
     "Departure": "HEL",
     "Destination": "LON",
     "DepartureTime": "2023-04-03T09:30:00",
-    "SeatsAvailable": 75,
+    "Seats": [],
     "Price": 450
   },
   {
@@ -28,7 +28,7 @@
     "Departure": "LON",
     "Destination": "SYD",
     "DepartureTime": "2023-04-04T16:15:00",
-    "SeatsAvailable": 150,
+    "Seats": [],
     "Price": 950
   },
   {
@@ -36,7 +36,7 @@
     "Departure": "SYD",
     "Destination": "LAX",
     "DepartureTime": "2023-04-05T11:45:00",
-    "SeatsAvailable": 100,
+    "Seats": [],
     "Price": 1200
   },
   {
@@ -44,7 +44,7 @@
     "Departure": "ROT",
     "Destination": "HEL",
     "DepartureTime": "2023-04-02T10:15:00",
-    "SeatsAvailable": 50,
+    "Seats": [],
     "Price": 200
   },
   {
@@ -52,7 +52,7 @@
     "Departure": "ABC",
     "Destination": "XYZ",
     "DepartureTime": "2023-03-28T08:00:00",
-    "SeatsAvailable": 50,
+    "Seats": [],
     "Price": 450
   },
   {
@@ -60,7 +60,7 @@
     "Departure": "XYZ",
     "Destination": "ABC",
     "DepartureTime": "2023-03-28T13:00:00",
-    "SeatsAvailable": 100,
+    "Seats": [],
     "Price": 550
   },
   {
@@ -68,7 +68,7 @@
     "Departure": "ROT",
     "Destination": "LAX",
     "DepartureTime": "2023-04-01T08:30:00",
-    "SeatsAvailable": 100,
+    "Seats": [],
     "Price": 650
   },
   {
@@ -76,15 +76,15 @@
     "Departure": "LAX",
     "Destination": "ROT",
     "DepartureTime": "2023-04-01T12:45:00",
-    "SeatsAvailable": 50,
-    "Price": 300
+    "Seats": [],
+    "Price": 300.00
   },
   {
     "FlightNumber": "LAX02",
     "Departure": "ROT",
     "Destination": "HEL",
     "DepartureTime": "2023-04-02T10:15:00",
-    "SeatsAvailable": 50,
-    "Price": 200
+    "Seats": [],
+    "Price": 200.00
   }
 ]

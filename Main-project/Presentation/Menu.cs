@@ -1,9 +1,12 @@
+using System.Runtime.Versioning;
+using Main_project.DataAccess;
+using Main_project.DataModels;
+
 namespace Main_project.Presentation;
 public class Menu
 {
     public static void Start()
     {
-        var consoleview = new ConsoleView();
         bool x = false;
         ConsoleKeyInfo key = new ConsoleKeyInfo();
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape &&  x == false)
@@ -15,7 +18,7 @@ public class Menu
                 switch (key.Key)
                 {
                     case ConsoleKey.D1:
-                        consoleview.DisplayFlights();
+                        ConsoleView.DisplayFlights();
                         break;
                     case ConsoleKey.D2:
                         Console.WriteLine("Book a flight");
@@ -25,17 +28,25 @@ public class Menu
                         Console.WriteLine("Cancel a flight");
                         break;
 
-                    case ConsoleKey.D4:
+                    case ConsoleKey.D4: case ConsoleKey.Q:
                         Console.WriteLine("Program has been quit");
                         x = true;
+                        break;
+                    
+                    case ConsoleKey.A:
+                        FlightDataAccess.CreateFlight(new Flight("LAX01", "ROT", "NYC", 
+                            new DateTime(1999, 7, 10), 160, 20, 150.99m));
                         break;
 
                     default:
                         // Checks for capslock/numlock
-                        if (Console.CapsLock && Console.NumberLock)
+                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                         {
-                            Console.WriteLine(key.KeyChar);
-                            Console.Write("Invalid option");
+                            if (Console.CapsLock && Console.NumberLock)
+                            {
+                                Console.WriteLine(key.KeyChar);
+                                Console.Write("Invalid option");
+                            }
                         }
                         break;
                 }
