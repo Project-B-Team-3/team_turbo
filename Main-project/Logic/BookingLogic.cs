@@ -10,14 +10,9 @@ namespace Main_project.Logic
                 .Where(f => f.DepartureTime < DateTime.Now + TimeSpan.FromDays(28));
             return displayedFlights;
         }
-        public IEnumerable<Flight> GetAllFlights()
+        public static IEnumerable<Flight> GetAllFlights()
         {
-            return flightData.GetFlights();
-        }
-
-        public IEnumerable<Flight> GetAllFlights()
-        {
-            return flightData.GetFlights();
+            return FlightDataAccess.GetFlights();
         }
 
         public static List<Seat> FlightSeats(string flightNumber)
