@@ -13,7 +13,7 @@ namespace Main_project.DataModels
         public string DepartureCity { get; set; }
         public string DestinationCity { get; set; }
 
-        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int seats, decimal price, string departurecity, string destinationcity)
+        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int seatCount, int premiumCount, decimal price, string departureCity, string destinationCity)
         {
             FlightNumber = flightnumber;
             DepartureAirportCode = departureairportcode;
@@ -28,7 +28,7 @@ namespace Main_project.DataModels
         // Formatting class data
         public override string ToString()
         {
-            return $"{Departure} to {Destination} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
+            return $"{DepartureCity} to {DestinationCity} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
         }
     }
 }
