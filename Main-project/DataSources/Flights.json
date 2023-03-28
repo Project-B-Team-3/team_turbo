@@ -38,19 +38,14 @@
     "DepartureTime": "2023-04-05T11:45:00",
     "SeatsAvailable": 100,
     "Price": 1200
->>>>>>> 3fc5bda (heb meer speelgoed toegevoegd)
   },
   {
     "FlightNumber": "LAX02",
     "Departure": "ROT",
     "Destination": "HEL",
     "DepartureTime": "2023-04-02T10:15:00",
-<<<<<<< HEAD
     "Seats": [],
     "Price": 200.00
-=======
-    "SeatsAvailable": 50,
-    "Price": 200
   },
   {
     "FlightNumber": "ABC01",
