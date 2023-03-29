@@ -17,7 +17,7 @@ namespace Main_project.Presentation
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"What do you wish to do?\n[1] " +
                     $"View all available flights\n[2] Change seat pricing \n[3] Change catering pricing\n[4] Change catering items\n" +
-                    $"[5] Change Ticket pricing\n[6] Change Ticket Destination\n[7] Quit");
+                    $"[5] Select Ticket To Change Ticket\n[6] Quit");
                 ConsoleKeyInfo Adminchoice;
                 Adminchoice = Console.ReadKey(true);
                 switch (Adminchoice.Key)
@@ -41,15 +41,10 @@ namespace Main_project.Presentation
 
                     case ConsoleKey.D5:
                         Console.WriteLine("Change ticket pricing");
-                        ChangeTicketPrice();
+                        SelectFlightToUpdate();
                         break;
 
                     case ConsoleKey.D6:
-                        Console.WriteLine("Change Ticket Destination");
-                        ChangeFlightsDestination();
-                        break;
-
-                    case ConsoleKey.D7:
                         Console.WriteLine("Program has been quit");
                         return;
 
@@ -98,41 +93,37 @@ namespace Main_project.Presentation
 
             Console.WriteLine($"Selected flight: {flightToUpdate.FlightNumber} - {flightToUpdate.DepartureCity} to {flightToUpdate.DestinationCity}");
 
-            Console.WriteLine($"What do you wish to do?\n[1] Change ticket pricing\n[2] Change ticket destination");
-            ConsoleKeyInfo adminChoice;
-            adminChoice = Console.ReadKey(true);
-
-            switch (adminChoice.Key)
+            while (true)
             {
-                case ConsoleKey.D1:
-                    ChangeTicketPrice();
-                    break;
+                Console.WriteLine($"What do you wish to do?\n[1] Change ticket pricing\n[2] Change ticket destination\n[3] Quit");
+                ConsoleKeyInfo adminChoice = Console.ReadKey(true);
 
-                case ConsoleKey.D2:
-                    ChangeFlightsDestination();
-                    break;
+                switch (adminChoice.Key)
+                {
+                    case ConsoleKey.D1:
+                        ChangeTicketPrice(flightToUpdate);
+                        break;
 
-                default:
-                    Console.WriteLine("Invalid option selected.");
-                    Console.ReadKey();
-                    break;
+                    case ConsoleKey.D2:
+                        ChangeFlightsDestination(flightToUpdate);
+                        break;
+
+                    case ConsoleKey.D3:
+                        Console.WriteLine("Quitting update flight menu.");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid option selected.");
+                        break;
+                }
             }
         }
 
-        public static void ChangeTicketPrice()
+        
+
+        public static void ChangeTicketPrice(Flight flightToUpdate)
         {
-            Console.Write("Enter the flight number to update: ");
-            string flightNumber = Console.ReadLine();
-
-            Flight flightToUpdate = BookingLogic.GetFlightByNumber(flightNumber);
-
-            if (flightToUpdate == null)
-            {
-                Console.WriteLine($"Flight with number {flightNumber} not found.");
-                Console.ReadKey();
-                return;
-            }
-
+            
             Console.WriteLine($"Current ticket price for flight {flightToUpdate.FlightNumber}: {flightToUpdate.Price}");
 
             Console.Write("Enter the new ticket price: ");
@@ -152,19 +143,8 @@ namespace Main_project.Presentation
             Console.ReadKey();
         }
 
-        public static void ChangeFlightsDestination()
+        public static void ChangeFlightsDestination(Flight flightToUpdate)
         {
-            Console.Write("Enter the flight number to update: ");
-            string flightNumber = Console.ReadLine();
-
-            Flight flightToUpdate = BookingLogic.GetFlightByNumber(flightNumber);
-
-            if (flightToUpdate == null)
-            {
-                Console.WriteLine($"Flight with number {flightNumber} not found.");
-                Console.ReadKey();
-                return;
-            }
 
             Console.WriteLine($"Current flight details: {flightToUpdate}");
 
