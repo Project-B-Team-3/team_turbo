@@ -1,1 +1,1 @@
-# Vliegtuigmaatschappij
+# Luchtvaartmaatschappij
