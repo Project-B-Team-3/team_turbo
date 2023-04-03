@@ -19,5 +19,9 @@ namespace Main_project.Logic
         {
             return FlightDataAccess.GetFlights().Where(h => h.FlightNumber == flightNumber).Select(h => h.Seats).First();
         }
+        public static Flight GetFlightByNumber(string flightNumber)
+        {
+            return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
+        }
     }
 }
