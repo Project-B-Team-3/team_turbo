@@ -46,6 +46,6 @@ public static class BookingDataAccess
 	{
 		var total = GetBookings();
 		total.Add(booking);
-		BookingWriter().Write(total);
+		BookingWriter().Write(JsonConvert.SerializeObject(total, Formatting.Indented));
 	}
 }
