@@ -66,17 +66,104 @@ namespace Main_project.Presentation
         }
         public static void DisplayAllFlights()
         {
-            foreach (var flight in BookingLogic.GetAllFlights())
+            while (true)
             {
-                Console.WriteLine($"Flight number: {flight.FlightNumber}");
-                Console.WriteLine($"Departure: {flight.DepartureCity}");
-                Console.WriteLine($"Destination: {flight.DestinationCity}");
-                Console.WriteLine($"Departure time: {flight.DepartureTime}");
-                Console.WriteLine($"Seats available: {flight.Seats.Count}");
-                Console.WriteLine($"Price: {flight.Price}");
-                Console.WriteLine();
+                Console.Clear();
+                Console.WriteLine("View all available flights");
+                Console.WriteLine($"Sort by:\n[1] Flight number\n[2] Departure city\n[3] Destination city\n[4] Departure time\n[5] Seats available\n[6] Price\n[7] Quit");
+                ConsoleKeyInfo sortChoice;
+                sortChoice = Console.ReadKey(true);
+                switch (sortChoice.Key)
+                {
+                    case ConsoleKey.D1:
+                        Console.WriteLine("Sorting by Flight number");
+                        SortAndDisplayFlights("FlightNumber");
+                        break;
+
+                    case ConsoleKey.D2:
+                        Console.WriteLine("Sorting by Departure city");
+                        SortAndDisplayFlights("DepartureCity");
+                        break;
+
+                    case ConsoleKey.D3:
+                        Console.WriteLine("Sorting by Destination city");
+                        SortAndDisplayFlights("DestinationCity");
+                        break;
+
+                    case ConsoleKey.D4:
+                        Console.WriteLine("Sorting by Departure time");
+                        SortAndDisplayFlights("DepartureTime");
+                        break;
+
+                    case ConsoleKey.D5:
+                        Console.WriteLine("Sorting by Seats available");
+                        SortAndDisplayFlights("Seats.Count");
+                        break;
+
+                    case ConsoleKey.D6:
+                        Console.WriteLine("Sorting by Price");
+                        SortAndDisplayFlights("Price");
+                        break;
+
+                    case ConsoleKey.D7:
+                        Console.WriteLine("Returning to Admin Panel");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid option selected.");
+                        break;
+                }
+
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey(true);
             }
         }
+
+        public static void SortAndDisplayFlights(string sortBy)
+        {
+            List<Flight> flights = BookingLogic.GetAllFlights();
+            switch (sortBy)
+            {
+                case "FlightNumber":
+                    flights.Sort((f1, f2) => f1.FlightNumber.CompareTo(f2.FlightNumber));
+                    break;
+
+                case "DepartureCity":
+                    flights.Sort((f1, f2) => f1.DepartureCity.CompareTo(f2.DepartureCity));
+                    break;
+
+                case "DestinationCity":
+                    flights.Sort((f1, f2) => f1.DestinationCity.CompareTo(f2.DestinationCity));
+                    break;
+
+                case "DepartureTime":
+                    flights.Sort((f1, f2) => f1.DepartureTime.CompareTo(f2.DepartureTime));
+                    break;
+
+                case "Seats.Count":
+                    flights.Sort((f1, f2) => f1.Seats.Count.CompareTo(f2.Seats.Count));
+                    break;
+
+                case "Price":
+                    flights.Sort((f1, f2) => f1.Price.CompareTo(f2.Price));
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option selected.");
+                    return;
+            }
+
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            Console.WriteLine("| Flight number   | Departure  | Destination  | Departure time       | Seats available  | Price     |");
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            foreach (var flight in flights)
+            {
+                Console.WriteLine($"| {flight.FlightNumber,-15} | {flight.DepartureCity,-10} | {flight.DestinationCity,-12} | {flight.DepartureTime,-20} | {flight.Seats.Count,-16} | {flight.Price,-9} |");
+            }
+            Console.WriteLine("-----------------------------------------------------------------------------");
+        }
+
+
         public static void SelectFlightToUpdate()
         {
             Console.Write("Enter the flight number to update: ");
