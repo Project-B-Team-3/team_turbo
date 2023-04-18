@@ -28,7 +28,7 @@ namespace Main_project.DataModels
         // Formatting class data
         public override string ToString()
         {
-            return $"{DepartureCity} to {DestinationCity} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
+            return $"{FlightNumber} {DepartureCity} to {DestinationCity} at {DepartureTime.ToString("yyyy-MM-dd HH:mm:ss")} for {Price} ({Seats.Count(h => h.Available)} seats available)";
         }
     }
 }
