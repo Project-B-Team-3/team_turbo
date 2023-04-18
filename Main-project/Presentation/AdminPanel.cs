@@ -1,4 +1,3 @@
-using System;
 using Main_project.DataAccess;
 using Main_project.DataModels;
 using Main_project.Logic;
@@ -71,8 +70,7 @@ namespace Main_project.Presentation
                 Console.Clear();
                 Console.WriteLine("View all available flights");
                 Console.WriteLine($"Sort by:\n[1] Flight number\n[2] Departure city\n[3] Destination city\n[4] Departure time\n[5] Seats available\n[6] Price\n[7] Quit");
-                ConsoleKeyInfo sortChoice;
-                sortChoice = Console.ReadKey(true);
+                var sortChoice = Console.ReadKey(true);
                 switch (sortChoice.Key)
                 {
                     case ConsoleKey.D1:
@@ -125,15 +123,15 @@ namespace Main_project.Presentation
             switch (sortBy)
             {
                 case "FlightNumber":
-                    flights.Sort((f1, f2) => f1.FlightNumber.CompareTo(f2.FlightNumber));
+                    flights.Sort((f1, f2) => String.Compare(f1.FlightNumber, f2.FlightNumber, StringComparison.Ordinal));
                     break;
 
                 case "DepartureCity":
-                    flights.Sort((f1, f2) => f1.DepartureCity.CompareTo(f2.DepartureCity));
+                    flights.Sort((f1, f2) => String.Compare(f1.DepartureCity, f2.DepartureCity, StringComparison.Ordinal));
                     break;
 
                 case "DestinationCity":
-                    flights.Sort((f1, f2) => f1.DestinationCity.CompareTo(f2.DestinationCity));
+                    flights.Sort((f1, f2) => String.Compare(f1.DestinationCity, f2.DestinationCity, StringComparison.Ordinal));
                     break;
 
                 case "DepartureTime":
@@ -169,14 +167,20 @@ namespace Main_project.Presentation
             Console.Write("Enter the flight number to update: ");
             string flightNumber = Console.ReadLine();
 
-            Flight flightToUpdate = BookingLogic.GetFlightByNumber(flightNumber);
+            if (flightNumber == null)
+            {
+                Console.WriteLine("Null value entered");
+                Console.ReadKey();
+                return;
+            }
 
-            if (flightToUpdate == null)
+            if (BookingLogic.GetAllFlights().All(h => h.FlightNumber != flightNumber))
             {
                 Console.WriteLine($"Flight with number {flightNumber} not found.");
                 Console.ReadKey();
                 return;
             }
+            Flight flightToUpdate = BookingLogic.GetFlightByNumber(flightNumber);
 
             Console.WriteLine($"Selected flight: {flightToUpdate.FlightNumber} - {flightToUpdate.DepartureCity} to {flightToUpdate.DestinationCity}");
 
@@ -236,7 +240,13 @@ namespace Main_project.Presentation
             Console.WriteLine($"Current flight details: {flightToUpdate}");
 
             Console.Write("Enter the new destination city: ");
-            string newDestination = Console.ReadLine();
+            string? newDestination = Console.ReadLine();
+            if (newDestination is null)
+            {
+                Console.WriteLine("Null value entered.");
+                Console.ReadKey();
+                return;
+            }
 
             flightToUpdate.DestinationCity = newDestination;
             FlightDataAccess.UpdateFlight(flightToUpdate);
