@@ -74,6 +74,13 @@ namespace Main_project.DataAccess
             FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
         }
 
+        public static void CreateFlights(List<Flight> flights)
+        {
+            var newflights = GetFlights();
+            newflights = newflights.Concat(flights).ToList();
+            FlightsWriter().Write(JsonConvert.SerializeObject(newflights, Formatting.Indented));
+        }
+
         public static void UpdateFlight(Flight flight)
         {
             List<Flight> flights = GetFlights();
