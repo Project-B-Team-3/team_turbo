@@ -1,3 +1,5 @@
+using Main_project.Misc;
+
 namespace Main_project.Presentation;
 
 public class Menu
@@ -31,6 +33,10 @@ public class Menu
                     x = true;
                     break;
 
+                case ConsoleKey.G:
+                    FlightGenerator.GenerateFlights();
+                    break;
+                
                 case ConsoleKey.S:
                     AdminPanel.Admin();
                     break;
