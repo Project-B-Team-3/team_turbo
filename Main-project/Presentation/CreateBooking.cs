@@ -1,5 +1,6 @@
 using Main_project.DataAccess;
 using Main_project.DataModels;
+using Main_project.Logic;
 
 namespace Main_project.Presentation;
 
@@ -9,8 +10,8 @@ public static class CreateBooking
 	{
 		Console.Clear();
 		Console.WriteLine("Welcome to the booking menu, please enter a flight number to book a flight.");
-		var flightNum = Console.ReadLine();
-		if (FlightDataAccess.GetFlights().All(h => h.FlightNumber != flightNum))
+		var flightNum = Console.ReadLine()?.ToUpper();
+		if (BookingLogic.UpComingFlights().All(h => h.FlightNumber != flightNum))
 		{
 			Console.WriteLine("This flight does not exist...");
 			Thread.Sleep(200);
