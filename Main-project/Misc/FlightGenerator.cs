@@ -1,3 +1,4 @@
+using Main_project.DataAccess;
 using Main_project.DataModels;
 
 namespace Main_project.Misc
@@ -5,6 +6,7 @@ namespace Main_project.Misc
     public class FlightGenerator
     {
         public static void GenerateFlights(){
+            Console.WriteLine("Generating flights...");
             int flightNumberCounter = 1;
             List<Flight> flights = new List<Flight>();
             Random rand = new Random();
@@ -59,6 +61,9 @@ namespace Main_project.Misc
                     }
                 }
             }
+            FlightDataAccess.CreateFlights(flights);
+            Console.WriteLine("Finished generating flights!");
+            Thread.Sleep(200);
         }
     }
 }
