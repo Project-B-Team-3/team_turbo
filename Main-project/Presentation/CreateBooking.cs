@@ -24,13 +24,14 @@ public static class CreateBooking
 		    flightNum == "" || peopleCount == "" || !int.TryParse(peopleCount, out peopleInt))
 		{
 			Console.WriteLine("Wrong input...");
+			Console.ReadKey();
 			return;
 		}
 
 		Dictionary<string, Person> seats = new();
 		for (int i = 0; i < peopleInt; i++)
 		{
-			Console.WriteLine($"What is the name of person #{i}?");
+			Console.WriteLine($"What is the name of person #{i+1}?");
 			var name = Console.ReadLine();
 			Console.WriteLine("What is the birthdate of this person?");
 			var birthdate = Console.ReadLine();
