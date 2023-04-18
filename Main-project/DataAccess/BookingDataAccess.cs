@@ -30,8 +30,6 @@ public static class BookingDataAccess
 		{
 			File.Create("./DataSources/Bookings.json");
 			var streamWriter = new StreamWriter("./DataSources/Bookings.json");
-			streamWriter.Write("[]");
-			streamWriter.Flush();
 			streamWriter.AutoFlush = true;
 			return streamWriter;
 		}
