@@ -21,7 +21,7 @@ public class Menu
                     ConsoleView.DisplayFlights();
                     break;
                 case ConsoleKey.D2:
-                    Console.WriteLine("Book a flight");
+                    CreateBooking.CreateNewBooking();
                     break;
 
                 case ConsoleKey.D3:

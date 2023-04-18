@@ -11,7 +11,11 @@ namespace Main_project.DataAccess
             {
                 return new StreamReader("./DataSources/Flights.json");
             }
-            File.Create("./DataSources/Flights.json");
+            var streamWriter = new StreamWriter("./DataSources/Flights.json");
+            streamWriter.Write("[]");
+            streamWriter.Flush();
+            streamWriter.Close();
+            streamWriter.Dispose();
             return new StreamReader("./DataSources/Flights.json");
         }
 
@@ -27,6 +31,8 @@ namespace Main_project.DataAccess
             {
                 File.Create("./DataSources/Flights.json");
                 var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.Write("[]");
+                streamWriter.Flush();
                 streamWriter.AutoFlush = true;
                 return streamWriter;
             }
