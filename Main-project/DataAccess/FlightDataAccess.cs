@@ -11,7 +11,11 @@ namespace Main_project.DataAccess
             {
                 return new StreamReader("./DataSources/Flights.json");
             }
-            File.Create("./DataSources/Flights.json");
+            var streamWriter = new StreamWriter("./DataSources/Flights.json");
+            streamWriter.Write("[]");
+            streamWriter.Flush();
+            streamWriter.Close();
+            streamWriter.Dispose();
             return new StreamReader("./DataSources/Flights.json");
         }
 
@@ -27,6 +31,8 @@ namespace Main_project.DataAccess
             {
                 File.Create("./DataSources/Flights.json");
                 var streamWriter = new StreamWriter("./DataSources/Flights.json");
+                streamWriter.Write("[]");
+                streamWriter.Flush();
                 streamWriter.AutoFlush = true;
                 return streamWriter;
             }
@@ -72,6 +78,13 @@ namespace Main_project.DataAccess
             var flights = GetFlights();
             flights.Add(flight);
             FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
+        }
+
+        public static void CreateFlights(List<Flight> flights)
+        {
+            var newflights = GetFlights();
+            newflights = newflights.Concat(flights).ToList();
+            FlightsWriter().Write(JsonConvert.SerializeObject(newflights, Formatting.Indented));
         }
 
         public static void UpdateFlight(Flight flight)

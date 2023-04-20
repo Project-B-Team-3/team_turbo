@@ -23,7 +23,7 @@ namespace Main_project.Presentation
             }
         }
 
-		public static void DisplayAllFlights()
+		    public static void DisplayAllFlights()
         {
             foreach (var flight in BookingLogic.GetAllFlights())
             {

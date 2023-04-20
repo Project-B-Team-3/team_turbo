@@ -1,3 +1,4 @@
+using Main_project.DataAccess;
 using Main_project.DataModels;
 
 namespace Main_project.Misc
@@ -5,10 +6,11 @@ namespace Main_project.Misc
     public class FlightGenerator
     {
         public static void GenerateFlights(){
+            Console.WriteLine("Generating flights...");
             int flightNumberCounter = 1;
             List<Flight> flights = new List<Flight>();
             Random rand = new Random();
-            int daysToGenerate = 30; // Generate flights for 30 days
+            int daysToGenerate = 7; // Generate flights for 7 days
 
             // Airport locations stored in a dictionary
             Dictionary<string, string> airportCodes = new Dictionary<string, string>() {
@@ -38,6 +40,10 @@ namespace Main_project.Misc
                         // Loop through all days in specified time
                         for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
                         {
+                            var seatCount = rand.Next(120, 200);
+                            seatCount -= seatCount % 4;
+                            var premiumCount = seatCount / 10;
+                            premiumCount -= premiumCount % 4;
                             var flight = new Flight
                             (
                                 $"ROT{flightNumberCounter:D3}", //:D3 formats int as string with at least 3 digits
@@ -45,9 +51,9 @@ namespace Main_project.Misc
                                 destinationAirport.Key,
                                 new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0,
                                     0), // Likely won't be random at end product, was ez to implement for now
-                                rand.Next(50,
-                                    200), // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
-                                rand.Next(5, 20),
+                                
+                                    seatCount, // Was ez to implement for wholistic sake, waiting for Luuk to be done with that part of the code
+                                premiumCount,
                                 rand.Next(100,
                                     1000), // Was ez to implement, waiting for this user story to be picked up in either sprint 2 or 3 to finalize this piece of code
                                 departureAirport.Value,
@@ -59,6 +65,9 @@ namespace Main_project.Misc
                     }
                 }
             }
+            FlightDataAccess.CreateFlights(flights);
+            Console.WriteLine("Finished generating flights!");
+            Thread.Sleep(200);
         }
     }
 }
