@@ -1,10 +1,9 @@
 using System.Drawing;
 using Main_project.Logic;
-using Console = System.Console;
 
 namespace Main_project.Presentation;
 
-public class SeatSelector
+public static class SeatSelector
 {
 	public static string SelectSeat(string flightNumber)
 	{
@@ -17,13 +16,13 @@ public class SeatSelector
 			switch (seat.Number.ToCharArray()[0])
 			{
 				case 'D':
-					Console.Write(seat.Available ? $"{seat.Number}\n" : "##\n", Color.Red);
+					Console.Write($"{seat.Number}\n", seat.Available ? Color.White : Color.Red);
 					break;
 				case 'B':
-					Console.Write(seat.Available ? $"{seat.Number}   " : "##   ", Color.Red);
+					Console.Write($"{seat.Number}  ", seat.Available ? Color.White : Color.Red);
 					break;
 				default:
-					Console.Write(seat.Available ? $"{seat.Number} " : "## ", Color.Red);
+					Console.Write($"{seat.Number} ", seat.Available ? Color.White : Color.Red);
 					break;
 			}
 		}
