@@ -29,10 +29,10 @@ public static class BookingDataAccess
 
     }
 
-    public static void CreateBooking(List<Booking> booking)
+    public static void CreateBooking(Booking booking)
     {
 		var newBookings = GetBookings();
-		newBookings = newBookings.Concat(booking).ToList();
+		newBookings.Add(booking);
 		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
 }
