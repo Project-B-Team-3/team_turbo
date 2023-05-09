@@ -5,47 +5,34 @@ namespace Main_project.DataAccess;
 
 public static class BookingDataAccess
 {
-	public static StreamReader BookingReader(){
-		if (File.Exists("./DataSources/Bookings.json"))
-		{
-			return new StreamReader("./DataSources/Bookings.json");
-		}
-		var streamWriter = new StreamWriter("./DataSources/Bookings.json");
-		streamWriter.Write("[]");
-		streamWriter.Flush();
-		streamWriter.Close();
-		streamWriter.Dispose();
-		return new StreamReader("./DataSources/Bookings.json");
-	}
+    public static void InitFiles()
+    {
+        if (File.Exists("./DataSources/Bookings.json")) return;
+        File.WriteAllText("./DataSources/Bookings.json", "[]");
+    }
 
-	public static StreamWriter BookingWriter()
-	{
-		if (File.Exists("./DataSources/Bookings.json"))
+    public static List<Booking> GetBookings()
+    {
+		try
 		{
-			var streamWriter = new StreamWriter("./DataSources/Bookings.json");
-			streamWriter.AutoFlush = true;
-			return streamWriter;
+			var json = File.ReadAllText("./DataSources/Bookings.json");
+			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+			return bookings ?? new List<Booking>();
 		}
-		else
+		catch (Exception e)
 		{
-			File.Create("./DataSources/Bookings.json");
-			var streamWriter = new StreamWriter("./DataSources/Bookings.json");
-			streamWriter.AutoFlush = true;
-			return streamWriter;
+			Console.Clear();
+			Console.WriteLine(e);
+			Environment.Exit(1);
+			return new List<Booking>();
 		}
-	}
 
-	public static List<Booking> GetBookings()
-	{
-		var json = BookingReader().ReadToEnd();
-		var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-		return bookings ?? new List<Booking>();
-	}
+    }
 
-	public static void CreateBooking(Booking booking)
-	{
-		var total = GetBookings();
-		total.Add(booking);
-		BookingWriter().Write(JsonConvert.SerializeObject(total, Formatting.Indented));
-	}
+    public static void CreateBooking(Booking booking)
+    {
+		var newBookings = GetBookings();
+		newBookings.Add(booking);
+		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+    }
 }

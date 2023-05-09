@@ -5,44 +5,17 @@ namespace Main_project.DataAccess
 {
     public static class FlightDataAccess
     {
-        private static StreamReader FlightsReader()
+        public static void InitFiles()
         {
-            if (File.Exists("./DataSources/Flights.json"))
-            {
-                return new StreamReader("./DataSources/Flights.json");
-            }
-            var streamWriter = new StreamWriter("./DataSources/Flights.json");
-            streamWriter.Write("[]");
-            streamWriter.Flush();
-            streamWriter.Close();
-            streamWriter.Dispose();
-            return new StreamReader("./DataSources/Flights.json");
-        }
-
-        private static StreamWriter FlightsWriter()
-        {
-            if (File.Exists("./DataSources/Flights.json"))
-            {
-                var streamWriter = new StreamWriter("./DataSources/Flights.json");
-                streamWriter.AutoFlush = true;
-                return streamWriter;
-            }
-            else
-            {
-                File.Create("./DataSources/Flights.json");
-                var streamWriter = new StreamWriter("./DataSources/Flights.json");
-                streamWriter.Write("[]");
-                streamWriter.Flush();
-                streamWriter.AutoFlush = true;
-                return streamWriter;
-            }
+            if (File.Exists("./DataSources/Flights.json")) return;
+            File.WriteAllText("./DataSources/Flights.json", "[]");
         }
 
         public static List<Flight> GetFlights()
         {
             try
             {
-                var json = FlightsReader().ReadToEnd();
+                var json = File.ReadAllText("./DataSources/Flights.json");
                 var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
                 return flights ?? new List<Flight>();
             }
@@ -77,14 +50,14 @@ namespace Main_project.DataAccess
         {
             var flights = GetFlights();
             flights.Add(flight);
-            FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
+            File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
         }
 
         public static void CreateFlights(List<Flight> flights)
         {
             var newflights = GetFlights();
             newflights = newflights.Concat(flights).ToList();
-            FlightsWriter().Write(JsonConvert.SerializeObject(newflights, Formatting.Indented));
+            File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(newflights, Formatting.Indented));
         }
 
         public static void UpdateFlight(Flight flight)
@@ -96,7 +69,7 @@ namespace Main_project.DataAccess
             if (index != -1)
             {
                 flights[index] = flight;
-                FlightsWriter().Write(JsonConvert.SerializeObject(flights, Formatting.Indented));
+                File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
     }
