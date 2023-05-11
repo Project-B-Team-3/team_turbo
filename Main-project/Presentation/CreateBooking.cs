@@ -54,7 +54,9 @@ public static class CreateBooking
 			Console.WriteLine("Successfully added another person to the booking.");
 			Thread.Sleep(200);
 		}
-		
-		BookingDataAccess.CreateBooking(new Booking(flightNum, seats));
+
+		var reservationNum = Random.Shared.Next().ToString();
+
+		BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats));
 	}
 }

@@ -28,7 +28,7 @@ public class Menu
                 case ConsoleKey.D3:
                     Console.WriteLine("Cancel a flight");
                     var reservationNumber = Console.ReadLine();
-                    ChangeBooking.CancelBooking(int.Parse(reservationNumber));
+                    ChangeBooking.CancelBooking(reservationNumber);
                     break;
 
                 case ConsoleKey.D4: case ConsoleKey.Q:
