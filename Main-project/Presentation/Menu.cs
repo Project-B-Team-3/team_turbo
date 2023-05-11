@@ -3,7 +3,7 @@ using Main_project.Misc;
 
 namespace Main_project.Presentation;
 
-public class Menu
+public static class Menu
 {
     public static void Start()
     {
