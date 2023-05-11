@@ -48,14 +48,15 @@ public static class CreateBooking
 			}
 
 			var seat = SeatSelector.SelectSeat(flightNum);
-			var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum);
-			flight.Seats.First(h => h.Number == seat).Available = false;
-			FlightDataAccess.UpdateFlight(flight);
+			Console.WriteLine("Writing data...");
+			FlightDataAccess.UpdateSeat(flightNum, seat, false);
 			seats.Add(seat, new Person(name, birthdate, docNum));
 			Console.WriteLine("Successfully added another person to the booking.");
 			Thread.Sleep(200);
 		}
-		
-		BookingDataAccess.CreateBooking(new Booking(flightNum, seats));
+
+		var reservationNum = Random.Shared.Next().ToString();
+
+		BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats));
 	}
 }
