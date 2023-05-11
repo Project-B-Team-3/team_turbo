@@ -7,7 +7,7 @@ namespace Main_project.Presentation
     static class UserLogin
     {
         static private BookingLogic bookingLogic = new BookingLogic();
-
+        
         public static void Start()
         {
             Console.WriteLine("Welcome to the login page");
@@ -16,7 +16,7 @@ namespace Main_project.Presentation
             Console.WriteLine("Please enter your birthdate (dd-m-yyyy or dd m yyyy):");
             string input = Console.ReadLine();
 
-            if (!DateTime.TryParseExact(input, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateOfBirth))
+            if (!DateTime.TryParseExact(input, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var Birthdate))
             {
                 Console.WriteLine("Invalid date format. Please use dd-m-yyyy, dd m yyyy, or dd-MM-yyyy.");
                 return;
@@ -24,7 +24,8 @@ namespace Main_project.Presentation
 
             Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber);
 
-            if (booking != null && booking.Seats.Any(s => s.Value.DateOfBirth == dateOfBirth))
+            if (booking != null && booking.Seats.Any(s => s.Value.Birthdate == Birthdate))
+
             {
                 Console.WriteLine("Welcome back " + booking.Seats["A1"].Name);
                 Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
