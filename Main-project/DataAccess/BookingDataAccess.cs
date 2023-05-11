@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace Main_project.DataAccess;
 
-
 public static class BookingDataAccess
 {
     public static void InitFiles()
@@ -14,41 +13,40 @@ public static class BookingDataAccess
 
     public static List<Booking> GetBookings()
     {
-	    try
-		{
-			
-			var json = File.ReadAllText("./DataSources/Bookings.json");
-			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-			return bookings ?? new List<Booking>();
-		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Booking>();
-		}
+        try
+        {
+            var json = File.ReadAllText("./DataSources/Bookings.json");
+            var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+            return bookings ?? new List<Booking>();
+        }
+        catch (Exception e)
+        {
+            Console.Clear();
+            Console.WriteLine(e);
+            Environment.Exit(1);
+            return new List<Booking>();
+        }
 
     }
 
     public static void CreateBooking(Booking booking)
     {
-	    
-	    var newBookings = GetBookings();
-	    newBookings.Add(booking);
-	    var settings = new JsonSerializerSettings
-	    {
-		    DateFormatString = "dd-MM-yyyy"
-	    };
-	    File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented, settings));
+        var newBookings = GetBookings();
+        newBookings.Add(booking);
+        File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
 
-
-    public static List<Booking> GetBookingsByFlightNumberAndBirthdate(string flightNumber, DateTime birthdate)
+    public static void RemoveBooking(Booking booking)
     {
-	    var bookings = GetBookings();
-	    return bookings.Where(b => b.FlightNumber == flightNumber 
-	                               && b.Seats.Any(s => s.Value.DateOfBirth == birthdate)).ToList();
+        var newBookings = GetBookings();
+        if (newBookings.RemoveAll(h => h.ReservationNumber == booking.ReservationNumber) == 1)
+        {
+            Console.WriteLine("Successfully removed booking!");
+        }
+        else
+        {
+            Console.WriteLine("Could not find booking!");
+        }
+        File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
-
 }

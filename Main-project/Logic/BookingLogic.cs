@@ -1,12 +1,11 @@
 using Main_project.DataAccess;
 using Main_project.DataModels;
 
-using System.Linq;
-
 namespace Main_project.Logic
 {
     public class BookingLogic
     {
+        
         public static IEnumerable<Flight> UpComingFlights(){
             var displayedFlights = FlightDataAccess.GetFlights().Where(f => f.DepartureTime > DateTime.Now)
                 .Where(f => f.DepartureTime < DateTime.Now + TimeSpan.FromDays(28));
@@ -25,18 +24,19 @@ namespace Main_project.Logic
         {
             return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
-        public static Booking GetBookingByFlightNumberAndBirthdate(string flightNumber, DateTime birthdate)
+        
+        private Dictionary<string, Booking> bookings = new Dictionary<string, Booking>();
+
+        public Booking GetBookingByReservationNumber(string reservationNumber)
         {
-            var bookings = BookingDataAccess.GetBookingsByFlightNumberAndBirthdate(flightNumber, birthdate);
-            return bookings.FirstOrDefault();
+            if (bookings.TryGetValue(reservationNumber, out Booking booking))
+            {
+                return booking;
+            }
+            else
+            {
+                return null;
+            }
         }
-
-        public static bool CheckBooking(string flightNumber, DateTime birthdate)
-        {
-            var booking = BookingDataAccess.GetBookingsByFlightNumberAndBirthdate(flightNumber, birthdate);
-            return booking != null;
-        }
-
-
     }
 }
