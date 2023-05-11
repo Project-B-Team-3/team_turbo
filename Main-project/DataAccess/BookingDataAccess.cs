@@ -35,4 +35,11 @@ public static class BookingDataAccess
 		newBookings.Add(booking);
 		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
+
+    public static void RemoveBooking(Booking booking)
+    {
+	    var newBookings = GetBookings();
+	    newBookings.Remove(booking);
+	    File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+    }
 }
