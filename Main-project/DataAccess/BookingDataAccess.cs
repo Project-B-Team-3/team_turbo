@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Main_project.DataAccess;
 
+
 public static class BookingDataAccess
 {
     public static void InitFiles()
@@ -13,8 +14,9 @@ public static class BookingDataAccess
 
     public static List<Booking> GetBookings()
     {
-		try
+	    try
 		{
+			
 			var json = File.ReadAllText("./DataSources/Bookings.json");
 			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
 			return bookings ?? new List<Booking>();
@@ -31,10 +33,16 @@ public static class BookingDataAccess
 
     public static void CreateBooking(Booking booking)
     {
-		var newBookings = GetBookings();
-		newBookings.Add(booking);
-		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+	    
+	    var newBookings = GetBookings();
+	    newBookings.Add(booking);
+	    var settings = new JsonSerializerSettings
+	    {
+		    DateFormatString = "dd-MM-yyyy"
+	    };
+	    File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented, settings));
     }
+
 
     public static List<Booking> GetBookingsByFlightNumberAndBirthdate(string flightNumber, DateTime birthdate)
     {
