@@ -1,3 +1,4 @@
+using Main_project.DataAccess;
 using Main_project.Misc;
 
 namespace Main_project.Presentation;
@@ -26,6 +27,8 @@ public class Menu
 
                 case ConsoleKey.D3:
                     Console.WriteLine("Cancel a flight");
+                    var reservationNumber = Console.ReadLine();
+                    ChangeBooking.CancelBooking(int.Parse(reservationNumber));
                     break;
 
                 case ConsoleKey.D4: case ConsoleKey.Q:

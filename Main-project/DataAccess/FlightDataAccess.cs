@@ -72,5 +72,11 @@ namespace Main_project.DataAccess
                 File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
+        
+        public static void UpdateSeat(string flightNum, string seat, bool available){
+            var flight = GetFlights().First(h => h.FlightNumber == flightNum);
+            flight.Seats.First(h => h.Number == seat).Available = available;
+            UpdateFlight(flight);
+        }
     }
 }

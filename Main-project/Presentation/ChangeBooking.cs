@@ -1,3 +1,5 @@
+using Main_project.DataAccess;
+
 namespace Main_project.Presentation;
 
 public static class ChangeBooking
@@ -8,9 +10,14 @@ public static class ChangeBooking
 		var key = Console.ReadKey().Key;
 		if (key == ConsoleKey.Y)
 		{
-			var booking = DataAccess.BookingDataAccess.GetBookings()
+			var booking = BookingDataAccess.GetBookings()
 				.First(u => u.ReservationNumber == reservationNumber);
-			DataAccess.BookingDataAccess.RemoveBooking(booking);
+
+			BookingDataAccess.RemoveBooking(booking);
+			foreach (var seatNum in booking.Seats)
+			{
+				FlightDataAccess.UpdateSeat(booking.FlightNumber, seatNum.Key, false);
+			}
 			Console.WriteLine("Successfully removed booking!");
 		}
 	}
