@@ -35,4 +35,12 @@ public static class BookingDataAccess
 		newBookings.Add(booking);
 		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
+
+    public static List<Booking> GetBookingsByFlightNumberAndBirthdate(string flightNumber, DateTime birthdate)
+    {
+	    var bookings = GetBookings();
+	    return bookings.Where(b => b.FlightNumber == flightNumber 
+	                               && b.Seats.Any(s => s.Value.DateOfBirth == birthdate)).ToList();
+    }
+
 }

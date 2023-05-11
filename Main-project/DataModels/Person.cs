@@ -5,6 +5,7 @@ public class Person
 	public string Name { get; set; }
 	public string Birthdate { get; set; }
 	public string DocumentNum { get; set; }
+	public DateTime DateOfBirth { get; set; }
 
 	public Person(string name, string birthDate, string documentNum)
 	{

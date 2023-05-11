@@ -1,6 +1,8 @@
 using Main_project.DataAccess;
 using Main_project.DataModels;
 
+using System.Linq;
+
 namespace Main_project.Logic
 {
     public class BookingLogic
@@ -23,5 +25,18 @@ namespace Main_project.Logic
         {
             return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
+        public static Booking GetBookingByFlightNumberAndBirthdate(string flightNumber, DateTime birthdate)
+        {
+            var bookings = BookingDataAccess.GetBookingsByFlightNumberAndBirthdate(flightNumber, birthdate);
+            return bookings.FirstOrDefault();
+        }
+
+        public static bool CheckBooking(string flightNumber, DateTime birthdate)
+        {
+            var booking = BookingDataAccess.GetBookingsByFlightNumberAndBirthdate(flightNumber, birthdate);
+            return booking != null;
+        }
+
+
     }
 }
