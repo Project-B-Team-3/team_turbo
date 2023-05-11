@@ -46,7 +46,7 @@ namespace Main_project.Misc
                             DateTime departureDateTime = new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0, 0);
                             if (departureDateTime.TimeOfDay >= minDepartureTime && departureDateTime.TimeOfDay < maxDepartureTime)
                             { 
-                                var seatCount = rand.Next(120, 200);
+                                var seatCount = 200;
                                 seatCount -= seatCount % 4;
                                 var premiumCount = seatCount / 10;
                                 premiumCount -= premiumCount % 4;
