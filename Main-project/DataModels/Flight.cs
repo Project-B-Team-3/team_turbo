@@ -1,4 +1,4 @@
-using Main_project.DataAccess;
+using Main_project.Logic;
 
 namespace Main_project.DataModels
 {
@@ -19,7 +19,7 @@ namespace Main_project.DataModels
             DepartureAirportCode = departureairportcode;
             DestinationAirportCode = destinationairportcode;
             DepartureTime = departuretime;
-            Seats = FlightDataAccess.GenerateSeats(seatCount, premiumCount);
+            Seats = SeatLogic.GenerateSeats(seatCount, premiumCount);
             Price = price;
             DepartureCity = departureCity;
             DestinationCity = destinationCity;

@@ -1,4 +1,5 @@
 using Main_project.DataAccess;
+using Main_project.Logic;
 
 namespace Main_project.Presentation;
 
@@ -17,9 +18,14 @@ public static class ChangeBooking
 			BookingDataAccess.RemoveBooking(booking);
 			foreach (var seatNum in booking.Seats)
 			{
-				FlightDataAccess.UpdateSeat(booking.FlightNumber, seatNum.Key, false);
+				SeatLogic.UpdateSeat(booking.FlightNumber, seatNum.Key, false);
 			}
 			Console.WriteLine("Successfully removed booking!");
 		}
+	}
+
+	public static void ChangeSeat(string reservationNumber, string birthday)
+	{
+		SeatLogic.ChangeSeat(reservationNumber, birthday);
 	}
 }
