@@ -1,6 +1,7 @@
-using Main_project.Logic;
+using System;
 using System.Globalization;
 using Main_project.DataModels;
+using Main_project.Logic;
 
 namespace Main_project.Presentation
 {
@@ -14,22 +15,24 @@ namespace Main_project.Presentation
             Console.WriteLine("Please enter your ReservationNumber:");
             string reservationNumber = Console.ReadLine();
             Console.WriteLine("Please enter your birthdate (dd-m-yyyy or dd m yyyy):");
-            string input = Console.ReadLine();
+            string birthdateString = Console.ReadLine();
 
-            if (!DateTime.TryParseExact(input, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var Birthdate))
+            if (!DateTime.TryParseExact(birthdateString, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var birthdate))
             {
                 Console.WriteLine("Invalid date format. Please use dd-m-yyyy, dd m yyyy, or dd-MM-yyyy.");
                 return;
             }
 
-            Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber);
-            Console.WriteLine("Booking Details: " + booking?.ReservationNumber + " " + booking?.FlightNumber);
-
-
-
-            if (booking != null && booking.Seats.TryGetValue(reservationNumber, out Person person) && person.BirthdateString == input)
+            Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, birthdateString);
+            if (booking != null)
             {
-                Console.WriteLine("Welcome back " + person.Name);
+                Console.WriteLine("Booking Details:");
+                Console.WriteLine("Reservation Number: " + booking.ReservationNumber);
+                Console.WriteLine("Flight Number: " + booking.FlightNumber);
+                Console.WriteLine("Departure Airport Code: " + booking.DepartureAirportCode);
+                Console.WriteLine("Destination Airport Code: " + booking.DestinationAirportCode);
+                Console.WriteLine("Departure Time: " + booking.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
+
                 Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
 
                 //Write some code to go back to the menu
@@ -39,7 +42,6 @@ namespace Main_project.Presentation
             {
                 Console.WriteLine("No booking found with that reservation number and birthdate");
             }
-
         }
     }
 }

@@ -1,6 +1,6 @@
 using Main_project.DataAccess;
 using Main_project.DataModels;
-
+using Newtonsoft.Json;
 namespace Main_project.Logic
 {
     public class BookingLogic
@@ -25,23 +25,12 @@ namespace Main_project.Logic
             return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
         
-        private Dictionary<string, Booking> bookings = new Dictionary<string, Booking>();
-
-        public Booking GetBookingByReservationNumber(string reservationNumber)
+        public Booking GetBookingByReservationNumber(string reservationNumber, string birthdateString)
         {
-            foreach (string key in bookings.Keys)
-            {
-                Console.WriteLine(key);
-            }
-            if (bookings.TryGetValue(reservationNumber, out Booking booking))
-            {
-                return booking;
-            }
-            else
-            {
-                return null;
-            }
+            var bookings = BookingDataAccess.GetBookings();
+            var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&
+                                                       b.Seats.Any(s => s.Value.BirthdateString == birthdateString));
+            return booking;
         }
-
     }
 }
