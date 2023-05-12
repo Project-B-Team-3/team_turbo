@@ -33,9 +33,9 @@ public static class CreateBooking
         {
             Console.WriteLine($"What is the name of person #{i+1}?");
             var name = Console.ReadLine();
-            Console.WriteLine("What is the birthdate of this person? (Format: dd/MM/yyyy)");
+            Console.WriteLine("What is the birthdate of this person? (Format: dd-MM-yyyy)");
             var birthdateInput = Console.ReadLine();
-            if (!DateTime.TryParseExact(birthdateInput, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out var birthdate))
+            if (!DateTime.TryParseExact(birthdateInput, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out var birthdate))
             {
                 Console.WriteLine("Invalid date entered, please try again...");
                 Thread.Sleep(200);
@@ -43,6 +43,7 @@ public static class CreateBooking
                 i--;
                 continue;
             }
+
             Console.WriteLine("What is the ID, driver's license or passport document number of this person?");
             var docNum = Console.ReadLine();
             if (name is null || birthdateInput is null || docNum is null ||
@@ -58,7 +59,7 @@ public static class CreateBooking
             var seat = SeatSelector.SelectSeat(flightNum);
             Console.WriteLine("Writing data...");
             FlightDataAccess.UpdateSeat(flightNum, seat, false);
-            seats.Add(seat, new Person(name, birthdate, docNum));
+            seats.Add(seat, new Person(name, birthdateInput, docNum));
             Console.WriteLine("Successfully added another person to the booking.");
             Thread.Sleep(200);
         }

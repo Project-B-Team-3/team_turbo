@@ -23,11 +23,13 @@ namespace Main_project.Presentation
             }
 
             Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber);
+            Console.WriteLine("Booking Details: " + booking?.ReservationNumber + " " + booking?.FlightNumber);
 
-            if (booking != null && booking.Seats.Any(s => s.Value.Birthdate == Birthdate))
 
+
+            if (booking != null && booking.Seats.TryGetValue(reservationNumber, out Person person) && person.BirthdateString == input)
             {
-                Console.WriteLine("Welcome back " + booking.Seats["A1"].Name);
+                Console.WriteLine("Welcome back " + person.Name);
                 Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
 
                 //Write some code to go back to the menu
@@ -37,6 +39,7 @@ namespace Main_project.Presentation
             {
                 Console.WriteLine("No booking found with that reservation number and birthdate");
             }
+
         }
     }
 }

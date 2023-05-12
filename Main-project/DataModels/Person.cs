@@ -1,13 +1,23 @@
+using System.Globalization;
+
 public class Person
 {
     public string Name { get; set; }
-    public DateTime Birthdate { get; set; }
+    public string BirthdateString { get; set; }
     public string DocumentNum { get; set; }
 
-    public Person(string name, DateTime birthdate, string documentNum)
+    public DateTime Birthdate
+    {
+        get
+        {
+            return DateTime.ParseExact(BirthdateString, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+        }
+    }
+
+    public Person(string name, string birthdateString, string documentNum)
     {
         Name = name;
-        Birthdate = birthdate;
+        BirthdateString = birthdateString;
         DocumentNum = documentNum;
     }
 }

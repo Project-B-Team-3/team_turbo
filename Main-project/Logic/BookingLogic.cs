@@ -29,6 +29,10 @@ namespace Main_project.Logic
 
         public Booking GetBookingByReservationNumber(string reservationNumber)
         {
+            foreach (string key in bookings.Keys)
+            {
+                Console.WriteLine(key);
+            }
             if (bookings.TryGetValue(reservationNumber, out Booking booking))
             {
                 return booking;
@@ -38,5 +42,6 @@ namespace Main_project.Logic
                 return null;
             }
         }
+
     }
 }
