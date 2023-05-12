@@ -15,28 +15,28 @@ namespace Main_project.Presentation
             Console.WriteLine("Please enter your ReservationNumber:");
             string reservationNumber = Console.ReadLine();
             Console.WriteLine("Please enter your birthdate (dd-m-yyyy or dd m yyyy):");
-            string birthdateString = Console.ReadLine();
+            string Birthdate = Console.ReadLine();
 
-            if (!DateTime.TryParseExact(birthdateString, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var birthdate))
+            if (!DateTime.TryParseExact(Birthdate, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var birthdate))
             {
                 Console.WriteLine("Invalid date format. Please use dd-m-yyyy, dd m yyyy, or dd-MM-yyyy.");
                 return;
             }
 
-            Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, birthdateString);
+            Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, Birthdate);
             if (booking != null)
             {
                 Console.WriteLine("Booking Details:");
                 Console.WriteLine("Reservation Number: " + booking.ReservationNumber);
                 Console.WriteLine("Flight Number: " + booking.FlightNumber);
-                Console.WriteLine("Departure Airport Code: " + booking.DepartureAirportCode);
-                Console.WriteLine("Destination Airport Code: " + booking.DestinationAirportCode);
-                Console.WriteLine("Departure Time: " + booking.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
+                Console.WriteLine("Departure Airport Code: " + booking.Flight.DepartureAirportCode);
+                Console.WriteLine("Destination Airport Code: " + booking.Flight.DestinationAirportCode);
+                Console.WriteLine("Departure Time: " + booking.Flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
 
                 Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
 
                 //Write some code to go back to the menu
-                Menu.Start();
+                // Menu.Start();
             }
             else
             {

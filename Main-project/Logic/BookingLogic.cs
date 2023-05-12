@@ -25,12 +25,19 @@ namespace Main_project.Logic
             return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
         
-        public Booking GetBookingByReservationNumber(string reservationNumber, string birthdateString)
+        public Booking GetBookingByReservationNumber(string reservationNumber, string Birthdate)
         {
             var bookings = BookingDataAccess.GetBookings();
             var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&
-                                                       b.Seats.Any(s => s.Value.BirthdateString == birthdateString));
+                                                       b.Seats.Any(s => s.Value.Birthdate == Birthdate));
+            if (booking != null)
+            {
+                var flight = FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == booking.FlightNumber);
+                booking.Flight = flight;
+            }
+
             return booking;
         }
     }
 }
+
