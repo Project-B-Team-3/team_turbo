@@ -28,24 +28,6 @@ namespace Main_project.DataAccess
             }
         }
 
-        public static List<Seat> GenerateSeats(int seatCount, int businessCount)
-        {
-            var rows = "ABCDEFGHJKL".ToCharArray();
-            var returnSeats = new List<Seat>();
-            for (var i = 0; i < seatCount; i++)
-            {
-                returnSeats.Add(new Seat
-                    {
-                        Number = rows[i % 4] + (i / 4 + 1).ToString(),
-                        Available = true,
-                        Class = i < businessCount ? "Business Class" : "Economy Class"
-                    }
-                );
-            }
-
-            return returnSeats;
-        }
-
         public static void CreateFlight(Flight flight)
         {
             var flights = GetFlights();
@@ -71,12 +53,6 @@ namespace Main_project.DataAccess
                 flights[index] = flight;
                 File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
-        }
-        
-        public static void UpdateSeat(string flightNum, string seat, bool available){
-            var flight = GetFlights().First(h => h.FlightNumber == flightNum);
-            flight.Seats.First(h => h.Number == seat).Available = available;
-            UpdateFlight(flight);
         }
     }
 }
