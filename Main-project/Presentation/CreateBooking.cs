@@ -58,7 +58,7 @@ public static class CreateBooking
 
             var seat = SeatSelector.SelectSeat(flightNum);
             Console.WriteLine("Writing data...");
-            FlightDataAccess.UpdateSeat(flightNum, seat, false);
+            SeatLogic.UpdateSeat(flightNum, seat, false);
             seats.Add(seat, new Person(name, birthdateInput, docNum));
             Console.WriteLine("Successfully added another person to the booking.");
             Thread.Sleep(200);
