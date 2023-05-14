@@ -13,27 +13,27 @@ public static class BookingDataAccess
 
     public static List<Booking> GetBookings()
     {
-		try
-		{
-			var json = File.ReadAllText("./DataSources/Bookings.json");
-			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-			return bookings ?? new List<Booking>();
-		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Booking>();
-		}
+        try
+        {
+            var json = File.ReadAllText("./DataSources/Bookings.json");
+            var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+            return bookings ?? new List<Booking>();
+        }
+        catch (Exception e)
+        {
+            Console.Clear();
+            Console.WriteLine(e);
+            Environment.Exit(1);
+            return new List<Booking>();
+        }
 
     }
 
     public static void CreateBooking(Booking booking)
     {
-		var newBookings = GetBookings();
-		newBookings.Add(booking);
-		File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+        var newBookings = GetBookings();
+        newBookings.Add(booking);
+        File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
 
     public static void RemoveBooking(Booking booking)

@@ -1,30 +1,49 @@
+using System;
+using System.Globalization;
+using Main_project.DataAccess;
+using Main_project.DataModels;
 using Main_project.Logic;
 
-namespace Main_project.Presentation;
-static class UserLogin
+namespace Main_project.Presentation
 {
-    static private AccountsLogic accountsLogic = new AccountsLogic();
-
-
-    public static void Start()
+    static class UserLogin
     {
-        Console.WriteLine("Welcome to the login page");
-        Console.WriteLine("Please enter your email address");
-        string email = Console.ReadLine();
-        Console.WriteLine("Please enter your password");
-        string password = Console.ReadLine();
-        AccountModel acc = accountsLogic.CheckLogin(email, password);
-        if (acc != null)
+        static private BookingLogic bookingLogic = new BookingLogic();
+        
+        public static void Start()
         {
-            Console.WriteLine("Welcome back " + acc.FullName);
-            Console.WriteLine("Your email number is " + acc.EmailAddress);
+            Console.WriteLine("Welcome to the login page");
+            Console.WriteLine("Please enter your ReservationNumber:");
+            string reservationNumber = Console.ReadLine();
+            Console.WriteLine("Please enter your birthdate (dd-m-yyyy or dd m yyyy):");
+            string Birthdate = Console.ReadLine();
 
-            //Write some code to go back to the menu
-            Menu.Start();
-        }
-        else
-        {
-            Console.WriteLine("No account found with that email and password");
+            if (!DateTime.TryParseExact(Birthdate, new[] { "dd-M-yyyy", "dd M yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out var birthdate))
+            {
+                Console.WriteLine("Invalid date format. Please use dd-m-yyyy, dd m yyyy, or dd-MM-yyyy.");
+                return;
+            }
+
+            Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, Birthdate);
+            var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
+            if (booking != null)
+            {
+                Console.WriteLine("Booking Details:");
+                Console.WriteLine("Reservation Number: " + booking.ReservationNumber);
+                Console.WriteLine("Flight Number: " + booking.FlightNumber);
+                Console.WriteLine("Departure Airport Code: " + flight.DepartureAirportCode);
+                Console.WriteLine("Destination Airport Code: " + flight.DestinationAirportCode);
+                Console.WriteLine("Departure Time: " + flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
+
+                Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
+
+                //Write some code to go back to the menu
+                // Menu.Start();
+            }
+            else
+            {
+                Console.WriteLine("No booking found with that reservation number and birthdate");
+            }
         }
     }
 }

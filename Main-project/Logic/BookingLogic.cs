@@ -1,10 +1,11 @@
 using Main_project.DataAccess;
 using Main_project.DataModels;
-
+using Newtonsoft.Json;
 namespace Main_project.Logic
 {
     public class BookingLogic
     {
+        
         public static IEnumerable<Flight> UpComingFlights(){
             var displayedFlights = FlightDataAccess.GetFlights().Where(f => f.DepartureTime > DateTime.Now)
                 .Where(f => f.DepartureTime < DateTime.Now + TimeSpan.FromDays(28));
@@ -23,5 +24,14 @@ namespace Main_project.Logic
         {
             return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
+        
+        public Booking GetBookingByReservationNumber(string reservationNumber, string Birthdate)
+        {
+            var bookings = BookingDataAccess.GetBookings();
+            var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&
+                                                       b.Seats.Any(s => s.Value.Birthdate == Birthdate));
+            return booking;
+        }
     }
 }
+
