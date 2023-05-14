@@ -49,4 +49,18 @@ public static class BookingDataAccess
         }
         File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
     }
+
+    public static void RemoveBooking(Booking booking)
+    {
+	    var newBookings = GetBookings();
+	    if (newBookings.RemoveAll(h => h.ReservationNumber == booking.ReservationNumber) == 1)
+	    {
+		    Console.WriteLine("Successfully removed booking!");
+	    }
+	    else
+	    {
+		    Console.WriteLine("Could not find booking!");
+	    }
+	    File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+    }
 }
