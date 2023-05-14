@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Main_project.DataAccess;
 using Main_project.DataModels;
 using Main_project.Logic;
 
@@ -24,14 +25,15 @@ namespace Main_project.Presentation
             }
 
             Booking booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, Birthdate);
+            var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
             if (booking != null)
             {
                 Console.WriteLine("Booking Details:");
                 Console.WriteLine("Reservation Number: " + booking.ReservationNumber);
                 Console.WriteLine("Flight Number: " + booking.FlightNumber);
-                Console.WriteLine("Departure Airport Code: " + booking.Flight.DepartureAirportCode);
-                Console.WriteLine("Destination Airport Code: " + booking.Flight.DestinationAirportCode);
-                Console.WriteLine("Departure Time: " + booking.Flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
+                Console.WriteLine("Departure Airport Code: " + flight.DepartureAirportCode);
+                Console.WriteLine("Destination Airport Code: " + flight.DestinationAirportCode);
+                Console.WriteLine("Departure Time: " + flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
 
                 Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
 

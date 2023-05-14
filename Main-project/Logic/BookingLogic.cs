@@ -30,12 +30,6 @@ namespace Main_project.Logic
             var bookings = BookingDataAccess.GetBookings();
             var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&
                                                        b.Seats.Any(s => s.Value.Birthdate == Birthdate));
-            if (booking != null)
-            {
-                var flight = FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == booking.FlightNumber);
-                booking.Flight = flight;
-            }
-
             return booking;
         }
     }
