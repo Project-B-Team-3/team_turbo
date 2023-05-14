@@ -28,6 +28,65 @@ public static class CreateBooking
             return;
         }
 
+        Console.WriteLine("Would you like to add catering to your booking? (y/n)");
+        var answer = Console.ReadLine()?.ToLower();
+        if (answer == "y")
+        {
+            var cateringList = CateringLogic.cateringList();
+            Console.WriteLine("Please choose from the following menu:");
+            for (int i = 0; i < cateringList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {cateringList[i].Name} ({cateringList[i].Price:C2}) - {cateringList[i].Description}");
+            }
+            var choices = new List<int>();
+            bool invalidInput;
+            do
+            {
+                invalidInput = false;
+                Console.WriteLine("Enter the number of the catering item you want to order (or '0' to exit):");
+                var choiceInput = Console.ReadLine();
+                int choice;
+                if (!int.TryParse(choiceInput, out choice))
+                {
+                    invalidInput = true;
+                    Console.WriteLine("Invalid input, please try again...");
+                    Thread.Sleep(200);
+                }
+                else if (choice < 0 || choice > cateringList.Count)
+                {
+                    invalidInput = true;
+                    Console.WriteLine("Invalid input, please try again...");
+                    Thread.Sleep(200);
+                }
+                else if (choice == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    choices.Add(choice - 1);
+                }
+            } while (invalidInput || choices.Count < cateringList.Count);
+
+            var cateringItems = new List<Catering>();
+            var totalPrice = 0M;
+            foreach (var choice in choices)
+            {
+                var cateringItem = cateringList[choice];
+                cateringItems.Add(cateringItem);
+                totalPrice += cateringItem.Price;
+            }
+
+            Console.WriteLine("Catering items ordered: ");
+            foreach (var cateringItem in cateringItems)
+            {
+                Console.WriteLine($"{cateringItem.Name}, ");
+            }
+
+            Console.WriteLine($"Total price: {totalPrice:C2}");
+            Thread.Sleep(200);
+        }
+
         Dictionary<string, Person> seats = new();
         for (int i = 0; i < peopleInt; i++)
         {
