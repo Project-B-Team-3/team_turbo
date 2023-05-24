@@ -63,6 +63,7 @@ namespace Main_project.DataAccess
             if (index != -1)
             {
                 flights.RemoveAt(index);
+                File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
 
