@@ -54,5 +54,18 @@ namespace Main_project.DataAccess
                 File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
             }
         }
+        public static void DeleteFlight(Flight flight )
+        {
+            List<Flight> flights = GetFlights();
+
+            int index = flights.FindIndex(f => f.FlightNumber == flight.FlightNumber);
+
+            if (index != -1)
+            {
+                flights.RemoveAt(index);
+                File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(flights, Formatting.Indented));
+            }
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace Main_project.Presentation
                         break;
 
                     case ConsoleKey.D5:
-                        Console.WriteLine("Change ticket pricing");
+                        Console.WriteLine("Change/Cancel flights");
                         SelectFlightToUpdate();
                         break;
 
@@ -198,8 +198,13 @@ namespace Main_project.Presentation
                     case ConsoleKey.D2:
                         ChangeFlightsDestination(flightToUpdate);
                         break;
-
+                    
                     case ConsoleKey.D3:
+                        Console.WriteLine("Cancel flight");
+                        CancelFlight(flightToUpdate);
+                        break;
+
+                    case ConsoleKey.D4:
                         Console.WriteLine("Quitting update flight menu.");
                         return;
 
@@ -252,6 +257,24 @@ namespace Main_project.Presentation
             FlightDataAccess.UpdateFlight(flightToUpdate);
 
             Console.WriteLine($"Flight {flightToUpdate.FlightNumber} updated.");
+            Console.ReadKey();
+        }
+        public static void CancelFlight(Flight flightToUpdate)
+        {
+            Console.WriteLine($"Selected flight: {flightToUpdate.FlightNumber} - {flightToUpdate.DepartureCity} to {flightToUpdate.DestinationCity}");
+
+            Console.Write("Are you sure you want to cancel this flight? (Y/N): ");
+            ConsoleKeyInfo confirmChoice = Console.ReadKey(true);
+            if (confirmChoice.Key == ConsoleKey.Y)
+            {
+                FlightDataAccess.DeleteFlight(flightToUpdate);
+                Console.WriteLine($"Flight {flightToUpdate.FlightNumber} has been canceled.");
+            }
+            else
+            {
+                Console.WriteLine("Flight cancellation aborted.");
+            }
+
             Console.ReadKey();
         }
     }
