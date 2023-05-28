@@ -61,8 +61,10 @@ namespace Main_project.Misc
                                 departureAirport.Key,
                                 destinationAirport.Key,
                                 departureDateTime,
+                                airplane.Rows,
                                 airplane.EconomySeat,
                                 airplane.BusinessSeat,
+                                airplane.FirstSeat,
                                 rand.Next(priceMin, priceMax),
                                 departureAirport.Value,
                                 destinationAirport.Value

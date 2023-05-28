@@ -23,17 +23,18 @@ public static class SeatLogic
 		FlightDataAccess.UpdateFlight(flight);
 	}
 
-	public static List<Seat> GenerateSeats(int seatCount, int businessCount)
+	public static List<Seat> GenerateSeats(int rowsCount, int economyCount, int businessCount, int firstCount)
 	{
 		var rows = "ABCDEFGHJKL".ToCharArray();
 		var returnSeats = new List<Seat>();
-		for (var i = 0; i < seatCount; i++)
+		for (var i = 0; i < economyCount + businessCount + firstCount; i++)
 		{
 			returnSeats.Add(new Seat
 				{
-					Number = rows[i % 4] + (i / 4 + 1).ToString(),
+					Number = rows[i % rowsCount] + (i / rowsCount + 1).ToString(),
 					Available = true,
-					Class = i < businessCount ? "Business Class" : "Economy Class"
+					Class = i < firstCount ? "First Class" :
+						i < firstCount + businessCount ? "Business Class" : "Economy Class"
 				}
 			);
 		}

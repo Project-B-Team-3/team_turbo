@@ -13,13 +13,13 @@ namespace Main_project.DataModels
         public string DepartureCity { get; set; }
         public string DestinationCity { get; set; }
 
-        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int seatCount, int premiumCount, decimal price, string departureCity, string destinationCity)
+        public Flight(string flightnumber, string departureairportcode, string destinationairportcode, DateTime departuretime, int rows, int economyCount, int businessCount, int firstCount, decimal price, string departureCity, string destinationCity)
         {
             FlightNumber = flightnumber;
             DepartureAirportCode = departureairportcode;
             DestinationAirportCode = destinationairportcode;
             DepartureTime = departuretime;
-            Seats = SeatLogic.GenerateSeats(seatCount, premiumCount);
+            Seats = SeatLogic.GenerateSeats(rows, economyCount, businessCount, firstCount);
             Price = price;
             DepartureCity = departureCity;
             DestinationCity = destinationCity;
