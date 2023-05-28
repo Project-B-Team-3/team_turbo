@@ -5,12 +5,6 @@ namespace Main_project.DataAccess
 {
     public static class FlightDataAccess
     {
-        public static void InitFiles()
-        {
-            if (File.Exists("./DataSources/Flights.json")) return;
-            File.WriteAllText("./DataSources/Flights.json", "[]");
-        }
-
         public static List<Flight> GetFlights()
         {
             try
