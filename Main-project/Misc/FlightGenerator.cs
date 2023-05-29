@@ -11,6 +11,7 @@ namespace Main_project.Misc
             List<Flight> flights = new List<Flight>();
             Random rand = new Random();
             int daysToGenerate = 90; // Generate flights for 90 days
+            var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Boeing", Model: "737" });
 
             // Airport locations stored in a dictionary
             Dictionary<string, string> airportCodes = new Dictionary<string, string>() {
@@ -46,17 +47,13 @@ namespace Main_project.Misc
                             DateTime departureDateTime = new DateTime(date.Year, date.Month, date.Day, rand.Next(0, 24), 0, 0);
                             if (departureDateTime.TimeOfDay >= minDepartureTime && departureDateTime.TimeOfDay < maxDepartureTime)
                             { 
-                                var seatCount = 200;
-                                seatCount -= seatCount % 4;
-                                var premiumCount = seatCount / 10;
-                                premiumCount -= premiumCount % 4;
                                 int priceMin = 50;
                                 int priceMax = 150;
                                 if (new[] {"RTM", "LHR", "CDG", "FRA", "BCN", "AMS", "CPH"}.Contains(departureAirport.Key) &&
                                     new[] {"RTM", "LHR", "CDG", "FRA", "BCN", "AMS", "CPH"}.Contains(destinationAirport.Key))
                                 {
-                                priceMin = 50;
-                                priceMax = 75;
+                                    priceMin = 50;
+                                    priceMax = 75;
                                 }
                                 var flight = new Flight
                                 (
@@ -64,8 +61,10 @@ namespace Main_project.Misc
                                 departureAirport.Key,
                                 destinationAirport.Key,
                                 departureDateTime,
-                                seatCount,
-                                premiumCount,
+                                airplane.Rows,
+                                airplane.EconomySeat,
+                                airplane.BusinessSeat,
+                                airplane.FirstSeat,
                                 rand.Next(priceMin, priceMax),
                                 departureAirport.Value,
                                 destinationAirport.Value
