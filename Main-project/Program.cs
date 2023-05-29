@@ -7,8 +7,6 @@ namespace Main_project
     {
         public static void Main()
         {
-            FlightDataAccess.InitFiles();
-            BookingDataAccess.InitFiles();
             Menu.Start();
         }
     }

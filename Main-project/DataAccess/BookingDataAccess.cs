@@ -5,13 +5,7 @@ namespace Main_project.DataAccess;
 
 public static class BookingDataAccess
 {
-    public static void InitFiles()
-    {
-        if (File.Exists("./DataSources/Bookings.json")) return;
-        File.WriteAllText("./DataSources/Bookings.json", "[]");
-    }
-
-    public static List<Booking> GetBookings()
+	public static List<Booking> GetBookings()
     {
         try
         {
