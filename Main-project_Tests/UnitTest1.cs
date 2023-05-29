@@ -9,16 +9,20 @@ public class UnitTest1
 {
 	public UnitTest1()
 	{
-		//if(!File.Exists("../Main-project/DataSources/Airplanes/Boeing737-700.json")) AirplaneDataAccess.MakePlane(new Airplane("Boeing", "737-700", 6, 106, 6, 20));
-		//if(!File.Exists("../Main-project/DataSources/Airplanes/EmbraerE-175.json")) AirplaneDataAccess.MakePlane(new Airplane("Embraer", "E-175", 4, 60, 8, 20));
-	}
-	[TestMethod]
-	public void TestFlights()
-	{
-		if (!File.Exists("../Main-project/DataSources/Flights.json"))
+		Directory.CreateDirectory("./DataSources/Airplanes");
+		if(!File.Exists("./DataSources/Airplanes/Boeing737-700.json"))
+		{
+			AirplaneDataAccess.MakePlane(new Airplane("Boeing", "737-700", 6, 106, 6, 20));
+		}
+		if (!File.Exists("./DataSources/Flights.json"))
 		{
 			FlightGenerator.GenerateFlights();
 		}
+	}
+	
+	[TestMethod]
+	public void TestFlights()
+	{
 		Assert.IsTrue(FlightDataAccess.GetFlights().Count > 0);
 	}
 }
