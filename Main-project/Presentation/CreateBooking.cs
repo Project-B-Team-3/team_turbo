@@ -8,6 +8,7 @@ public static class CreateBooking
 {
     public static void CreateNewBooking()
     {
+        decimal catering;
         Console.Clear();
         Console.WriteLine("Welcome to the booking menu, please enter a flight number to book a flight.");
         var flightNum = Console.ReadLine()?.ToUpper();
@@ -83,6 +84,7 @@ public static class CreateBooking
                 Console.WriteLine($"{cateringItem.Name}, ");
             }
 
+            catering = totalPrice;
             Console.WriteLine($"Total price: {totalPrice:C2}");
             Thread.Sleep(200);
         }
@@ -125,6 +127,8 @@ public static class CreateBooking
 
         var reservationNum = Random.Shared.Next().ToString();
 
-        BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats));
+        // TODO actually integrate pricing
+        Cost cost = new(5, 5, new List<int>());
+        BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats, cost));
     }
 }
