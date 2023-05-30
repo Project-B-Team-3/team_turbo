@@ -17,8 +17,16 @@ public class UnitTest1
 		if (!File.Exists("./DataSources/Flights.json"))
 		{
 			// TODO fix the generator so it works in testing.
-			FlightGenerator.GenerateFlights();
+			//FlightGenerator.GenerateFlights();
 		}
+	}
+
+	[TestMethod]
+	public void MakePlane()
+	{
+		Assert.IsTrue(AirplaneDataAccess.MakePlane(!File.Exists("./DataSources/Airplanes/Boeing737-700.json")
+			? new Airplane("Boeing", "737-700", 6, 106, 6, 20)
+			: new Airplane("Fantasy", Random.Shared.NextInt64().ToString(), 4, 140, 16, 8)));
 	}
 	
 	[TestMethod]

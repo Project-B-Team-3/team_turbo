@@ -12,9 +12,10 @@ public static class AirplaneDataAccess
 			.Where(plane => plane != null).ToList();
 	}
 
-	public static void MakePlane(Airplane plane)
+	public static bool MakePlane(Airplane plane)
 	{
 		File.WriteAllText("./DataSources/Airplanes/" + plane.Brand + plane.Model + ".json",
 			JsonConvert.SerializeObject(plane, Formatting.Indented));
+		return true;
 	}
 }
