@@ -8,6 +8,7 @@ public static class CreateBooking
 {
     public static void CreateNewBooking()
     {
+        Cost cost = new(0, 0, new List<decimal>());
         Console.Clear();
         Console.WriteLine("Welcome to the booking menu, please enter a flight number to book a flight.");
         var flightNum = Console.ReadLine()?.ToUpper();
@@ -75,6 +76,7 @@ public static class CreateBooking
                 var cateringItem = cateringList[choice];
                 cateringItems.Add(cateringItem);
                 totalPrice += cateringItem.Price;
+                cost.Catering += cateringItem.Price;
             }
 
             Console.WriteLine("Catering items ordered: ");
@@ -119,12 +121,18 @@ public static class CreateBooking
             Console.WriteLine("Writing data...");
             SeatLogic.UpdateSeat(flightNum, seat, false);
             seats.Add(seat, new Person(name, birthdateInput, docNum));
+            cost.SeatPrices.Add(
+                FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum)
+                    .Seats.First(h => h.Number == seat).Price);
             Console.WriteLine("Successfully added another person to the booking.");
             Thread.Sleep(200);
         }
+        
+        Console.WriteLine("The cost of this booking is as follows:");
+        Console.WriteLine(cost);
 
         var reservationNum = Random.Shared.Next().ToString();
 
-        BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats));
+        BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats, cost));
     }
 }
