@@ -4,6 +4,7 @@ public class Cost
 {
 	public decimal FlightPrice { get; set; }
 	public decimal Catering { get; set; }
+	// still need to add luggage
 	public List<decimal> SeatPrices { get; set; }
 
 	public Cost(int flightPrice, int catering, List<decimal> seatPrices)
