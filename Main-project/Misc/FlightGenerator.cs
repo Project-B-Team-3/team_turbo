@@ -11,7 +11,7 @@ namespace Main_project.Misc
             List<Flight> flights = new List<Flight>();
             Random rand = new Random();
             int daysToGenerate = 90; // Generate flights for 90 days
-            var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Boeing", Model: "737" });
+            var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Boeing", Model: "737-700" });
 
             // Airport locations stored in a dictionary
             Dictionary<string, string> airportCodes = new Dictionary<string, string>() {

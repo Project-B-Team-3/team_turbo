@@ -34,7 +34,9 @@ public static class SeatLogic
 					Number = rows[i % rowsCount] + (i / rowsCount + 1).ToString(),
 					Available = true,
 					Class = i < firstCount ? "First Class" :
-						i < firstCount + businessCount ? "Business Class" : "Economy Class"
+						i < firstCount + businessCount ? "Business Class" : "Economy Class",
+					Price = i < firstCount ? 60 :
+					i < firstCount + businessCount ? 40 : 20
 				}
 			);
 		}
