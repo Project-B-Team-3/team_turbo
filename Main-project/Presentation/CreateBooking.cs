@@ -71,6 +71,7 @@ public static class CreateBooking
 
             var cateringItems = new List<Catering>();
             var totalPrice = 0M;
+            
             foreach (var choice in choices)
             {
                 var cateringItem = cateringList[choice];
