@@ -1,4 +1,6 @@
 using Main_project.DataModels;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Main_project.DataAccess
 {
@@ -16,7 +18,7 @@ namespace Main_project.DataAccess
             {
                 var json = File.ReadAllText("./DataSources/Catering.json");
                 var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
-                return cateringItems ?? new List<Flight>();
+                return cateringItems ?? new List<Catering>();
             }
             catch (Exception e)
             {
@@ -31,7 +33,7 @@ namespace Main_project.DataAccess
         {
             var newCatering = GetCatering();
             newCatering = newCatering.Concat(cateringList).ToList();
-            File.WriteAllText("./DataSources/Flights.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
+            File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
         }
     }
 }
