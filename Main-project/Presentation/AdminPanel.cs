@@ -15,8 +15,8 @@ namespace Main_project.Presentation
                 Console.WriteLine("Admin Panel");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"What do you wish to do?\n[1] " +
-                    $"View all available flights\n[2] Change seat pricing \n[3] Change catering pricing\n[4] Change catering items\n" +
-                    $"[5] Select Ticket To Change Ticket\n[6] Quit");
+                    $"View all available flights\n[2] Change seat pricing \n[3] Change catering \n" +
+                    $"[4] Select Ticket To Change Ticket\n[5] Quit");
                 ConsoleKeyInfo Adminchoice;
                 Adminchoice = Console.ReadKey(true);
                 switch (Adminchoice.Key)
@@ -31,19 +31,16 @@ namespace Main_project.Presentation
                         break;
 
                     case ConsoleKey.D3:
-                        Console.WriteLine("Change catering pricing");
+                        Console.WriteLine("Change catering");
+                        SelectCateringToUpdate();
                         break;
 
                     case ConsoleKey.D4:
-                        Console.WriteLine("Change catering items");
-                        break;
-
-                    case ConsoleKey.D5:
                         Console.WriteLine("Change/Cancel flights");
                         SelectFlightToUpdate();
                         break;
 
-                    case ConsoleKey.D6:
+                    case ConsoleKey.D5:
                         Console.WriteLine("Program has been quit");
                         return;
 
@@ -63,6 +60,7 @@ namespace Main_project.Presentation
                 Console.ReadKey(true);
             }
         }
+        
         public static void DisplayAllFlights()
         {
             while (true)
@@ -214,8 +212,134 @@ namespace Main_project.Presentation
                 }
             }
         }
+        private static void SelectCateringToUpdate()
+        {
+            Console.Clear();
+            
+            Console.WriteLine("Right now the list of caterings is:");
 
+            List<Catering> caterings = CateringLogic.cateringList();
+            
+            foreach (var catering in caterings)
+            {
+                Console.WriteLine($"{catering.Name}, {catering.Description}, {catering.Price}, {catering.IsHalal}");
+            }
+            
+            Console.WriteLine("Select Option:");
+            Console.WriteLine("[1] Change Caterings");
+            Console.WriteLine("[2] Change Caterings");
+
+            ConsoleKeyInfo input = Console.ReadKey(true);
+
+            switch (input.Key)
+            {
+                case ConsoleKey.D1:
+                    AddCatering();
+                    break;
+
+                case ConsoleKey.D2:
+                    ChangeCaterings();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid option.");
+                    break;
+            }
+        }
+
+        public static void AddCatering()
+        {
+            Console.Clear();
+            Console.WriteLine("Add New Catering Option:");
+            
+            List<Catering> caterings = CateringLogic.cateringList();
+            
+            foreach (var catering in caterings)
+            {
+                Console.WriteLine($"Name: {catering.Name}Description: {catering.Description}Price: {catering.Price}IsHalal: {catering.IsHalal}");
+            }
+
+            Console.WriteLine("Enter the name of the catering:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter the description of the catering:");
+            string description = Console.ReadLine();
+
+            Console.WriteLine("Enter the price of the catering:");
+            if (decimal.TryParse(Console.ReadLine(), out decimal price))
+            {
+                Console.WriteLine("Is the catering halal? (y/n)");
+                bool isHalal = Console.ReadLine()?.ToLower() == "y";
+
+                Catering newCatering = new Catering(name, description, price, isHalal);
+                caterings.Add(newCatering);
+
+                Console.WriteLine("\nNew catering option added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid price input. Catering option not added.");
+            }
+        }
+
+        private static void ChangeCaterings()
+        {
+            Console.Clear();
+            Console.WriteLine("Select Catering to Update:");
+    
+            List<Catering> caterings = CateringLogic.cateringList();
+    
+            for (int i = 0; i < caterings.Count; i++)
+            {
+                Console.WriteLine($"[{i + 1}] {caterings[i].Name}");
+            }
+    
+            Console.WriteLine("\nEnter the number of the catering to update:");
+            string input = Console.ReadLine();
+    
+            if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
+            {
+                Catering selectedCatering = caterings[cateringIndex - 1];
         
+                Console.WriteLine(
+                    $"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
+
+
+                Console.WriteLine("\nEnter the new name:");
+                string newName = Console.ReadLine();
+                selectedCatering.Name = newName;
+                
+                Console.WriteLine("\nEnter the new description:");
+                string newDescription = Console.ReadLine();
+                selectedCatering.Name = newDescription;
+                
+                Console.WriteLine("\nEnter the new price:");
+                string priceInput = Console.ReadLine();
+                if (decimal.TryParse(priceInput, out decimal newPrice))
+                {
+                    selectedCatering.Price = newPrice;
+                    Console.WriteLine("Catering price updated successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid price input. Catering price not updated.");
+                }
+                
+                Console.WriteLine("Is the catering halal? (y/n):");
+                string halalInput = Console.ReadLine();
+                bool newIsHalal = (halalInput?.ToLower() == "y");
+                selectedCatering.IsHalal = newIsHalal;
+        
+                // Repeat the above steps for other properties if needed
+        
+                Console.WriteLine("\nCatering updated successfully!");
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid input or catering not found.");
+            }
+        }
+
 
         public static void ChangeTicketPrice(Flight flightToUpdate)
         {
