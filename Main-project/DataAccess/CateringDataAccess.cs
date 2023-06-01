@@ -1,5 +1,4 @@
 using Main_project.DataModels;
-using System.IO;
 using Main_project.Logic;
 using Newtonsoft.Json;
 
@@ -33,5 +32,35 @@ public static class CateringDataAccess
 		var newCatering = GetCatering();
 		newCatering.Add(catering);
 		File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
+	}
+	public static void DeleteCatering(Catering catering)
+	{
+		List<Catering> caterings = GetCatering();
+
+		int index = caterings.FindIndex(c => c.Name == catering.Name);
+
+		if (index != -1)
+		{
+			caterings.RemoveAt(index);
+			File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(caterings, Formatting.Indented));
+
+			Console.WriteLine("Catering deleted successfully!");
+		}
+		else
+		{
+			Console.WriteLine("Catering not found.");
+		}
+	}
+	public static void UpdateCatering(Catering catering)
+	{
+		List<Catering> caterings = GetCatering();
+
+		var index = caterings.FindIndex(c => c.Name == catering.Name);
+
+		if (index != -1)
+		{
+			caterings[index] = catering;
+			File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(caterings, Formatting.Indented));
+		}
 	}
 }

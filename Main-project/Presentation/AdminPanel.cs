@@ -199,44 +199,6 @@ namespace Main_project.Presentation
             }
         }
         
-
-        public static void DeleteCatering()
-        {
-            Console.Clear();
-            Console.WriteLine("Select Catering to Delete:");
-
-            List<Catering> caterings = CateringDataAccess.GetCatering();
-            DisplayCaterings(caterings);
-
-
-            Console.WriteLine("\nEnter the number of the catering to delete:");
-            string input = Console.ReadLine();
-
-            if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
-            {
-                Catering selectedCatering = caterings[cateringIndex - 1];
-                Console.WriteLine($"\nDeleting Catering: {selectedCatering.Name}");
-
-                // Confirm deletion
-                Console.WriteLine("Are you sure you want to delete this catering? (y/n):");
-                string confirmInput = Console.ReadLine()?.ToLower();
-                if (confirmInput == "y")
-                {
-                    caterings.RemoveAt(cateringIndex - 1);
-                    Console.WriteLine("Catering deleted successfully!");
-                }
-                else
-                {
-                    Console.WriteLine("Catering deletion canceled.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("\nInvalid input or catering not found.");
-            }
-            Console.WriteLine("Press any key to go back...");
-            Console.ReadKey();
-        }
         public static void AddCatering()
         {
             Console.Clear();
@@ -260,8 +222,6 @@ namespace Main_project.Presentation
                 Catering newCatering = new Catering(name, description, price, isHalal);
                 CateringDataAccess.CreateCateringItem(newCatering);
 
-                DisplayCaterings(caterings);
-                
                 Console.WriteLine("\nNew catering option added successfully!");
                 
             }
@@ -272,34 +232,71 @@ namespace Main_project.Presentation
             Console.WriteLine("Press any key to go back...");
             Console.ReadKey();
         }
+        public static void DeleteCatering()
+        {
+            Console.Clear();
+            Console.WriteLine("Select Catering to Delete:");
+
+            List<Catering> caterings = CateringDataAccess.GetCatering();
+            DisplayCaterings(caterings);
+
+
+            Console.WriteLine("\nEnter the number of the catering to delete:");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
+            {
+                Catering selectedCatering = caterings[cateringIndex - 1];
+                Console.WriteLine($"\nDeleting Catering: {selectedCatering.Name}");
+
+                // Confirm deletion
+                Console.WriteLine("Are you sure you want to delete this catering? (y/n):");
+                string confirmInput = Console.ReadLine()?.ToLower();
+                if (confirmInput == "y")
+                {
+                    CateringDataAccess.DeleteCatering(selectedCatering);
+
+
+                    Console.WriteLine("Catering deleted successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Catering deletion canceled.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid input or catering not found.");
+            }
+            Console.WriteLine("Press any key to go back...");
+            Console.ReadKey();
+        }
+
         public static void ChangeCaterings()
         {
             Console.Clear();
             Console.WriteLine("Select Catering to Update:");
-    
+
             List<Catering> caterings = CateringDataAccess.GetCatering();
             DisplayCaterings(caterings);
 
-    
             Console.WriteLine("\nEnter the number of the catering to update:");
             string input = Console.ReadLine();
-    
+
             if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
             {
                 Catering selectedCatering = caterings[cateringIndex - 1];
-        
-                Console.WriteLine(
-                    $"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
 
+                Console.WriteLine($"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
 
                 Console.WriteLine("\nEnter the new name:");
                 string newName = Console.ReadLine();
                 selectedCatering.Name = newName;
-                
+
                 Console.WriteLine("\nEnter the new description:");
                 string newDescription = Console.ReadLine();
-                selectedCatering.Name = newDescription;
-                
+                selectedCatering.Description = newDescription;
+
                 Console.WriteLine("\nEnter the new price:");
                 string priceInput = Console.ReadLine();
                 if (decimal.TryParse(priceInput, out decimal newPrice))
@@ -311,14 +308,14 @@ namespace Main_project.Presentation
                 {
                     Console.WriteLine("Invalid price input. Catering price not updated.");
                 }
-                
+
                 Console.WriteLine("Is the catering halal? (y/n):");
                 string halalInput = Console.ReadLine();
                 bool newIsHalal = (halalInput?.ToLower() == "y");
                 selectedCatering.IsHalal = newIsHalal;
-        
-                // Repeat the above steps for other properties if needed
-        
+
+                CateringDataAccess.UpdateCatering(selectedCatering);
+
                 Console.WriteLine("\nCatering updated successfully!");
             }
             else
@@ -371,6 +368,7 @@ namespace Main_project.Presentation
             Console.WriteLine($"Flight {flightToUpdate.FlightNumber} updated.");
             Console.ReadKey();
         }
+        
         public static void CancelFlight(Flight flightToUpdate)
         {
             Console.WriteLine($"Selected flight: {flightToUpdate.FlightNumber} - {flightToUpdate.DepartureCity} to {flightToUpdate.DestinationCity}");
