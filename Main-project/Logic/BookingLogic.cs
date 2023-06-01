@@ -3,7 +3,7 @@ using Main_project.DataModels;
 
 namespace Main_project.Logic;
 
-public class BookingLogic
+public static class BookingLogic
 {
 	public static IEnumerable<Flight> UpComingFlights()
 	{
@@ -27,7 +27,7 @@ public class BookingLogic
 		return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
 	}
 
-	public Booking GetBookingByReservationNumber(string reservationNumber, DateTime Birthdate)
+	public static Booking GetBookingByReservationNumber(string reservationNumber, DateTime Birthdate)
 	{
 		var bookings = BookingDataAccess.GetBookings();
 		var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&

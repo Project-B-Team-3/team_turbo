@@ -8,8 +8,6 @@ namespace Main_project.Presentation;
 
 internal static class UserLogin
 {
-	private static BookingLogic bookingLogic = new();
-
 	public static void Start()
 	{
 		Console.WriteLine("Welcome to the login page");
@@ -25,7 +23,7 @@ internal static class UserLogin
 			return;
 		}
 
-		var booking = bookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
+		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
 		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
 		if (booking != null)
 		{
