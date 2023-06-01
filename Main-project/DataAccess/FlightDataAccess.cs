@@ -8,10 +8,7 @@ public static class FlightDataAccess
 	public static List<Flight> GetFlights()
 	{
 		var path = "./DataSources/Flights.json";
-		if (!File.Exists(path))
-		{
-			File.Create(path).Close();
-		}
+		if (!File.Exists(path)) File.Create(path).Close();
 
 		var json = File.ReadAllText(path);
 		var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
