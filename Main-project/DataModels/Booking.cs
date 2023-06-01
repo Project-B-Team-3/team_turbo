@@ -1,21 +1,10 @@
-using System.Text.RegularExpressions;
+using Main_project.DataAccess;
 
 namespace Main_project.DataModels;
 
 public class Booking
 {
-	private string reservationNumber;
-
-	public string ReservationNumber
-	{
-		get => reservationNumber;
-		set
-		{
-			if (!IsValidReservationCode(value)) throw new ArgumentException("Invalid reservation code.");
-			reservationNumber = value;
-		}
-	}
-
+	public string ReservationNumber { get; set; }
 	public string FlightNumber { get; set; }
 	public Dictionary<string, Person> Seats { get; set; }
 	public Cost Cost { get; set; }
@@ -33,13 +22,24 @@ public class Booking
 		Cost = cost;
 	}
 
-	private bool IsValidReservationCode(string code)
+	public List<string> GetLines()
 	{
-		if (code.Length < 8)
-			return false;
-
-		var pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
-		var regex = new Regex(pattern);
-		return regex.IsMatch(code);
+		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == FlightNumber);
+		string[] lines =
+		{
+			$"You just booked a flight from {flight.DepartureCity} to {flight.DestinationCity}.",
+			"Booking Details",
+			$"Reservation Number: {ReservationNumber}",
+			$"Flight Number: {FlightNumber}",
+			$"Departure Airport Code: {flight.DepartureAirportCode}",
+			$"Destination Airport Code: {flight.DestinationAirportCode}",
+			$"Departure Time: {flight.DepartureTime:dd-M-yyy HH:mm:ss}",
+			$"For the total price of: {Cost.GetTotal()}",
+			"",
+			"And your seats are:"
+		};
+		var returnVal = lines.ToList();
+		foreach (var person in Seats.Values.ToArray()) returnVal.Add(person.ToString());
+		return returnVal;
 	}
 }

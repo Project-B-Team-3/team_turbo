@@ -9,11 +9,16 @@ public class Cost
 	// still need to add luggage
 	public List<decimal> SeatPrices { get; set; }
 
-	public Cost(int flightPrice, int catering, List<decimal> seatPrices)
+	public Cost(decimal flightPrice, decimal catering, List<decimal> seatPrices)
 	{
 		FlightPrice = flightPrice;
 		Catering = catering;
 		SeatPrices = seatPrices;
+	}
+
+	public decimal GetTotal()
+	{
+		return FlightPrice + Catering + SeatPrices.Sum();
 	}
 
 	public override string ToString()

@@ -6,7 +6,7 @@ namespace Main_project.Logic;
 
 public static class SeatLogic
 {
-	public static void ChangeSeat(string reservationNumber, string birthday)
+	public static void ChangeSeat(string reservationNumber, DateTime birthday)
 	{
 		var flight = BookingDataAccess.GetBookings().First(u => u.ReservationNumber == reservationNumber);
 		var person = flight.Seats

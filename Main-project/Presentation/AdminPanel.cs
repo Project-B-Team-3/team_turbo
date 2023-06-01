@@ -14,9 +14,12 @@ public static class AdminPanel
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("Admin Panel");
 			Console.ForegroundColor = ConsoleColor.White;
-			Console.WriteLine($"What do you wish to do?\n[1] " +
-			                  $"View all available flights\n[2] Change seat pricing \n[3] Change catering \n" +
-			                  $"[4] Select Ticket To Change Ticket\n[5] Quit");
+			Console.WriteLine("What do you wish to do?\n" +
+			                  "[1] View all available flights\n" +
+			                  "[2] Change seat pricing\n" +
+			                  "[3] Update catering\n" +
+			                  "[4] Change or cancel flights\n" +
+			                  "[5] Quit");
 			ConsoleKeyInfo Adminchoice;
 			Adminchoice = Console.ReadKey(true);
 			switch (Adminchoice.Key)
@@ -31,17 +34,17 @@ public static class AdminPanel
 					break;
 
 				case ConsoleKey.D3:
-					Console.WriteLine("Change catering");
+					Console.WriteLine("Update catering");
 					SelectCateringToUpdate();
 					break;
 
 				case ConsoleKey.D4:
-					Console.WriteLine("Change/Cancel flights");
+					Console.WriteLine("Change or cancel flights");
 					SelectFlightToUpdate();
 					break;
 
 				case ConsoleKey.D5:
-					Console.WriteLine("Program has been quit");
+					Console.WriteLine("Exiting the program");
 					return;
 
 				default:
@@ -56,114 +59,18 @@ public static class AdminPanel
 					break;
 			}
 
+			Console.WriteLine("Resetting screen...");
 			Console.WriteLine("\nPress any key to continue...");
-			Console.ReadKey(true);
-		}
-	}
-
-	public static void DisplayAllFlights()
-	{
-		while (true)
-		{
 			Console.Clear();
-			Console.WriteLine("View all available flights");
-			Console.WriteLine(
-				$"Sort by:\n[1] Flight number\n[2] Departure city\n[3] Destination city\n[4] Departure time\n[5] Seats available\n[6] Price\n[7] Quit");
-			var sortChoice = Console.ReadKey(true);
-			switch (sortChoice.Key)
-			{
-				case ConsoleKey.D1:
-					Console.WriteLine("Sorting by Flight number");
-					SortAndDisplayFlights("FlightNumber");
-					break;
-
-				case ConsoleKey.D2:
-					Console.WriteLine("Sorting by Departure city");
-					SortAndDisplayFlights("DepartureCity");
-					break;
-
-				case ConsoleKey.D3:
-					Console.WriteLine("Sorting by Destination city");
-					SortAndDisplayFlights("DestinationCity");
-					break;
-
-				case ConsoleKey.D4:
-					Console.WriteLine("Sorting by Departure time");
-					SortAndDisplayFlights("DepartureTime");
-					break;
-
-				case ConsoleKey.D5:
-					Console.WriteLine("Sorting by Seats available");
-					SortAndDisplayFlights("Seats.Count");
-					break;
-
-				case ConsoleKey.D6:
-					Console.WriteLine("Sorting by Price");
-					SortAndDisplayFlights("Price");
-					break;
-
-				case ConsoleKey.D7:
-					Console.WriteLine("Returning to Admin Panel");
-					return;
-
-				default:
-					Console.WriteLine("Invalid option selected.");
-					break;
-			}
-
-			Console.WriteLine("\nPress any key to continue...");
 			Console.ReadKey(true);
 		}
 	}
-
-	public static void SortAndDisplayFlights(string sortBy)
-	{
-		List<Flight> flights = BookingLogic.GetAllFlights();
-		switch (sortBy)
-		{
-			case "FlightNumber":
-				flights.Sort((f1, f2) => string.Compare(f1.FlightNumber, f2.FlightNumber, StringComparison.Ordinal));
-				break;
-
-			case "DepartureCity":
-				flights.Sort((f1, f2) => string.Compare(f1.DepartureCity, f2.DepartureCity, StringComparison.Ordinal));
-				break;
-
-			case "DestinationCity":
-				flights.Sort((f1, f2) =>
-					string.Compare(f1.DestinationCity, f2.DestinationCity, StringComparison.Ordinal));
-				break;
-
-			case "DepartureTime":
-				flights.Sort((f1, f2) => f1.DepartureTime.CompareTo(f2.DepartureTime));
-				break;
-
-			case "Seats.Count":
-				flights.Sort((f1, f2) => f1.Seats.Count.CompareTo(f2.Seats.Count));
-				break;
-
-			case "Price":
-				flights.Sort((f1, f2) => f1.Price.CompareTo(f2.Price));
-				break;
-
-			default:
-				Console.WriteLine("Invalid option selected.");
-				return;
-		}
-
-		Console.WriteLine("-----------------------------------------------------------------------------");
-		Console.WriteLine(
-			"| Flight number   | Departure  | Destination  | Departure time       | Seats available  | Price     |");
-		Console.WriteLine("-----------------------------------------------------------------------------");
-		foreach (var flight in flights)
-			Console.WriteLine(
-				$"| {flight.FlightNumber,-15} | {flight.DepartureCity,-10} | {flight.DestinationCity,-12} | {flight.DepartureTime,-20} | {flight.Seats.Count,-16} | {flight.Price,-9} |");
-		Console.WriteLine("-----------------------------------------------------------------------------");
-	}
-
 
 	public static void SelectFlightToUpdate()
 	{
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("Flight Update Panel\n");
+		Console.ForegroundColor = ConsoleColor.White;
 		Console.Write("Enter the flight number to update: ");
 		var flightNumber = Console.ReadLine();
 
@@ -188,17 +95,23 @@ public static class AdminPanel
 
 		while (true)
 		{
-			Console.WriteLine(
-				$"What do you wish to do?\n[1] Change ticket pricing\n[2] Change ticket destination\n[3] Quit");
+			Console.WriteLine("What do you wish to do?\n" +
+			                  "[1] Change ticket pricing\n" +
+			                  "[2] Change ticket destination\n" +
+			                  "[3] Cancel flight\n" +
+			                  "[4] Return to Admin");
+
 			var adminChoice = Console.ReadKey(true);
 
 			switch (adminChoice.Key)
 			{
 				case ConsoleKey.D1:
-					ChangeTicketPrice(flightToUpdate);
+					Console.WriteLine("Change ticket pricing");
+					ChangeFlightsPrice(flightToUpdate);
 					break;
 
 				case ConsoleKey.D2:
+					Console.WriteLine("Change ticket destination");
 					ChangeFlightsDestination(flightToUpdate);
 					break;
 
@@ -208,7 +121,7 @@ public static class AdminPanel
 					break;
 
 				case ConsoleKey.D4:
-					Console.WriteLine("Quitting update flight menu.");
+					Console.WriteLine("Returning to Admin.");
 					return;
 
 				default:
@@ -218,36 +131,74 @@ public static class AdminPanel
 		}
 	}
 
-	private static void SelectCateringToUpdate()
+	public static void SelectCateringToUpdate()
 	{
-		Console.Clear();
+		while (true)
+		{
+			Console.Clear();
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("Catering Update Panel\n");
+			Console.ForegroundColor = ConsoleColor.White;
 
-		Console.WriteLine("Right now the list of caterings is:");
+			Console.WriteLine("The list of available caterings is:");
 
-		List<Catering> caterings = CateringLogic.cateringList();
+			var caterings = CateringDataAccess.GetCatering();
+			DisplayCaterings(caterings);
+
+
+			Console.WriteLine("\nSelect an option:\n" +
+			                  "[1] Add a new catering item\n" +
+			                  "[2] Change a catering item\n" +
+			                  "[3] Delete a catering item\n" +
+			                  "[4] Return to Admin");
+
+
+			var input = Console.ReadKey(true);
+
+			switch (input.Key)
+			{
+				case ConsoleKey.D1:
+					Console.WriteLine("Add a new catering item");
+					;
+					AddCatering();
+					break;
+
+				case ConsoleKey.D2:
+					Console.WriteLine("Change a catering item");
+					;
+					ChangeCaterings();
+					break;
+
+				case ConsoleKey.D3:
+					Console.WriteLine("Delete a catering item");
+					;
+					DeleteCatering();
+					break;
+
+				case ConsoleKey.D4:
+					Console.WriteLine("return to Admin.");
+					;
+					break;
+
+				default:
+					Console.WriteLine("Invalid option.");
+					break;
+			}
+		}
+	}
+
+	public static void DisplayCaterings(List<Catering> caterings)
+	{
+		var line = new string('-', 100);
+		Console.WriteLine(line);
+		Console.WriteLine("| Name             | Description           | Price     | Is Halal |");
+		Console.WriteLine(line);
 
 		foreach (var catering in caterings)
-			Console.WriteLine($"{catering.Name}, {catering.Description}, {catering.Price}, {catering.IsHalal}");
-
-		Console.WriteLine("Select Option:");
-		Console.WriteLine("[1] Change Caterings");
-		Console.WriteLine("[2] Change Caterings");
-
-		var input = Console.ReadKey(true);
-
-		switch (input.Key)
 		{
-			case ConsoleKey.D1:
-				AddCatering();
-				break;
-
-			case ConsoleKey.D2:
-				ChangeCaterings();
-				break;
-
-			default:
-				Console.WriteLine("Invalid option.");
-				break;
+			Console.WriteLine(
+				$"{catering.Name,-18} | {catering.Description,-22} | {catering.Price,-9} | {catering.IsHalal,-9} |");
+			Console.WriteLine(line);
 		}
 	}
 
@@ -256,11 +207,8 @@ public static class AdminPanel
 		Console.Clear();
 		Console.WriteLine("Add New Catering Option:");
 
-		List<Catering> caterings = CateringLogic.cateringList();
-
-		foreach (var catering in caterings)
-			Console.WriteLine(
-				$"Name: {catering.Name}Description: {catering.Description}Price: {catering.Price}IsHalal: {catering.IsHalal}");
+		var caterings = CateringDataAccess.GetCatering();
+		DisplayCaterings(caterings);
 
 		Console.WriteLine("Enter the name of the catering:");
 		var name = Console.ReadLine();
@@ -275,7 +223,7 @@ public static class AdminPanel
 			var isHalal = Console.ReadLine()?.ToLower() == "y";
 
 			var newCatering = new Catering(name, description, price, isHalal);
-			caterings.Add(newCatering);
+			CateringDataAccess.CreateCateringItem(newCatering);
 
 			Console.WriteLine("\nNew catering option added successfully!");
 		}
@@ -283,16 +231,59 @@ public static class AdminPanel
 		{
 			Console.WriteLine("\nInvalid price input. Catering option not added.");
 		}
+
+		Console.WriteLine("Press any key to go back...");
+		Console.ReadKey();
 	}
 
-	private static void ChangeCaterings()
+	public static void DeleteCatering()
+	{
+		Console.Clear();
+		Console.WriteLine("Select Catering to Delete:");
+
+		var caterings = CateringDataAccess.GetCatering();
+		DisplayCaterings(caterings);
+
+
+		Console.WriteLine("\nEnter the number of the catering to delete:");
+		var input = Console.ReadLine();
+
+		if (int.TryParse(input, out var cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
+		{
+			var selectedCatering = caterings[cateringIndex - 1];
+			Console.WriteLine($"\nDeleting Catering: {selectedCatering.Name}");
+
+			// Confirm deletion
+			Console.WriteLine("Are you sure you want to delete this catering? (y/n):");
+			var confirmInput = Console.ReadLine()?.ToLower();
+			if (confirmInput == "y")
+			{
+				CateringDataAccess.DeleteCatering(selectedCatering);
+
+
+				Console.WriteLine("Catering deleted successfully!");
+			}
+			else
+			{
+				Console.WriteLine("Catering deletion canceled.");
+			}
+		}
+		else
+		{
+			Console.WriteLine("\nInvalid input or catering not found.");
+		}
+
+		Console.WriteLine("Press any key to go back...");
+		Console.ReadKey();
+	}
+
+	public static void ChangeCaterings()
 	{
 		Console.Clear();
 		Console.WriteLine("Select Catering to Update:");
 
-		List<Catering> caterings = CateringLogic.cateringList();
-
-		for (var i = 0; i < caterings.Count; i++) Console.WriteLine($"[{i + 1}] {caterings[i].Name}");
+		var caterings = CateringDataAccess.GetCatering();
+		DisplayCaterings(caterings);
 
 		Console.WriteLine("\nEnter the number of the catering to update:");
 		var input = Console.ReadLine();
@@ -304,14 +295,13 @@ public static class AdminPanel
 			Console.WriteLine(
 				$"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
 
-
 			Console.WriteLine("\nEnter the new name:");
 			var newName = Console.ReadLine();
 			selectedCatering.Name = newName;
 
 			Console.WriteLine("\nEnter the new description:");
 			var newDescription = Console.ReadLine();
-			selectedCatering.Name = newDescription;
+			selectedCatering.Description = newDescription;
 
 			Console.WriteLine("\nEnter the new price:");
 			var priceInput = Console.ReadLine();
@@ -330,7 +320,7 @@ public static class AdminPanel
 			var newIsHalal = halalInput?.ToLower() == "y";
 			selectedCatering.IsHalal = newIsHalal;
 
-			// Repeat the above steps for other properties if needed
+			CateringDataAccess.UpdateCatering(selectedCatering);
 
 			Console.WriteLine("\nCatering updated successfully!");
 		}
@@ -338,10 +328,13 @@ public static class AdminPanel
 		{
 			Console.WriteLine("\nInvalid input or catering not found.");
 		}
+
+		Console.WriteLine("Press any key to go back...");
+		Console.ReadKey();
 	}
 
 
-	public static void ChangeTicketPrice(Flight flightToUpdate)
+	public static void ChangeFlightsPrice(Flight flightToUpdate)
 	{
 		Console.WriteLine($"Current ticket price for flight {flightToUpdate.FlightNumber}: {flightToUpdate.Price}");
 
@@ -400,5 +393,143 @@ public static class AdminPanel
 		}
 
 		Console.ReadKey();
+	}
+
+	public static void DisplayAllFlights()
+	{
+		while (true)
+		{
+			Console.Clear();
+			Console.WriteLine("View all available flights");
+			Console.WriteLine(
+				$"Sort by:\n[1] Flight number\n[2] Departure city\n[3] Destination city\n[4] Departure time\n[5] Seats available\n[6] Price\n[7] Quit");
+			var sortChoice = Console.ReadKey(true);
+			switch (sortChoice.Key)
+			{
+				case ConsoleKey.D1:
+					Console.WriteLine("Sorting by Flight number");
+					SortAndDisplayFlights("FlightNumber");
+					break;
+
+				case ConsoleKey.D2:
+					Console.WriteLine("Sorting by Departure city");
+					SortAndDisplayFlights("DepartureCity");
+					break;
+
+				case ConsoleKey.D3:
+					Console.WriteLine("Sorting by Destination city");
+					SortAndDisplayFlights("DestinationCity");
+					break;
+
+				case ConsoleKey.D4:
+					Console.WriteLine("Sorting by Departure time");
+					SortAndDisplayFlights("DepartureTime");
+					break;
+
+				case ConsoleKey.D5:
+					Console.WriteLine("Sorting by Seats available");
+					SortAndDisplayFlights("Seats.Count");
+					break;
+
+				case ConsoleKey.D6:
+					Console.WriteLine("Sorting by Price");
+					SortAndDisplayFlights("Price");
+					break;
+
+				case ConsoleKey.D7:
+					Console.WriteLine("Returning to Admin Panel");
+					return;
+
+				default:
+					Console.WriteLine("Invalid option selected.");
+					break;
+			}
+
+			Console.WriteLine("Resetting screen...");
+			Console.WriteLine("\nPress any key to continue...");
+			Console.ReadKey(true);
+		}
+	}
+
+	public static void SortAndDisplayFlights(string sortBy)
+	{
+		Console.Clear();
+		var flights = BookingLogic.GetAllFlights();
+		switch (sortBy)
+		{
+			case "FlightNumber":
+				flights.Sort((f1, f2) => string.Compare(f1.FlightNumber, f2.FlightNumber, StringComparison.Ordinal));
+				break;
+
+			case "DepartureCity":
+				flights.Sort((f1, f2) => string.Compare(f1.DepartureCity, f2.DepartureCity, StringComparison.Ordinal));
+				break;
+
+			case "DestinationCity":
+				flights.Sort((f1, f2) =>
+					string.Compare(f1.DestinationCity, f2.DestinationCity, StringComparison.Ordinal));
+				break;
+
+			case "DepartureTime":
+				flights.Sort((f1, f2) => f1.DepartureTime.CompareTo(f2.DepartureTime));
+				break;
+
+			case "Seats.Count":
+				flights.Sort((f1, f2) => f1.Seats.Count.CompareTo(f2.Seats.Count));
+				break;
+
+			case "Price":
+				flights.Sort((f1, f2) => f1.Price.CompareTo(f2.Price));
+				break;
+
+			default:
+				Console.WriteLine("Invalid option selected.");
+				return;
+		}
+
+		var line = new string('-', 100);
+		Console.WriteLine(line);
+		Console.WriteLine(
+			"| Flight number   | Departure  | Destination  | Departure time       | Seats available  | Price     |");
+		Console.WriteLine(line);
+		var startIndex = 0;
+		var displayCount = 25;
+		while (startIndex < flights.Count)
+		{
+			var endIndex = Math.Min(startIndex + displayCount, flights.Count);
+			for (var i = startIndex; i < endIndex; i++)
+			{
+				var flight = flights[i];
+				Console.WriteLine(line);
+				Console.WriteLine(
+					$"| {flight.FlightNumber,-14} | {flight.DepartureCity,-10} | {flight.DestinationCity,-12} | {flight.DepartureTime,-14} | {flight.Seats.Count,-15} | {flight.Price,-9} |");
+			}
+
+			Console.WriteLine(line);
+
+			// Prompt for user input to continue displaying flights
+			// Prompt for user input to navigate flights
+			Console.WriteLine("Options: [B]ack, [F]orward, [R]eturn to Sort Menu");
+			Console.WriteLine(line);
+			var input = Console.ReadKey(true);
+
+			Console.Clear();
+
+			if (input.Key == ConsoleKey.B)
+			{
+				// Go back to the previous interval
+				if (startIndex - displayCount >= 0) startIndex -= displayCount;
+			}
+			else if (input.Key == ConsoleKey.F)
+			{
+				// Go forward to the next interval
+				if (startIndex + displayCount < flights.Count) startIndex += displayCount;
+			}
+			else if (input.Key == ConsoleKey.R)
+			{
+				// Return to the sort menu
+				return;
+			}
+		}
 	}
 }
