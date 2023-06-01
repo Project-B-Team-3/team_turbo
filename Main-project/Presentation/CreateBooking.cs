@@ -127,6 +127,7 @@ public static class CreateBooking
 			Console.WriteLine("Successfully added another person to the booking.");
 			Thread.Sleep(200);
 		}
+		cost.FlightPrice = FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum).Price;
 
 		Console.WriteLine("The cost of this booking is as follows:");
 		Console.WriteLine(cost);
