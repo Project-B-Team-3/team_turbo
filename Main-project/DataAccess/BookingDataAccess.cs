@@ -23,6 +23,7 @@ public static class BookingDataAccess
 			"./DataSources/Bookings.json",
 			JsonConvert.SerializeObject(newBookings, Formatting.Indented)
 		);
+		File.WriteAllLines($"./{booking.ReservationNumber}.txt", booking.GetLines());
 	}
 
 	public static void RemoveBooking(Booking booking)

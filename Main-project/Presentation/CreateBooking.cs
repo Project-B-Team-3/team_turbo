@@ -131,6 +131,8 @@ public static class CreateBooking
 		Console.WriteLine("The cost of this booking is as follows:");
 		Console.WriteLine(cost);
 
+		Console.ReadKey();
+
 		var reservationNum = BookingLogic.GenerateUniqueReservationCode();
 		BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats, cost));
 	}
