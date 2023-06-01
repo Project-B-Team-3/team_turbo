@@ -4,7 +4,7 @@ using Main_project.Logic;
 
 namespace Main_project.Presentation
 {
-    public static class BookingPresentation
+    public static class CreateBooking
     {
         public static void CreateNewBooking()
         {
