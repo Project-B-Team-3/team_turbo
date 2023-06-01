@@ -22,4 +22,11 @@ public static class CateringDataAccess
 		newCatering = newCatering.Concat(cateringList).ToList();
 		File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
 	}
+
+	public static void CreateCateringItem(Catering catering)
+	{
+		var newCatering = GetCatering();
+		newCatering.Add(catering);
+		File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
+	}
 }

@@ -140,7 +140,7 @@ namespace Main_project.Presentation
 
                 Console.WriteLine("The list of available caterings is:");
 
-                List<Catering> caterings = CateringLogic.cateringList();
+                List<Catering> caterings = CateringDataAccess.GetCatering();
                 DisplayCaterings(caterings);
 
 
@@ -205,7 +205,7 @@ namespace Main_project.Presentation
             Console.Clear();
             Console.WriteLine("Select Catering to Delete:");
 
-            List<Catering> caterings = CateringLogic.cateringList();
+            List<Catering> caterings = CateringDataAccess.GetCatering();
             DisplayCaterings(caterings);
 
 
@@ -242,7 +242,7 @@ namespace Main_project.Presentation
             Console.Clear();
             Console.WriteLine("Add New Catering Option:");
             
-            List<Catering> caterings = CateringLogic.cateringList();
+            List<Catering> caterings = CateringDataAccess.GetCatering();
             DisplayCaterings(caterings);
 
             Console.WriteLine("Enter the name of the catering:");
@@ -258,7 +258,7 @@ namespace Main_project.Presentation
                 bool isHalal = Console.ReadLine()?.ToLower() == "y";
 
                 Catering newCatering = new Catering(name, description, price, isHalal);
-                caterings.Add(newCatering);
+                CateringDataAccess.CreateCateringItem(newCatering);
 
                 DisplayCaterings(caterings);
                 
@@ -277,7 +277,7 @@ namespace Main_project.Presentation
             Console.Clear();
             Console.WriteLine("Select Catering to Update:");
     
-            List<Catering> caterings = CateringLogic.cateringList();
+            List<Catering> caterings = CateringDataAccess.GetCatering();
             DisplayCaterings(caterings);
 
     

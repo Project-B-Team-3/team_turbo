@@ -35,7 +35,7 @@ public static class CreateBooking
 		var answer = Console.ReadLine()?.ToLower();
 		if (answer == "y")
 		{
-			var cateringList = CateringLogic.cateringList();
+			var cateringList = CateringDataAccess.GetCatering();
 			Console.WriteLine("Please choose from the following menu:");
 			for (var i = 0; i < cateringList.Count; i++)
 				Console.WriteLine(
