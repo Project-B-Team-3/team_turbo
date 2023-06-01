@@ -27,7 +27,7 @@ public class BookingLogic
 		return FlightDataAccess.GetFlights().FirstOrDefault(f => f.FlightNumber == flightNumber);
 	}
 
-	public Booking GetBookingByReservationNumber(string reservationNumber, string Birthdate)
+	public Booking GetBookingByReservationNumber(string reservationNumber, DateTime Birthdate)
 	{
 		var bookings = BookingDataAccess.GetBookings();
 		var booking = bookings.FirstOrDefault(b => b.ReservationNumber == reservationNumber &&

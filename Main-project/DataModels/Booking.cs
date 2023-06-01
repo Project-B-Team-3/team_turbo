@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Main_project.DataAccess;
 
 namespace Main_project.DataModels;
 
@@ -31,6 +32,15 @@ public class Booking
 		FlightNumber = flightNumber;
 		Seats = seats;
 		Cost = cost;
+	}
+
+
+	public string[] GetLines()
+	{
+		Flight flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == FlightNumber);
+		string[] lines = {$"You just booked a flight from {flight.DepartureCity} to {flight.DestinationCity}.",
+			Seats.Values.ToArray().ToString()};
+		return lines;
 	}
 
 	private bool IsValidReservationCode(string code)

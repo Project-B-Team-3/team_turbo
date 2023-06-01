@@ -120,7 +120,7 @@ public static class CreateBooking
 			var seat = SeatSelector.SelectSeat(flightNum);
 			Console.WriteLine("Writing data...");
 			SeatLogic.UpdateSeat(flightNum, seat, false);
-			seats.Add(seat, new Person(name, birthdateInput, docNum));
+			seats.Add(seat, new Person(name, birthdate, docNum));
 			cost.SeatPrices.Add(
 				FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum)
 					.Seats.First(h => h.Number == seat).Price);

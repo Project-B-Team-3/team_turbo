@@ -7,19 +7,15 @@ public static class FlightDataAccess
 {
 	public static List<Flight> GetFlights()
 	{
-		try
+		var path = "./DataSources/Flights.json";
+		if (!File.Exists(path))
 		{
-			var json = File.ReadAllText("./DataSources/Flights.json");
-			var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
-			return flights ?? new List<Flight>();
+			File.Create(path).Close();
 		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Flight>();
-		}
+
+		var json = File.ReadAllText(path);
+		var flights = JsonConvert.DeserializeObject<List<Flight>>(json);
+		return flights ?? new List<Flight>();
 	}
 
 	public static void CreateFlight(Flight flight)

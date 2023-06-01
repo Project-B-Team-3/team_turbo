@@ -7,19 +7,15 @@ public static class BookingDataAccess
 {
 	public static List<Booking> GetBookings()
 	{
-		try
+		var path = "./DataSources/Bookings.json";
+		if (!File.Exists(path))
 		{
-			var json = File.ReadAllText("./DataSources/Bookings.json");
-			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-			return bookings ?? new List<Booking>();
+			File.Create(path).Close();
 		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Booking>();
-		}
+
+		var json = File.ReadAllText(path);
+		var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+		return bookings ?? new List<Booking>();
 	}
 
 	public static void CreateBooking(Booking booking)
@@ -36,6 +32,7 @@ public static class BookingDataAccess
 			"./DataSources/Bookings.json",
 			JsonConvert.SerializeObject(newBookings, Formatting.Indented)
 		);
+		File.WriteAllLines($"./{booking.ReservationNumber}.txt", booking.GetLines());
 	}
 
 	public static void RemoveBooking(Booking booking)
