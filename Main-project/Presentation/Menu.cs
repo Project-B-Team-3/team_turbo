@@ -1,5 +1,7 @@
 using Main_project.DataAccess;
 using Main_project.Misc;
+using Main_project.DataModels;
+using Main_project.Misc;
 
 namespace Main_project.Presentation;
 
@@ -12,7 +14,7 @@ public static class Menu
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape && x == false)
         {
             Console.Clear();
-            Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Quit\n");
+            Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Contact us\n[5] Quit\n");
             
             key = Console.ReadKey(true);
             //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
@@ -31,7 +33,11 @@ public static class Menu
                     ChangeBooking.CancelBooking(reservationNumber);
                     break;
 
-                case ConsoleKey.D4: case ConsoleKey.Q:
+                case ConsoleKey.D4:
+                    Console.WriteLine("Contact us now");
+                    break;
+
+                case ConsoleKey.D5: case ConsoleKey.Q:
                     Console.WriteLine("Program has been quit");
                     x = true;
                     break;
