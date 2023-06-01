@@ -15,6 +15,6 @@ public class Person
 
 	public override string ToString()
 	{
-		return Name;
+		return $"{Name}, {Birthdate:dd/MM/yyyy}, {DocumentNum}";
 	}
 }
