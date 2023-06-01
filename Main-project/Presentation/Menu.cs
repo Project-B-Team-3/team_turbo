@@ -21,7 +21,7 @@ public static class Menu
                     ConsoleView.DisplayFlights();
                     break;
                 case ConsoleKey.D2:
-                    BookingPresentation.CreateNewBooking();
+                    CreateBooking.CreateNewBooking();
                     break;
 
                 case ConsoleKey.D3:
