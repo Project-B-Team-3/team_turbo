@@ -164,7 +164,7 @@ namespace Main_project.Presentation
             }
         }
 
-        public static void ChangeSeat(string reservationNumber, string birthday)
+        public static void ChangeSeat(string reservationNumber, DateTime birthday)
         {
             SeatLogic.ChangeSeat(reservationNumber, birthday);
         }

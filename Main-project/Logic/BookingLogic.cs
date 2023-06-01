@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Main_project.Logic
 {
-    public class BookingLogic
+    public static class BookingLogic
     {
         public static IEnumerable<Flight> UpComingFlights()
         {
@@ -36,13 +36,13 @@ namespace Main_project.Logic
                 .FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
 
-        public Booking GetBookingByReservationNumber(string reservationNumber, string birthdate)
+        public static Booking GetBookingByReservationNumber(string reservationNumber, DateTime birthdate)
         {
             var bookings = BookingDataAccess.GetBookings();
             var booking = bookings.FirstOrDefault(
                 b =>
                     b.ReservationNumber == reservationNumber
-                    && b.Seats.Any(s => s.Value.Birthdate == DateTime.Parse(birthdate))
+                    && b.Seats.Any(s => s.Value.Birthdate == birthdate)
             );
             return booking;
         }
