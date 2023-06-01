@@ -6,27 +6,14 @@ namespace Main_project.DataAccess;
 
 public static class CateringDataAccess
 {
-	public static void InitFiles()
-	{
-		if (File.Exists("./DataSources/Catering.json")) return;
-		File.WriteAllText("./DataSources/Catering.json", "[]");
-	}
-
 	public static List<Catering> GetCatering()
 	{
-		try
-		{
-			var json = File.ReadAllText("./DataSources/Catering.json");
-			var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
-			return cateringItems ?? new List<Catering>();
-		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Catering>();
-		}
+		var path = "./DataSources/Catering.json";
+		if (!File.Exists(path)) File.Create(path).Close();
+		
+		var json = File.ReadAllText(path);
+		var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
+		return cateringItems ?? new List<Catering>();
 	}
 
 	public static void CreateCateringItems(List<Catering> cateringList)
