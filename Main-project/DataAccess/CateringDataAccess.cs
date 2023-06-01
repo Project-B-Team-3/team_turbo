@@ -34,16 +34,18 @@ public static class CateringDataAccess
 		newCatering.Add(catering);
 		File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
 	}
+
 	public static void DeleteCatering(Catering catering)
 	{
 		List<Catering> caterings = GetCatering();
 
-		int index = caterings.FindIndex(c => c.Name == catering.Name);
+		var index = caterings.FindIndex(c => c.Name == catering.Name);
 
 		if (index != -1)
 		{
 			caterings.RemoveAt(index);
-			File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(caterings, Formatting.Indented));
+			File.WriteAllText("./DataSources/Catering.json",
+				JsonConvert.SerializeObject(caterings, Formatting.Indented));
 
 			Console.WriteLine("Catering deleted successfully!");
 		}
@@ -52,6 +54,7 @@ public static class CateringDataAccess
 			Console.WriteLine("Catering not found.");
 		}
 	}
+
 	public static void UpdateCatering(Catering catering)
 	{
 		List<Catering> caterings = GetCatering();
@@ -61,7 +64,8 @@ public static class CateringDataAccess
 		if (index != -1)
 		{
 			caterings[index] = catering;
-			File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(caterings, Formatting.Indented));
+			File.WriteAllText("./DataSources/Catering.json",
+				JsonConvert.SerializeObject(caterings, Formatting.Indented));
 		}
 	}
 }
