@@ -5,7 +5,7 @@ namespace Main_project.DataAccess;
 
 public static class BookingDataAccess
 {
-	public static List<Booking> GetBookings()
+    public static List<Booking> GetBookings()
     {
         try
         {
@@ -20,27 +20,38 @@ public static class BookingDataAccess
             Environment.Exit(1);
             return new List<Booking>();
         }
-
     }
 
     public static void CreateBooking(Booking booking)
     {
+        if (!IsValidReservationCode(booking.ReservationNumber))
+        {
+            Console.WriteLine("Invalid reservation code.");
+            return;
+        }
+
         var newBookings = GetBookings();
         newBookings.Add(booking);
-        File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+        File.WriteAllText(
+            "./DataSources/Bookings.json",
+            JsonConvert.SerializeObject(newBookings, Formatting.Indented)
+        );
     }
 
     public static void RemoveBooking(Booking booking)
     {
-	    var newBookings = GetBookings();
-	    if (newBookings.RemoveAll(h => h.ReservationNumber == booking.ReservationNumber) == 1)
-	    {
-		    Console.WriteLine("Successfully removed booking!");
-	    }
-	    else
-	    {
-		    Console.WriteLine("Could not find booking!");
-	    }
-	    File.WriteAllText("./DataSources/Bookings.json", JsonConvert.SerializeObject(newBookings, Formatting.Indented));
+        var newBookings = GetBookings();
+        if (newBookings.RemoveAll(h => h.ReservationNumber == booking.ReservationNumber) == 1)
+        {
+            Console.WriteLine("Successfully removed booking!");
+        }
+        else
+        {
+            Console.WriteLine("Could not find booking!");
+        }
+        File.WriteAllText(
+            "./DataSources/Bookings.json",
+            JsonConvert.SerializeObject(newBookings, Formatting.Indented)
+        );
     }
 }
