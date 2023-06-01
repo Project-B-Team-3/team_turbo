@@ -2,16 +2,11 @@ using Main_project.DataModels;
 
 namespace Main_project.DataAccess
 {
-    public static class AirportDataAccess
+    public class AirportDataAccess
     {
-        public static Airport GetAirportDetails()
+        public Airport GetAirportDetails()
         {
-            return new Airport
-            {
-                PhoneNumber = "010-6942069",
-                Address = "Driemanssteeweg 107, 3011 WN in Rotterdam",
-                Email = "info@darcyairlines.com"
-            };
+            return new Airport("010-6942069", "Driemanssteeweg 107, 3011 WN in Rotterdam", "info@darcyairlines.com");
         }
     }
 }

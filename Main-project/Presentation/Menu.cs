@@ -60,10 +60,10 @@ public static class Menu
             }
         }
     }
-
     private static void DisplayContactDetails() // Luuk you are free to move this :p I know hahahah.
     {
-        Airport airport = AirportDataAccess.GetAirportDetails();
+        AirportDataAccess airportDataAccess = new AirportDataAccess();
+        Airport airport = airportDataAccess.GetAirportDetails();
 
         Console.Clear();
         Console.WriteLine("Airport Contact Information");
