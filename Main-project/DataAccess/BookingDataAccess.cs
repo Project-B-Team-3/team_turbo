@@ -7,19 +7,12 @@ public static class BookingDataAccess
 {
 	public static List<Booking> GetBookings()
 	{
-		try
-		{
-			var json = File.ReadAllText("./DataSources/Bookings.json");
-			var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
-			return bookings ?? new List<Booking>();
-		}
-		catch (Exception e)
-		{
-			Console.Clear();
-			Console.WriteLine(e);
-			Environment.Exit(1);
-			return new List<Booking>();
-		}
+		var path = "./DataSources/Bookings.json";
+		if (!File.Exists(path)) File.Create(path).Close();
+		
+		var json = File.ReadAllText(path);
+		var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
+		return bookings ?? new List<Booking>();
 	}
 
 	public static void CreateBooking(Booking booking)
