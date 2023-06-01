@@ -50,7 +50,6 @@ public static class BookingLogic
 	public static string GenerateUniqueReservationCode()
 	{
 		string reservationCode;
-		var random = new Random();
 		var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!])[A-Za-z\d@!]{8,}$");
 
 		do
@@ -61,7 +60,7 @@ public static class BookingLogic
 		return reservationCode;
 	}
 
-	public static string GenerateRandomCode()
+	private static string GenerateRandomCode()
 	{
 		const string characters =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!";
