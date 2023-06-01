@@ -1,5 +1,6 @@
 using Main_project.DataModels;
 using System.IO;
+using Main_project.Logic;
 using Newtonsoft.Json;
 
 namespace Main_project.DataAccess;
@@ -9,7 +10,11 @@ public static class CateringDataAccess
 	public static List<Catering> GetCatering()
 	{
 		var path = "./DataSources/Catering.json";
-		if (!File.Exists(path)) File.Create(path).Close();
+		if (!File.Exists(path))
+		{
+			File.Create(path).Close();
+			File.WriteAllText(path, JsonConvert.SerializeObject(CateringLogic.DefaultCateringList(), Formatting.Indented));
+		}
 		
 		var json = File.ReadAllText(path);
 		var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
