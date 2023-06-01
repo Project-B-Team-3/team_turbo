@@ -1,3 +1,5 @@
+namespace Main_project.DataModels;
+
 public class Airport
 {
     public string PhoneNumber { get; set; }

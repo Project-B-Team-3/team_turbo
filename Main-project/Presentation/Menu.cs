@@ -1,5 +1,4 @@
 using Main_project.DataAccess;
-using Main_project.Misc;
 using Main_project.DataModels;
 using Main_project.Misc;
 
@@ -14,10 +13,12 @@ public static class Menu
         while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape && x == false)
         {
             Console.Clear();
-            Console.WriteLine("What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Contact us\n[5] Quit\n");
-            
+            Console.WriteLine(
+                "What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Contact us\n[5] Quit\n"
+            );
+
             key = Console.ReadKey(true);
-            //Press key to trigger event ( D0 = 0 , D1 = 1 etc.)
+            // Press key to trigger event (D0 = 0, D1 = 1, etc.)
             switch (key.Key)
             {
                 case ConsoleKey.D1:
@@ -26,30 +27,25 @@ public static class Menu
                 case ConsoleKey.D2:
                     CreateBooking.CreateNewBooking();
                     break;
-
                 case ConsoleKey.D3:
                     Console.WriteLine("Cancel a flight");
                     var reservationNumber = Console.ReadLine();
                     ChangeBooking.CancelBooking(reservationNumber);
                     break;
-
                 case ConsoleKey.D4:
-                    Console.WriteLine("Contact us now");
+                    DisplayContactDetails();
                     break;
-
-                case ConsoleKey.D5: case ConsoleKey.Q:
+                case ConsoleKey.D5:
+                case ConsoleKey.Q:
                     Console.WriteLine("Program has been quit");
                     x = true;
                     break;
-
                 case ConsoleKey.G:
                     FlightGenerator.GenerateFlights();
                     break;
-                
                 case ConsoleKey.S:
                     AdminPanel.Admin();
                     break;
-                    
                 default:
                     // Checks for capslock/numlock
                     if (Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -63,5 +59,18 @@ public static class Menu
                     break;
             }
         }
+    }
+
+    private static void DisplayContactDetails() // Luuk you are free to move this :p I know hahahah.
+    {
+        Airport airport = AirportDataAccess.GetAirportDetails();
+
+        Console.Clear();
+        Console.WriteLine("Airport Contact Information");
+        Console.WriteLine("Phone Number: " + airport.PhoneNumber);
+        Console.WriteLine("Address: " + airport.Address);
+        Console.WriteLine("Email: " + airport.Email);
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadKey(true);
     }
 }
