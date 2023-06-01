@@ -1,4 +1,3 @@
-using Main_project.DataAccess;
 using Main_project.Misc;
 
 namespace Main_project.Presentation;
@@ -22,7 +21,7 @@ public static class Menu
                     ConsoleView.DisplayFlights();
                     break;
                 case ConsoleKey.D2:
-                    CreateBooking.CreateNewBooking();
+                    BookingPresentation.CreateNewBooking();
                     break;
 
                 case ConsoleKey.D3:
