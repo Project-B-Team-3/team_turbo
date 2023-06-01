@@ -30,6 +30,7 @@ public static class CreateBooking
 			Console.ReadKey();
 			return;
 		}
+
 		cost.FlightPrice = FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum).Price;
 
 		Console.WriteLine("Would you like to add catering to your booking? (y/n)");

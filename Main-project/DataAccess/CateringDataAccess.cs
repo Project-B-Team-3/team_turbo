@@ -13,9 +13,10 @@ public static class CateringDataAccess
 		if (!File.Exists(path))
 		{
 			File.Create(path).Close();
-			File.WriteAllText(path, JsonConvert.SerializeObject(CateringLogic.DefaultCateringList(), Formatting.Indented));
+			File.WriteAllText(path,
+				JsonConvert.SerializeObject(CateringLogic.DefaultCateringList(), Formatting.Indented));
 		}
-		
+
 		var json = File.ReadAllText(path);
 		var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
 		return cateringItems ?? new List<Catering>();

@@ -4,7 +4,8 @@ namespace Main_project.Logic;
 
 public static class CateringLogic
 {
-	public static List<Catering> DefaultCateringList() // I will add more catering options later after PO interview -Menno
+	public static List<Catering>
+		DefaultCateringList() // I will add more catering options later after PO interview -Menno
 	{
 		var items = new List<Catering>()
 		{
