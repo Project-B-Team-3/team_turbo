@@ -31,7 +31,7 @@ public static class SeatSelector
 		var chairNumber = Console.ReadLine();
 		while (!BookingLogic.FlightSeats(flightNumber).Exists(h => h.Number == chairNumber) ||
 		       !BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available ||
-				chairNumber == null)
+		       chairNumber == null)
 		{
 			Console.WriteLine("Invalid choice, please choose again.");
 			Console.Write("Which seat do you want? ");

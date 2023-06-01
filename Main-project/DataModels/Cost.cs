@@ -3,7 +3,9 @@ namespace Main_project.DataModels;
 public class Cost
 {
 	public decimal FlightPrice { get; set; }
+
 	public decimal Catering { get; set; }
+
 	// still need to add luggage
 	public List<decimal> SeatPrices { get; set; }
 
