@@ -13,7 +13,7 @@ public class Airplane
 	{
 		Brand = brand;
 		Model = model;
-		Rows = rows; 
+		Rows = rows;
 		EconomySeat = economySeat;
 		BusinessSeat = businessSeat;
 		FirstSeat = firstSeat;

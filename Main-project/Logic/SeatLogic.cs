@@ -6,7 +6,8 @@ namespace Main_project.Logic;
 
 public static class SeatLogic
 {
-	public static void ChangeSeat(string reservationNumber, string birthday){
+	public static void ChangeSeat(string reservationNumber, string birthday)
+	{
 		var flight = BookingDataAccess.GetBookings().First(u => u.ReservationNumber == reservationNumber);
 		var person = flight.Seats
 			.First(h => h.Value.Birthdate == birthday);
@@ -17,7 +18,8 @@ public static class SeatLogic
 		flight.Seats.Add(seat, person.Value);
 	}
 
-	public static void UpdateSeat(string flightNum, string seat, bool available){
+	public static void UpdateSeat(string flightNum, string seat, bool available)
+	{
 		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == flightNum);
 		flight.Seats.First(h => h.Number == seat).Available = available;
 		FlightDataAccess.UpdateFlight(flight);
@@ -28,7 +30,6 @@ public static class SeatLogic
 		var rows = "ABCDEFGHJKL".ToCharArray();
 		var returnSeats = new List<Seat>();
 		for (var i = 0; i < economyCount + businessCount + firstCount; i++)
-		{
 			returnSeats.Add(new Seat
 				{
 					Number = rows[i % rowsCount] + (i / rowsCount + 1).ToString(),
@@ -36,10 +37,9 @@ public static class SeatLogic
 					Class = i < firstCount ? "First Class" :
 						i < firstCount + businessCount ? "Business Class" : "Economy Class",
 					Price = i < firstCount ? 60 :
-					i < firstCount + businessCount ? 40 : 20
+						i < firstCount + businessCount ? 40 : 20
 				}
 			);
-		}
 
 		return returnSeats;
 	}
