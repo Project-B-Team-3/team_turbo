@@ -16,10 +16,9 @@ namespace Main_project.Presentation
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("What do you wish to do?\n" +
                                   "[1] View all available flights\n" +
-                                  "[2] Change seat pricing\n" +
-                                  "[3] Update catering\n" +
-                                  "[4] Change or cancel flights\n" +
-                                  "[5] Quit");
+                                  "[2] Update catering\n" +
+                                  "[3] Change or cancel flights\n" +
+                                  "[4] Quit");
                 ConsoleKeyInfo Adminchoice;
                 Adminchoice = Console.ReadKey(true);
                 switch (Adminchoice.Key)
@@ -30,20 +29,16 @@ namespace Main_project.Presentation
                         break;
 
                     case ConsoleKey.D2:
-                        Console.WriteLine("Change seat pricing");
-                        break;
-
-                    case ConsoleKey.D3:
                         Console.WriteLine("Update catering");
                         SelectCateringToUpdate();
                         break;
 
-                    case ConsoleKey.D4:
+                    case ConsoleKey.D3:
                         Console.WriteLine("Change or cancel flights");
                         SelectFlightToUpdate();
                         break;
 
-                    case ConsoleKey.D5:
+                    case ConsoleKey.D4:
                         Console.WriteLine("Exiting the program");
                         return;
 
@@ -225,7 +220,7 @@ namespace Main_project.Presentation
 
                     case ConsoleKey.D4:
                         Console.WriteLine("return to Admin.");
-                        ;
+                        Admin();
                         break;
 
                     default:
@@ -600,7 +595,7 @@ namespace Main_project.Presentation
                 {
                     if (calledFromUpdateMenu)
                     {
-                        SelectFlightToUpdate();
+                        return;
                     }
                     else
                     {
