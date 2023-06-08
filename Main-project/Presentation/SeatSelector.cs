@@ -28,16 +28,17 @@ public static class SeatSelector
 		}
 
 		Console.Write("Which seat do you want? ");
-		var chairNumber = Console.ReadLine();
-		while (!BookingLogic.FlightSeats(flightNumber).Exists(h => h.Number == chairNumber) ||
-		       !BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available ||
-		       chairNumber == null)
+		var chairNumber = Console.ReadLine()?.ToUpper();
+		while (true)
 		{
-			Console.WriteLine("Invalid choice, please choose again.");
+			if (BookingLogic.FlightSeats(flightNumber).Exists(h => h.Number == chairNumber) &&
+			    BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available &&
+			    chairNumber != null) return chairNumber;
+			Console.WriteLine(!BookingLogic.FlightSeats(flightNumber).First(h => h.Number == chairNumber).Available
+				? "This seat is already taken, please try again."
+				: "Invalid seat number entered, please try again.");
 			Console.Write("Which seat do you want? ");
 			chairNumber = Console.ReadLine();
 		}
-
-		return chairNumber;
 	}
 }
