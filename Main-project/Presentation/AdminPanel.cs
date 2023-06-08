@@ -585,7 +585,7 @@ namespace Main_project.Presentation
 
                 // Prompt for user input to continue displaying flights
                 // Prompt for user input to navigate flights
-                Console.WriteLine("Options: [B]ack, [F]orward, [R]eturn to Sort Menu");
+                Console.WriteLine("Options: [B]ack, [F]orward, [R]eturn to Menu");
                 Console.WriteLine(line);
                 ConsoleKeyInfo input = Console.ReadKey(true);
 
