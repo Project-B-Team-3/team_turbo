@@ -14,24 +14,60 @@ public class FlightGenerator
 		var daysToGenerate = 90; // Generate flights for 90 days
 		var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Boeing", Model: "737-700" });
 
-		// Airport locations stored in a dictionary
-		Dictionary<string, string> airportCodes = new()
-		{
-			// Europe
-			{ "RTM", "Rotterdam" },
-			{ "LHR", "London" }, { "CDG", "Paris" }, { "FRA", "Frankfurt" }, { "BCN", "Barcelona" },
-			{ "AMS", "Amsterdam" },
-			{ "CPH", "Copenhagen" }, { "MAD", "Madrid" }, { "IST", "Istanbul" }, { "ATH", "Athens" },
-			{ "ZRH", "Zurich" },
-			// America
-			{ "JFK", "New York" }, { "LAX", "Los Angeles" }, { "ORD", "Chicago" }, { "SFO", "San Francisco" },
-			{ "MCO", "Orlando" },
-			{ "DEN", "Denver" }, { "SEA", "Seattle" }, { "MIA", "Miami" }, { "LAS", "Las Vegas" }, { "ATL", "Atlanta" },
-			// Asia
-			{ "HND", "Tokyo" }, { "NRT", "Tokyo" }, { "PEK", "Beijing" }, { "HKG", "Hong Kong" }, { "DXB", "Dubai" },
-			{ "BKK", "Bangkok" }, { "ICN", "Seoul" }, { "KUL", "Kuala Lumpur" }, { "SGN", "Ho Chi Minh City" },
-			{ "DEL", "New Delhi" }
-		};
+        // Airport locations stored in a dictionary
+        Dictionary<string, string> airportCodes =
+            new()
+            {
+                // Europe
+                { "RTM", "Rotterdam" },
+                { "LHR", "London" },
+                { "CDG", "Paris" },
+                { "FRA", "Frankfurt" },
+                { "BCN", "Barcelona" },
+                { "AMS", "Amsterdam" },
+                { "CPH", "Copenhagen" },
+                { "MAD", "Madrid" },
+                { "ATH", "Athens" },
+                { "ZRH", "Zurich" },
+				{ "PRG", "Prague" },
+                { "BUD", "Budapest" },
+                { "ZAG", "Zagreb" }, // croatia
+                { "BEG", "Belgrade" },
+                { "SOF", "Sofia" },
+                { "SKG", "Thessaloniki" }, // greece, adding this for an eventual question in presentation about this code wtf these cities are!!! im an IT student, not geography :)
+                { "TLL", "Tallinn" }, // estonia
+                { "RIX", "Riga" }, // latvia
+                { "VNO", "Vilnius" }, // lithuania
+                { "MSQ", "Minsk" }, // belarus
+                { "HEL", "Helsinki" },
+                { "OSL", "Oslo" },
+                { "ARN", "Stockholm" },
+                { "SKP", "Skopje" }, // macedonia
+                { "KIV", "Chisinau" }, // moldova
+                { "SJJ", "Sarajevo" }, // bosnia and herzegovina
+                { "TGD", "Podgorica" }, // montenegro
+                { "LIS", "Lisbon" },
+                // North America
+                { "JFK", "New York" },
+                { "LAX", "Los Angeles" },
+                { "ORD", "Chicago" },
+                { "SFO", "San Francisco" },
+                { "MCO", "Orlando" },
+                { "DEN", "Denver" },
+                { "SEA", "Seattle" },
+                { "MIA", "Miami" },
+                { "LAS", "Las Vegas" },
+                { "ATL", "Atlanta" },
+                // Canada
+                { "YYZ", "Toronto" },
+                { "YVR", "Vancouver" },
+                { "YUL", "Montreal" },
+                { "YYC", "Calgary" },
+                // North Africa
+                { "CMN", "Casablanca" },
+				{ "CAI", "Cairo" },
+				{ "ALG", "Algiers" } // algeria
+            };
 
 		// Generating the next month of flights
 		var startDate = DateTime.Today;
