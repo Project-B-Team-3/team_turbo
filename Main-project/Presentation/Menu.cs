@@ -14,7 +14,7 @@ public static class Menu
 		{
 			Console.Clear();
 			Console.WriteLine(
-				"What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[3] Cancel a flight\n[4] Contact us\n[5] Quit\n"
+				"What do you wish to do?\n[1] View all upcoming flights\n[2] Book a flight\n[4] Cancel a booking\n[5] Contact us\n[6] Quit\n"
 			);
 
 			key = Console.ReadKey(true);
@@ -28,14 +28,19 @@ public static class Menu
 					CreateBooking.CreateNewBooking();
 					break;
 				case ConsoleKey.D3:
-					Console.WriteLine("Cancel a flight");
+					// TODO implement changing booking
+					// UserLogin.Start();
+					Console.WriteLine("You will be able to change your booking here...");
+					break;
+				case ConsoleKey.D4:
+					Console.WriteLine("Please enter your booking number:");
 					var reservationNumber = Console.ReadLine();
 					ChangeBooking.CancelBooking(reservationNumber);
 					break;
-				case ConsoleKey.D4:
+				case ConsoleKey.D5:
 					DisplayContactDetails();
 					break;
-				case ConsoleKey.D5:
+				case ConsoleKey.D6:
 				case ConsoleKey.Q:
 					Console.WriteLine("Program has been quit");
 					x = true;

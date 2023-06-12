@@ -8,6 +8,8 @@ public class Program
 {
 	public static void Main()
 	{
+		if (!Directory.Exists("./DataSources/Airplanes"))
+			Directory.CreateDirectory("./DataSources/Airplanes");
 		if (!File.Exists("./DataSources/Airplanes/Boeing737-700.json"))
 			AirplaneDataAccess.MakePlane(new Airplane("Boeing", "737-700", 6, 106, 6, 20));
 		if (!File.Exists("./DataSources/Airplanes/EmbraerE-175.json"))
