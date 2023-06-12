@@ -9,7 +9,7 @@ public static class BookingDataAccess
 	{
 		var path = "./DataSources/Bookings.json";
 		if (!File.Exists(path)) File.Create(path).Close();
-		
+
 		var json = File.ReadAllText(path);
 		var bookings = JsonConvert.DeserializeObject<List<Booking>>(json);
 		return bookings ?? new List<Booking>();

@@ -21,11 +21,13 @@ public class Booking
 		Seats = seats;
 		Cost = cost;
 	}
-	
+
 	public List<string> GetLines()
 	{
-		Flight flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == FlightNumber);
-		string[] lines = {$"You just booked a flight from {flight.DepartureCity} to {flight.DestinationCity}.",
+		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == FlightNumber);
+		string[] lines =
+		{
+			$"You just booked a flight from {flight.DepartureCity} to {flight.DestinationCity}.",
 			"Booking Details",
 			$"Reservation Number: {ReservationNumber}",
 			$"Flight Number: {FlightNumber}",
@@ -34,12 +36,10 @@ public class Booking
 			$"Departure Time: {flight.DepartureTime:dd-M-yyy HH:mm:ss}",
 			$"For the total price of: {Cost.GetTotal()}",
 			"",
-			"And your seats are:"};
+			"And your seats are:"
+		};
 		var returnVal = lines.ToList();
-		foreach (var person in Seats.Values.ToArray())
-		{
-			returnVal.Add(person.ToString());
-		}
+		foreach (var person in Seats.Values.ToArray()) returnVal.Add(person.ToString());
 		return returnVal;
 	}
 }

@@ -10,10 +10,8 @@ public class UnitTest1
 	public UnitTest1()
 	{
 		Directory.CreateDirectory("./DataSources/Airplanes");
-		if(!File.Exists("./DataSources/Airplanes/Boeing737-700.json"))
-		{
+		if (!File.Exists("./DataSources/Airplanes/Boeing737-700.json"))
 			AirplaneDataAccess.MakePlane(new Airplane("Boeing", "737-700", 6, 106, 6, 20));
-		}
 		if (!File.Exists("./DataSources/Flights.json"))
 		{
 			// TODO fix the generator so it works in testing.
@@ -28,7 +26,7 @@ public class UnitTest1
 			? new Airplane("Boeing", "737-700", 6, 106, 6, 20)
 			: new Airplane("Fantasy", Random.Shared.NextInt64().ToString(), 4, 140, 16, 8)));
 	}
-	
+
 	[TestMethod]
 	public void TestFlights()
 	{
