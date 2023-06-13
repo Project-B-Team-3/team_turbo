@@ -3,51 +3,66 @@ using Newtonsoft.Json;
 
 public static class CateringDataAccess
 {
-    private static readonly string cateringFilePath = "./DataSources/Catering.json";
-
     public static List<Catering> GetCatering()
     {
-        if (!File.Exists(cateringFilePath))
+        var path = "./DataSources/Catering.json";
+        if (!File.Exists(path))
         {
-            var defaultCatering = CateringLogic.DefaultCateringList();
-            File.WriteAllText(cateringFilePath, JsonConvert.SerializeObject(defaultCatering, Formatting.Indented));
+            File.Create(path).Close();
+            File.WriteAllText(path,
+                JsonConvert.SerializeObject(CateringLogic.DefaultCateringList(), Formatting.Indented));
         }
 
-        var json = File.ReadAllText(cateringFilePath);
+        var json = File.ReadAllText(path);
         var cateringItems = JsonConvert.DeserializeObject<List<Catering>>(json);
         return cateringItems ?? new List<Catering>();
     }
 
+    public static void CreateCateringItems(List<Catering> cateringList)
+    {
+        var newCatering = GetCatering();
+        newCatering = newCatering.Concat(cateringList).ToList();
+        File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
+    }
+
     public static void CreateCateringItem(Catering catering)
     {
-        var cateringItems = GetCatering();
-        cateringItems.Add(catering);
-        SaveCateringItems(cateringItems);
+        var newCatering = GetCatering();
+        newCatering.Add(catering);
+        File.WriteAllText("./DataSources/Catering.json", JsonConvert.SerializeObject(newCatering, Formatting.Indented));
     }
 
     public static void DeleteCatering(Catering catering)
     {
-        var cateringItems = GetCatering();
-        cateringItems.Remove(catering);
-        SaveCateringItems(cateringItems);
-    }
+        List<Catering> caterings = GetCatering();
 
-    public static void UpdateCatering(Catering updatedCatering)
-    {
-        var cateringItems = GetCatering();
-        var cateringToUpdate = cateringItems.FirstOrDefault(c => c.Name == updatedCatering.Name);
+        var index = caterings.FindIndex(c => c.Name == catering.Name);
 
-        if (cateringToUpdate != null)
+        if (index != -1)
         {
-            cateringToUpdate.Description = updatedCatering.Description;
-            cateringToUpdate.Price = updatedCatering.Price;
-            SaveCateringItems(cateringItems);
+            caterings.RemoveAt(index);
+            File.WriteAllText("./DataSources/Catering.json",
+                JsonConvert.SerializeObject(caterings, Formatting.Indented));
+
+            Console.WriteLine("Catering deleted successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Catering not found.");
         }
     }
 
-    private static void SaveCateringItems(List<Catering> cateringItems)
+    public static void UpdateCatering(Catering catering)
     {
-        var json = JsonConvert.SerializeObject(cateringItems, Formatting.Indented);
-        File.WriteAllText(cateringFilePath, json);
+        List<Catering> caterings = GetCatering();
+
+        var index = caterings.FindIndex(c => c.Name == catering.Name);
+
+        if (index != -1)
+        {
+            caterings[index] = catering;
+            File.WriteAllText("./DataSources/Catering.json",
+                JsonConvert.SerializeObject(caterings, Formatting.Indented));
+        }
     }
 }
