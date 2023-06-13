@@ -94,5 +94,10 @@ namespace Main_project.DataAccess
 
             return flights.FirstOrDefault(f => f.FlightNumber == flightNumber);
         }
+
+        public static List<Flight> FilterFlightsByDate(List<Flight> flights, DateTime travelDate)
+        {
+            return flights.Where(flight => flight.DepartureTime.Date == travelDate.Date).ToList();
+        }
     }
 }

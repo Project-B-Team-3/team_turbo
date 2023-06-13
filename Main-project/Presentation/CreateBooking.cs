@@ -1,18 +1,24 @@
+using System.Globalization;
 using Main_project.DataAccess;
 using Main_project.DataModels;
 using Main_project.Logic;
 
 namespace Main_project.Presentation
 {
-    public static class CreateBooking
+    public class CreateBooking
     {
         public static void CreateNewBooking()
         {
             var cost = new Cost(0, 0, new List<decimal>());
             Console.Clear();
-            Console.WriteLine("Welcome to the booking menu. Please select a destination:");
+            Console.WriteLine(
+                "Welcome to the booking menu. Please wait while the list of destinations is being loaded..."
+            );
 
             var destinations = FlightDataAccess.GetDestinations();
+
+            Console.Clear();
+            Console.WriteLine("List of destinations loaded. Please select a destination:");
 
             for (var i = 0; i < destinations.Count; i++)
             {
@@ -23,7 +29,11 @@ namespace Main_project.Presentation
             Console.WriteLine();
             Console.WriteLine("Enter the number corresponding to your desired destination:");
             var destinationInput = Console.ReadLine();
-            if (!int.TryParse(destinationInput, out var destinationIndex) || destinationIndex < 1 || destinationIndex > destinations.Count)
+            if (
+                !int.TryParse(destinationInput, out var destinationIndex)
+                || destinationIndex < 1
+                || destinationIndex > destinations.Count
+            )
             {
                 Console.WriteLine("Invalid input, please try again...");
                 Thread.Sleep(200);
@@ -40,10 +50,53 @@ namespace Main_project.Presentation
                 return;
             }
 
-            Console.WriteLine($"Available flights to {selectedDestination}:");
-            for (var i = 0; i < flights.Count; i++)
+            Console.WriteLine("Please enter your desired travel date (dd/mm/yyyy):");
+            string dateInput;
+            DateTime travelDate;
+            while (true)
             {
-                var flight = flights[i];
+                dateInput = Console.ReadLine();
+                if (
+                    !DateTime.TryParseExact(
+                        dateInput,
+                        "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out travelDate
+                    )
+                )
+                {
+                    Console.WriteLine(
+                        "Invalid date format. Please enter the date in the format dd/MM/yyyy."
+                    );
+                    Console.WriteLine("For example, enter 13/06/2023 for June 13, 2023.");
+                    Thread.Sleep(200);
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            var filteredFlights = FlightLogic.GetFlightsByDestinationAndDate(
+                selectedDestination,
+                travelDate
+            );
+
+            if (filteredFlights.Count == 0)
+            {
+                Console.WriteLine("There are no available flights on the selected travel date...");
+                Thread.Sleep(200);
+                return;
+            }
+
+            Console.WriteLine(
+                $"Available flights to {selectedDestination} on {travelDate.ToShortDateString()}:"
+            );
+            for (var i = 0; i < filteredFlights.Count; i++)
+            {
+                var flight = filteredFlights[i];
                 Console.WriteLine($"{i + 1}. Flight {flight.FlightNumber}");
                 Console.WriteLine($"   Departure: {flight.DepartureTime}");
                 Console.WriteLine($"   Price: {flight.Price:C2}");
@@ -52,14 +105,18 @@ namespace Main_project.Presentation
 
             Console.WriteLine("Enter the number corresponding to the flight you want to book:");
             var flightInput = Console.ReadLine();
-            if (!int.TryParse(flightInput, out var flightIndex) || flightIndex < 1 || flightIndex > flights.Count)
+            if (
+                !int.TryParse(flightInput, out var flightIndex)
+                || flightIndex < 1
+                || flightIndex > filteredFlights.Count
+            )
             {
                 Console.WriteLine("Invalid input, please try again...");
                 Thread.Sleep(200);
                 return;
             }
 
-            var selectedFlight = flights[flightIndex - 1];
+            var selectedFlight = filteredFlights[flightIndex - 1];
             cost.FlightPrice = selectedFlight.Price;
             var flightNum = selectedFlight.FlightNumber;
 
@@ -120,11 +177,7 @@ namespace Main_project.Presentation
                     }
 
                     int choice;
-                    if (
-                        !int.TryParse(choiceInput, out choice)
-                        || choice < 1
-                        || choice > cateringList.Count
-                    )
+                    if (!int.TryParse(choiceInput, out choice) || choice < 1 || choice > cateringList.Count)
                     {
                         invalidInput = true;
                         Console.WriteLine("Invalid input, please try again...");
@@ -227,9 +280,7 @@ namespace Main_project.Presentation
                 Console.ReadKey();
 
                 var reservationNum = BookingLogic.GenerateUniqueReservationCode();
-                BookingDataAccess.CreateBooking(
-                    new Booking(reservationNum, flightNum, seats, cost)
-                );
+                BookingDataAccess.CreateBooking(new Booking(reservationNum, flightNum, seats, cost));
             }
         }
     }
