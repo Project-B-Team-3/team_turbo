@@ -39,7 +39,7 @@ namespace Main_project.Presentation
                         break;
 
                     case ConsoleKey.D4:
-                        Console.WriteLine("Exiting the program");
+                        Console.WriteLine("Exiting the admin menu...");
                         return;
 
                     default:
@@ -202,26 +202,22 @@ namespace Main_project.Presentation
                 {
                     case ConsoleKey.D1:
                         Console.WriteLine("Add a new catering item");
-                        ;
                         AddCatering();
                         break;
 
                     case ConsoleKey.D2:
                         Console.WriteLine("Change a catering item");
-                        ;
                         ChangeCaterings();
                         break;
 
                     case ConsoleKey.D3:
                         Console.WriteLine("Delete a catering item");
-                        ;
                         DeleteCatering();
                         break;
 
                     case ConsoleKey.D4:
                         Console.WriteLine("return to Admin.");
-                        Admin();
-                        break;
+                        return;
 
                     default:
                         Console.WriteLine("Invalid option.");
@@ -596,10 +592,6 @@ namespace Main_project.Presentation
                     if (calledFromUpdateMenu)
                     {
                         return;
-                    }
-                    else
-                    {
-                        Admin();
                     }
                 }
 
