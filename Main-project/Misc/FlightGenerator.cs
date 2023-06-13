@@ -3,7 +3,7 @@ using Main_project.DataModels;
 
 namespace Main_project.Misc;
 
-public class FlightGenerator
+public static class FlightGenerator
 {
 	public static void GenerateFlights()
 	{
@@ -12,7 +12,7 @@ public class FlightGenerator
 		List<Flight> flights = new();
 		var rand = new Random();
 		var daysToGenerate = 90; // Generate flights for 90 days
-		var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Boeing", Model: "737-700" });
+		var airplane = AirplaneDataAccess.GetPlanes().First(h => h is { Brand: "Embraer", Model: "E-175" });
 
         // Airport locations stored in a dictionary
         Dictionary<string, string> airportCodes =
@@ -73,7 +73,7 @@ public class FlightGenerator
 		var startDate = DateTime.Today;
 		var endDate = startDate + TimeSpan.FromDays(daysToGenerate);
 
-		// Loop through all pairs departpure and destination airports
+		// Loop through all pairs departure and destination airports
 		foreach (var departureAirport in airportCodes)
 		foreach (var destinationAirport in airportCodes)
 			// Check if departure and destination airports are different
