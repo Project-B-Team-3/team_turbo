@@ -217,7 +217,8 @@ namespace Main_project.Presentation
 
                     case ConsoleKey.D4:
                         Console.WriteLine("return to Admin.");
-                        return;
+                        Admin();
+                        break;
 
                     default:
                         Console.WriteLine("Invalid option.");
