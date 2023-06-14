@@ -9,7 +9,6 @@ namespace Main_project.Presentation
     {
         public static void CreateNewBooking()
         {
-            var cost = new Cost(0, 0, new List<decimal>());
             Console.Clear();
             Console.WriteLine(
                 "Welcome to the booking menu. Please wait while the list of destinations is being loaded..."
@@ -139,6 +138,7 @@ namespace Main_project.Presentation
 
             var selectedFlight = filteredFlights[flightIndex - 1];
             Console.WriteLine(selectedFlight);
+            var flightNum = selectedFlight.FlightNumber;
 
             Console.WriteLine("Enter the number of passengers:");
 
@@ -161,7 +161,8 @@ namespace Main_project.Presentation
                     isValidInput = true;
                 }
             } while (!isValidInput);
-
+            
+            var cost = new Cost(selectedFlight.Price, 0, new List<decimal>());
             var totalPrice = FlightLogic.CalculateTotalPrice(selectedFlight, numberOfPassengers);
             cost.FlightPrice = totalPrice;
 
@@ -266,28 +267,23 @@ namespace Main_project.Presentation
             }
 
             var availableSeats = selectedFlight.Seats.Where(seat => seat.Available).ToList();
-            var selectedSeats = availableSeats.Take(numberOfPassengers).ToList();
 
-            if (selectedSeats.Count < numberOfPassengers)
+            if (availableSeats.Count < numberOfPassengers)
             {
                 Console.WriteLine(
                     "Insufficient seats available for the requested number of people."
                 );
                 return;
             }
+            
 
-            foreach (var seat in selectedSeats)
-            {
-                seat.Available = false;
-            }
-
-            var passengers = new List<Person>();
+            Dictionary<string, Person> seats = new();
 
             for (var i = 0; i < numberOfPassengers; i++)
             {
                 Console.WriteLine($"Enter the details for passenger #{i + 1}:");
                 Console.Write("Name: ");
-                var passengerName = Console.ReadLine();
+                var name = Console.ReadLine();
                 Console.Write("Birthdate (dd/MM/yyyy): ");
                 DateTime birthdate;
 
@@ -313,6 +309,7 @@ namespace Main_project.Presentation
                         );
                     }
                 }
+
                 Console.Write("Document number: ");
                 var documentNum = Console.ReadLine();
 
@@ -323,74 +320,52 @@ namespace Main_project.Presentation
                     Console.Write("Document number: ");
                     documentNum = Console.ReadLine();
                 }
-                passengers.Add(new Person(passengerName, birthdate, documentNum));
-                
-                var flightNumber = selectedFlight.FlightNumber;
-                var seats = selectedSeats.ToDictionary(s => s.Number, s => (Person)null); // Placeholder value for seats
-                var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
 
-                var booking = new Booking(
-                    reservationNumber,
-                    flightNumber,
-                    seats,
-                    new Cost(
-                        selectedFlight.Price,
-                        0, // Replace `cateringPrice` with the actual value or set it to 0
-                        selectedSeats.Select(s => s.Price).ToList()
-                    )
-                );
-                
-                foreach (var line in booking.GetLines())
-                {
-                    Console.WriteLine(line);
-                }
-                
-                Console.WriteLine("Confirm booking? (y/n)");
-                var confirmation = Console.ReadLine()?.ToLower();
-
-                while (confirmation != "y" && confirmation != "n")
-                {
-                    Console.WriteLine("Invalid input. Please enter 'y' for yes or 'n' for no.");
-                    confirmation = Console.ReadLine()?.ToLower();
-                }
-
-                if (confirmation == "y")
-                {
-                    BookingDataAccess.CreateBooking(booking);
-
-                    Console.WriteLine(
-                        $"You just booked a flight from {selectedFlight.DepartureCity} to {selectedFlight.DestinationCity}."
-                    );
-                    Console.WriteLine("Booking Details");
-                    Console.WriteLine($"Reservation Number: {booking.ReservationNumber}");
-                    Console.WriteLine($"Flight Number: {booking.FlightNumber}");
-                    Console.WriteLine(
-                        $"Departure Airport Code: {selectedFlight.DepartureAirportCode}"
-                    );
-                    Console.WriteLine(
-                        $"Destination Airport Code: {selectedFlight.DestinationAirportCode}"
-                    );
-                    Console.WriteLine(
-                        $"Departure Time: {selectedFlight.DepartureTime:dd-M-yyy HH:mm:ss}"
-                    );
-                    Console.WriteLine($"For the total price of: {booking.Cost.GetTotal()}");
-                    Console.WriteLine();
-                    Console.WriteLine("And your seats are:");
-                    foreach (var person in seats.Values.ToArray())
-                    {
-                        Console.WriteLine(person.ToString());
-                    }
-
-                    Console.WriteLine("Booking confirmed!");
-                    Console.WriteLine("Total cost: {0:C2}", booking.Cost.GetTotal());
-                }
-                else if (confirmation == "n")
-                {
-                    Console.WriteLine("Booking cancelled.");
-                }
-
-                Console.ReadKey(intercept: true);
+                var seat = SeatSelector.SelectSeat(flightNum);
+                seats.Add(seat, new Person(name, birthdate, documentNum));
             }
+
+            var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
+
+            var booking = new Booking(
+                reservationNumber,
+                flightNum,
+                seats,
+                cost
+            );
+
+            foreach (var line in booking.GetLines())
+            {
+                Console.WriteLine(line);
+            }
+            
+            Console.WriteLine("Confirm booking? (y/n)");
+            var confirmation = Console.ReadLine()?.ToLower();
+
+            while (confirmation != "y" && confirmation != "n")
+            {
+                Console.WriteLine("Invalid input. Please enter 'y' for yes or 'n' for no.");
+                confirmation = Console.ReadLine()?.ToLower();
+            }
+
+            if (confirmation == "y")
+            {
+                BookingDataAccess.CreateBooking(booking);
+                foreach (var seatsKey in seats.Keys)
+                {
+                    SeatLogic.UpdateSeat(flightNum, seatsKey, false);
+                }
+                Console.WriteLine("Booking confirmed!");
+
+                booking.GetLines().ForEach(Console.WriteLine);
+                Console.WriteLine("Please write down your reservation number. You will need this to cancel your booking.");
+            }
+            else if (confirmation == "n")
+            {
+                Console.WriteLine("Booking cancelled.");
+            }
+
+            Console.ReadKey(intercept: true);
         }
 
         private static DateTime GetValidTravelDate()
