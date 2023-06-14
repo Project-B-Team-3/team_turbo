@@ -36,8 +36,9 @@ namespace Main_project.DataModels
 
         string[] lines =
         {
-            $"You just booked a flight from {flight.DepartureCity} to {flight.DestinationCity}.",
             "Booking Details",
+            $"Departure City: {flight.DepartureCity}",
+            $"Destination City: {flight.DestinationCity}",
             $"Reservation Number: {ReservationNumber}",
             $"Flight Number: {FlightNumber}",
             $"Departure Airport Code: {flight.DepartureAirportCode}",
@@ -48,14 +49,8 @@ namespace Main_project.DataModels
             "And your seats are:"
         };
 
-        if (lines == null)
-        {
-            // Handle the scenario when the lines array is null
-            return new List<string>();
-        }
-
         var returnVal = lines.ToList();
-        returnVal.AddRange(Seats.Values.ToArray().Select(person => person.ToString()));
+        foreach (var person in Seats) returnVal.Add(person.Value + ", " + person.Key);
         return returnVal;
     }
 }

@@ -322,7 +322,15 @@ namespace Main_project.Presentation
                 }
 
                 var seat = SeatSelector.SelectSeat(flightNum);
+                SeatLogic.UpdateSeat(flightNum, seat, false);
                 seats.Add(seat, new Person(name, birthdate, documentNum));
+                var yearDelta = (DateTime.Now - birthdate).TotalDays / 365.2425;
+                cost.SeatPrices.Add(
+                    FlightDataAccess
+                        .GetFlights()
+                        .First(h => h.FlightNumber == flightNum)
+                        .Seats.First(h => h.Number == seat).Price *
+                    (yearDelta < 3 ? 0m : yearDelta < 12 ? 0.35m : yearDelta < 18 ? 0.75m : 1.0m));
             }
 
             var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
@@ -351,10 +359,6 @@ namespace Main_project.Presentation
             if (confirmation == "y")
             {
                 BookingDataAccess.CreateBooking(booking);
-                foreach (var seatsKey in seats.Keys)
-                {
-                    SeatLogic.UpdateSeat(flightNum, seatsKey, false);
-                }
                 Console.WriteLine("Booking confirmed!");
 
                 booking.GetLines().ForEach(Console.WriteLine);
@@ -362,6 +366,10 @@ namespace Main_project.Presentation
             }
             else if (confirmation == "n")
             {
+                foreach (var seatsKey in seats.Keys)
+                {
+                    SeatLogic.UpdateSeat(flightNum, seatsKey, true);
+                }
                 Console.WriteLine("Booking cancelled.");
             }
 
