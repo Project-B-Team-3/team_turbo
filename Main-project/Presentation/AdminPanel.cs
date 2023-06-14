@@ -229,18 +229,20 @@ namespace Main_project.Presentation
 
         public static void DisplayCaterings(List<Catering> caterings)
         {
-            string line = new string('-', 100);
+            string line = new string('-', 196);
             Console.WriteLine(line);
-            Console.WriteLine("| Name             | Description           | Price     | Is Halal |");
+            Console.WriteLine($"| {"ID",-5} | {"Name",-30} | {"Description",-120} | {"Price",-10} | {"Is Halal",-10} |");
             Console.WriteLine(line);
 
+            int id = 1;
             foreach (var catering in caterings)
             {
                 Console.WriteLine(
-                    $"{catering.Name,-18} | {catering.Description,-22} | {catering.Price,-9} | {catering.IsHalal,-9} |");
+                    $"| {id++,5} | {catering.Name,-30} | {catering.Description,-120} | {catering.Price,-10} | {(catering.IsHalal ? "Yes" : "No"),-10} |");
                 Console.WriteLine(line);
             }
         }
+
 
         public static void AddCatering()
         {
