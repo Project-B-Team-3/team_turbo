@@ -12,7 +12,7 @@ public static class SeatSelector
 		Console.WriteLine("The white seats are available:");
 		foreach (var seat in BookingLogic.FlightSeats(flightNumber))
 		{
-			Console.ForegroundColor = !seat.Available ? ConsoleColor.Red : ConsoleColor.White;
+			Console.ForegroundColor = color(seat);
 
 			switch (seat.Number.ToCharArray()[0])
 			{
