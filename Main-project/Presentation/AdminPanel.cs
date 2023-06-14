@@ -238,7 +238,7 @@ namespace Main_project.Presentation
             foreach (var catering in caterings)
             {
                 Console.WriteLine(
-                    $"| {id++,5} | {catering.Name,-30} | {catering.Description,-120} | {catering.Price,-10} | {catering.IsHalal,-10} |");
+                    $"| {id++,5} | {catering.Name,-30} | {catering.Description,-120} | {catering.Price,-10} | {(catering.IsHalal ? "Yes" : "No"),-10} |");
                 Console.WriteLine(line);
             }
         }
