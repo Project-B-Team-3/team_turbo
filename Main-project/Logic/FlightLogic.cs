@@ -26,4 +26,9 @@ public static class FlightLogic
 
         return filteredFlights;
     }
+
+    public static decimal CalculateTotalPrice(Flight flight, int numberOfPassengers)
+    {
+        return flight.Price * numberOfPassengers;
+    }
 }

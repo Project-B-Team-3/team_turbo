@@ -34,7 +34,7 @@ public static class FlightGenerator
                 { "ZAG", "Zagreb" }, // croatia
                 { "BEG", "Belgrade" },
                 { "SOF", "Sofia" },
-                { "SKG", "Thessaloniki" }, // greece, adding this for an eventual question in presentation about this code wtf these cities are!!! im an IT student, not geography :)
+                { "SKG", "Thessaloniki" }, // greece
                 { "TLL", "Tallinn" }, // estonia
                 { "RIX", "Riga" }, // latvia
                 { "VNO", "Vilnius" }, // lithuania
