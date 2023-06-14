@@ -287,7 +287,7 @@ namespace Main_project.Presentation
             {
                 Console.WriteLine($"Enter the details for passenger #{i + 1}:");
                 Console.Write("Name: ");
-                var name = Console.ReadLine();
+                var passengerName = Console.ReadLine();
                 Console.Write("Birthdate (dd/MM/yyyy): ");
                 DateTime birthdate;
 
@@ -313,7 +313,6 @@ namespace Main_project.Presentation
                         );
                     }
                 }
-
                 Console.Write("Document number: ");
                 var documentNum = Console.ReadLine();
 
@@ -324,8 +323,7 @@ namespace Main_project.Presentation
                     Console.Write("Document number: ");
                     documentNum = Console.ReadLine();
                 }
-
-                passengers.Add(new Person(name, birthdate, documentNum));
+                passengers.Add(new Person(passengerName, birthdate, documentNum));
                 
                 var flightNumber = selectedFlight.FlightNumber;
                 var seats = selectedSeats.ToDictionary(s => s.Number, s => (Person)null); // Placeholder value for seats
