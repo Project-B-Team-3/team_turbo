@@ -138,6 +138,7 @@ namespace Main_project.Presentation
             } while (!isValidInput);
 
             var selectedFlight = filteredFlights[flightIndex - 1];
+            Console.WriteLine(selectedFlight);
 
             Console.WriteLine("Enter the number of passengers:");
 
@@ -325,7 +326,27 @@ namespace Main_project.Presentation
                 }
 
                 passengers.Add(new Person(name, birthdate, documentNum));
+                
+                var flightNumber = selectedFlight.FlightNumber;
+                var seats = selectedSeats.ToDictionary(s => s.Number, s => (Person)null); // Placeholder value for seats
+                var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
 
+                var booking = new Booking(
+                    reservationNumber,
+                    flightNumber,
+                    seats,
+                    new Cost(
+                        selectedFlight.Price,
+                        0, // Replace `cateringPrice` with the actual value or set it to 0
+                        selectedSeats.Select(s => s.Price).ToList()
+                    )
+                );
+                
+                foreach (var line in booking.GetLines())
+                {
+                    Console.WriteLine(line);
+                }
+                
                 Console.WriteLine("Confirm booking? (y/n)");
                 var confirmation = Console.ReadLine()?.ToLower();
 
@@ -337,22 +358,6 @@ namespace Main_project.Presentation
 
                 if (confirmation == "y")
                 {
-                    var flightNumber = selectedFlight.FlightNumber;
-                    var passengersDictionary = passengers.ToDictionary(p => p.DocumentNum);
-                    var seats = selectedSeats.ToDictionary(s => s.Number, s => (Person)null); // Placeholder value for seats
-                    var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
-
-                    var booking = new Booking(
-                        reservationNumber,
-                        flightNumber,
-                        seats,
-                        new Cost(
-                            selectedFlight.Price,
-                            0, // Replace `cateringPrice` with the actual value or set it to 0
-                            selectedSeats.Select(s => s.Price).ToList()
-                        )
-                    );
-
                     BookingDataAccess.CreateBooking(booking);
 
                     Console.WriteLine(

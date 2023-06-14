@@ -55,15 +55,7 @@ namespace Main_project.DataModels
         }
 
         var returnVal = lines.ToList();
-
-        if (Seats != null)
-        {
-            foreach (var person in Seats.Values.ToArray())
-            {
-                returnVal.Add(person.ToString());
-            }
-        }
-
+        returnVal.AddRange(Seats.Values.ToArray().Select(person => person.ToString()));
         return returnVal;
     }
 }
