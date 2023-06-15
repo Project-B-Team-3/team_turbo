@@ -1,6 +1,4 @@
-﻿using Main_project.DataModels;
-
-namespace Main_project.Logic;
+﻿namespace Main_project.Logic;
 
 public static class CateringLogic
 {
