@@ -636,6 +636,10 @@ namespace Main_project.Presentation
                     {
                         return;
                     }
+                    else
+                    {
+                        Admin();
+                    }
                 }
 
                 if (input.Key == ConsoleKey.B)
