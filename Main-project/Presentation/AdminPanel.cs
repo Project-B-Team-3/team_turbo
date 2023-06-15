@@ -108,21 +108,34 @@ namespace Main_project.Presentation
 
             SortAndDisplayFlights(sortBy, true);
             Console.WriteLine();
-            Console.Write("Enter the flight number to update: ");
-            string flightNumber = Console.ReadLine();
+            
+            string flightNumber = null;
+            bool isValidFlightNumber = false;
 
-            if (flightNumber == null)
+            while (!isValidFlightNumber)
             {
-                Console.WriteLine("Null value entered");
-                Console.ReadKey();
-                return;
-            }
+                Console.Write("Enter the flight number to update: ");
+                flightNumber = Console.ReadLine();
+                Console.Write("loading");
 
-            if (BookingLogic.GetAllFlights().All(h => h.FlightNumber != flightNumber))
-            {
-                Console.WriteLine($"Flight with number {flightNumber} not found.");
-                Console.ReadKey();
-                return;
+                if (flightNumber == null)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Null value entered");
+                    Console.ReadKey();
+                    return;
+                }
+
+                if (BookingLogic.GetAllFlights().Any(h => h.FlightNumber == flightNumber))
+                {
+                    Console.Clear();
+                    isValidFlightNumber = true;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Flight with number {flightNumber} not found.");
+                }
             }
 
             Flight flightToUpdate = BookingLogic.GetFlightByNumber(flightNumber);
