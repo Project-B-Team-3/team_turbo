@@ -637,14 +637,7 @@ namespace Main_project.Presentation
 
                 if (input.Key == ConsoleKey.R)
                 {
-                    if (calledFromUpdateMenu)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        Admin();
-                    }
+                    return;
                 }
 
                 if (input.Key == ConsoleKey.B)
