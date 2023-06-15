@@ -9,7 +9,7 @@ namespace Main_project.Presentation
         {
             Console.Clear();
             Console.WriteLine(
-                "Please enter the desired destination or leave it blank to view all upcoming flights:"
+                "Please enter the desired destination to view all upcoming flights:"
             );
             var destination = Console.ReadLine()?.ToUpper();
 
