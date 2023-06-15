@@ -23,30 +23,35 @@ internal static class UserLogin
 
 		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
 		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
+		Console.WriteLine("loading");
 		if (booking != null)
 		{
-			Console.WriteLine("Booking Details:");
-			Console.WriteLine("Reservation Number: " + booking.ReservationNumber);
-			Console.WriteLine("Flight Number: " + booking.FlightNumber);
-			Console.WriteLine("Departure Airport Code: " + flight.DepartureAirportCode);
-			Console.WriteLine("Destination Airport Code: " + flight.DestinationAirportCode);
-			Console.WriteLine("Departure Time: " + flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"));
-
-			Console.WriteLine("Your reservation code is " + booking.ReservationNumber);
-
 			while (true)
 			{
 				Console.Clear();
+				
+				
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.WriteLine("change booking\n");
 				Console.ForegroundColor = ConsoleColor.White;
 
-				Console.WriteLine("The list of available caterings is:");
+				Console.WriteLine("you're ticket:");
+				
+				Console.WriteLine("**************************************************");
+				Console.WriteLine($"*{"Booking Details:",-50}*");
+				Console.WriteLine($"*{"Reservation Number: " + booking.ReservationNumber,-50}*");
+				Console.WriteLine($"*{"Flight Number: " + booking.FlightNumber,-50}*");
+				Console.WriteLine($"*{"Departure Airport Code: " + flight.DepartureAirportCode,-50}*");
+				Console.WriteLine($"*{"Destination Airport Code: " + flight.DestinationAirportCode,-50}*");
+				Console.WriteLine($"*{"Departure Time: " + flight.DepartureTime.ToString("dd-M-yyyy HH:mm:ss"),-50}*");
+				Console.WriteLine($"*{"Your reservation code is " + booking.ReservationNumber,-50}*");
+				Console.WriteLine("**************************************************");
+
+				
 
 				Console.WriteLine("\nSelect an option:\n" +
 				                  "[1] Delete booking\n" +
-				                  "[2] Change booking\n" +
-				                  "[3] Return to Admin");
+				                  "[2] Return to Admin");
 
 
 				ConsoleKeyInfo input = Console.ReadKey(true);
@@ -67,13 +72,9 @@ internal static class UserLogin
 
 						Console.ReadKey(intercept: true);
 						break;
+					
 
 					case ConsoleKey.D2:
-						Console.WriteLine("Change booking");
-						
-						break;
-
-					case ConsoleKey.D3:
 						Console.WriteLine("return to menu.");
 						Menu.Start();
 						break;
