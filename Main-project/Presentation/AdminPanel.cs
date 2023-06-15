@@ -294,100 +294,127 @@ namespace Main_project.Presentation
 
         public static void DeleteCatering()
         {
-            Console.Clear();
-            Console.WriteLine("Select Catering to Delete:");
-
-            List<Catering> caterings = CateringDataAccess.GetCatering();
-            DisplayCaterings(caterings);
-
-
-            Console.WriteLine("\nEnter the number of the catering to delete:");
-            string input = Console.ReadLine();
-
-            if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
+            while (true)
             {
-                Catering selectedCatering = caterings[cateringIndex - 1];
-                Console.WriteLine($"\nDeleting Catering: {selectedCatering.Name}");
+                Console.Clear();
+                Console.WriteLine("Select Catering to Delete:");
 
-                // Confirm deletion
-                Console.WriteLine("Are you sure you want to delete this catering? (y/n):");
-                string confirmInput = Console.ReadLine()?.ToLower();
-                if (confirmInput == "y")
+                List<Catering> caterings = CateringDataAccess.GetCatering();
+                DisplayCaterings(caterings);
+
+                Console.WriteLine("\nEnter the number of the catering to delete (0 to exit):");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out int cateringIndex))
                 {
-                    CateringDataAccess.DeleteCatering(selectedCatering);
+                    if (cateringIndex >= 1 && cateringIndex <= caterings.Count)
+                    {
+                        Catering selectedCatering = caterings[cateringIndex - 1];
+                        Console.WriteLine($"\nDeleting Catering: {selectedCatering.Name}");
 
-
-                    Console.WriteLine("Catering deleted successfully!");
+                        // Confirm deletion
+                        Console.WriteLine("Are you sure you want to delete this catering? (y/n):");
+                        string confirmInput = Console.ReadLine()?.ToLower();
+                        if (confirmInput == "y")
+                        {
+                            CateringDataAccess.DeleteCatering(selectedCatering);
+                            Console.WriteLine("Catering deleted successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Catering deletion canceled.");
+                        }
+                    }
+                    else if (cateringIndex == 0)
+                    {
+                        break; // Exit the loop if 0 is entered
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid input or catering not found.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Catering deletion canceled.");
+                    Console.WriteLine("\nInvalid input. Please enter a number.");
                 }
-            }
-            else
-            {
-                Console.WriteLine("\nInvalid input or catering not found.");
-            }
 
-            Console.WriteLine("Press any key to go back...");
-            Console.ReadKey();
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
         }
+
 
         public static void ChangeCaterings()
         {
-            Console.Clear();
-            Console.WriteLine("Select Catering to Update:");
-
-            List<Catering> caterings = CateringDataAccess.GetCatering();
-            DisplayCaterings(caterings);
-
-            Console.WriteLine("\nEnter the number of the catering to update:");
-            string input = Console.ReadLine();
-
-            if (int.TryParse(input, out int cateringIndex) && cateringIndex >= 1 && cateringIndex <= caterings.Count)
+            while (true)
             {
-                Catering selectedCatering = caterings[cateringIndex - 1];
+                Console.Clear();
+                Console.WriteLine("Select Catering to Update:");
 
-                Console.WriteLine(
-                    $"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
+                List<Catering> caterings = CateringDataAccess.GetCatering();
+                DisplayCaterings(caterings);
 
-                Console.WriteLine("\nEnter the new name:");
-                string newName = Console.ReadLine();
-                selectedCatering.Name = newName;
+                Console.WriteLine("\nEnter the number of the catering to update (0 to exit):");
+                string input = Console.ReadLine();
 
-                Console.WriteLine("\nEnter the new description:");
-                string newDescription = Console.ReadLine();
-                selectedCatering.Description = newDescription;
-
-                Console.WriteLine("\nEnter the new price:");
-                string priceInput = Console.ReadLine();
-                if (decimal.TryParse(priceInput, out decimal newPrice))
+                if (int.TryParse(input, out int cateringIndex))
                 {
-                    selectedCatering.Price = newPrice;
-                    Console.WriteLine("Catering price updated successfully!");
+                    if (cateringIndex >= 1 && cateringIndex <= caterings.Count)
+                    {
+                        Catering selectedCatering = caterings[cateringIndex - 1];
+
+                        Console.WriteLine(
+                            $"\nUpdating Catering: Name: {selectedCatering.Name} Description: {selectedCatering.Description} Price: {selectedCatering.Price} Is Halal: {selectedCatering.IsHalal}");
+
+                        Console.WriteLine("\nEnter the new name:");
+                        string newName = Console.ReadLine();
+                        selectedCatering.Name = newName;
+
+                        Console.WriteLine("\nEnter the new description:");
+                        string newDescription = Console.ReadLine();
+                        selectedCatering.Description = newDescription;
+
+                        Console.WriteLine("\nEnter the new price:");
+                        string priceInput = Console.ReadLine();
+                        if (decimal.TryParse(priceInput, out decimal newPrice))
+                        {
+                            selectedCatering.Price = newPrice;
+                            Console.WriteLine("Catering price updated successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid price input. Catering price not updated.");
+                        }
+
+                        Console.WriteLine("Is the catering halal? (y/n):");
+                        string halalInput = Console.ReadLine();
+                        bool newIsHalal = (halalInput?.ToLower() == "y");
+                        selectedCatering.IsHalal = newIsHalal;
+
+                        CateringDataAccess.UpdateCatering(selectedCatering);
+
+                        Console.WriteLine("\nCatering updated successfully!");
+                    }
+                    else if (cateringIndex == 0)
+                    {
+                        break; 
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid input or catering not found.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid price input. Catering price not updated.");
+                    Console.WriteLine("\nInvalid input. Please enter a number.");
                 }
 
-                Console.WriteLine("Is the catering halal? (y/n):");
-                string halalInput = Console.ReadLine();
-                bool newIsHalal = (halalInput?.ToLower() == "y");
-                selectedCatering.IsHalal = newIsHalal;
-
-                CateringDataAccess.UpdateCatering(selectedCatering);
-
-                Console.WriteLine("\nCatering updated successfully!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
             }
-            else
-            {
-                Console.WriteLine("\nInvalid input or catering not found.");
-            }
-
-            Console.WriteLine("Press any key to go back...");
-            Console.ReadKey();
         }
+
 
 
         public static void ChangeFlightsPrice(Flight flightToUpdate)
