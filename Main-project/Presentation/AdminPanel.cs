@@ -20,6 +20,7 @@ namespace Main_project.Presentation
                                   "[3] Change or cancel flights\n" +
                                   "[4] Quit");
                 ConsoleKeyInfo Adminchoice;
+                // Break the loop if a valid option is selected
                 Adminchoice = Console.ReadKey(true);
                 switch (Adminchoice.Key)
                 {
@@ -73,37 +74,41 @@ namespace Main_project.Presentation
             Console.WriteLine("The list of the flight:");
             Console.WriteLine(
                 "Sort flights by: [1] FlightNumber, [2] DepartureCity, [3] DestinationCity, [4] DepartureTime, [5] Seats.Count, [6] Price");
-            ConsoleKeyInfo sortChoice = Console.ReadKey(true);
             string sortBy;
-            switch (sortChoice.Key)
-            {
-                case ConsoleKey.D1:
-                    sortBy = "FlightNumber";
-                    break;
+            while (true)
+            {       // Break the loop if a valid option is selected
+                ConsoleKeyInfo sortChoice = Console.ReadKey(true);
+                switch (sortChoice.Key)
+                {
+                    case ConsoleKey.D1:
+                        sortBy = "FlightNumber";
+                        break;
 
-                case ConsoleKey.D2:
-                    sortBy = "DepartureCity";
-                    break;
+                    case ConsoleKey.D2:
+                        sortBy = "DepartureCity";
+                        break;
 
-                case ConsoleKey.D3:
-                    sortBy = "DestinationCity";
-                    break;
+                    case ConsoleKey.D3:
+                        sortBy = "DestinationCity";
+                        break;
 
-                case ConsoleKey.D4:
-                    sortBy = "DepartureTime";
-                    break;
+                    case ConsoleKey.D4:
+                        sortBy = "DepartureTime";
+                        break;
 
-                case ConsoleKey.D5:
-                    sortBy = "Seats.Count";
-                    break;
+                    case ConsoleKey.D5:
+                        sortBy = "Seats.Count";
+                        break;
 
-                case ConsoleKey.D6:
-                    sortBy = "Price";
-                    break;
+                    case ConsoleKey.D6:
+                        sortBy = "Price";
+                        break;
 
-                default:
-                    Console.WriteLine("Invalid option selected. Returning to Admin.");
-                    return;
+                    default:
+                        Console.WriteLine("Invalid option selected. Please try again.");
+                        continue;
+                }
+                break; // Break the loop if a valid option is selected
             }
 
             SortAndDisplayFlights(sortBy, true);
