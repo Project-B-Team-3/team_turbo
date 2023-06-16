@@ -24,20 +24,20 @@ public static class Menu
 				case ConsoleKey.D1:
 					ConsoleView.DisplayFlights();
 					break;
-				
+
 				case ConsoleKey.D2:
 					CreateBooking.CreateNewBooking();
 					break;
-				
+
 				case ConsoleKey.D3:
 					UserLogin.Login();
-					Console.ReadKey(intercept: true);
+					Console.ReadKey(true);
 					break;
-				
+
 				case ConsoleKey.D4:
 					DisplayContactDetails();
 					break;
-				
+
 				case ConsoleKey.D5:
 				case ConsoleKey.Q:
 					Console.WriteLine("Program has been quit");

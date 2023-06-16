@@ -25,18 +25,17 @@ internal static class UserLogin
 		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
 		Console.WriteLine("loading");
 		if (booking != null)
-		{
 			while (true)
 			{
 				Console.Clear();
-				
-				
+
+
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.WriteLine("change booking\n");
 				Console.ForegroundColor = ConsoleColor.White;
 
 				Console.WriteLine("you're ticket:");
-				
+
 				Console.WriteLine("**************************************************");
 				Console.WriteLine($"*{"Booking Details:",-50}*");
 				Console.WriteLine($"*{"Reservation Number: " + booking.ReservationNumber,-50}*");
@@ -47,21 +46,21 @@ internal static class UserLogin
 				Console.WriteLine($"*{"Your reservation code is " + booking.ReservationNumber,-50}*");
 				Console.WriteLine("**************************************************");
 
-				
 
 				Console.WriteLine("\nSelect an option:\n" +
 				                  "[1] Delete booking\n" +
 				                  "[2] Return to Admin");
 
 
-				ConsoleKeyInfo input = Console.ReadKey(true);
+				var input = Console.ReadKey(true);
 
 				switch (input.Key)
 				{
 					case ConsoleKey.D1:
 						Console.WriteLine("Delete booking");
 
-						if(BookingDataAccess.GetBookings().Any(h => h.ReservationNumber == reservationNumber)){
+						if (BookingDataAccess.GetBookings().Any(h => h.ReservationNumber == reservationNumber))
+						{
 							ChangeBooking.CancelBooking(reservationNumber);
 							Console.WriteLine($"Your booking with number {reservationNumber} is cancelled!");
 						}
@@ -70,9 +69,9 @@ internal static class UserLogin
 							Console.WriteLine($"There is no booking with the number {reservationNumber}!");
 						}
 
-						Console.ReadKey(intercept: true);
+						Console.ReadKey(true);
 						break;
-					
+
 
 					case ConsoleKey.D2:
 						Console.WriteLine("return to menu.");
@@ -84,11 +83,8 @@ internal static class UserLogin
 						break;
 				}
 			}
-		}
-		
+
 		else
-		{
 			Console.WriteLine("No booking found with that reservation number and birthdate");
-		}
 	}
 }

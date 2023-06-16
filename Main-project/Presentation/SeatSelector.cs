@@ -51,10 +51,7 @@ public static class SeatSelector
 
 	public static ConsoleColor color(Seat seat)
 	{
-		if (!seat.Available)
-		{
-			return ConsoleColor.Red;
-		}
+		if (!seat.Available) return ConsoleColor.Red;
 		switch (seat.Class)
 		{
 			case "Business Class":
