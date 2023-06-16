@@ -106,6 +106,7 @@ public static class CreateBooking
 			);
 			Console.WriteLine($"   Destination: {flight.DestinationCity}");
 			Console.WriteLine($"   Seats Available: {flight.Seats.Count(s => s.Available)}");
+			Console.WriteLine($"   Price of the flight: {flight.Price}");
 			Console.WriteLine();
 		}
 
@@ -141,10 +142,7 @@ public static class CreateBooking
 		{
 			var passengersInput = Console.ReadLine();
 
-			if (
-				!int.TryParse(passengersInput, out numberOfPassengers)
-				|| numberOfPassengers <= 0
-			)
+			if (!int.TryParse(passengersInput, out numberOfPassengers) || numberOfPassengers <= 0)
 				Console.WriteLine("Invalid input, please enter a valid number of passengers.");
 			else
 				isValidInput = true;
@@ -201,13 +199,12 @@ public static class CreateBooking
 
 					while (exitChoice != "y" && exitChoice != "n")
 					{
-						Console.WriteLine(
-							"Invalid input. Please enter 'y' for yes or 'n' for no."
-						);
+						Console.WriteLine("Invalid input. Please enter 'y' for yes or 'n' for no.");
 						exitChoice = Console.ReadLine()?.ToLower();
 					}
 
-					if (exitChoice == "y") exitCateringMenu = true;
+					if (exitChoice == "y")
+						exitCateringMenu = true;
 				}
 				else
 				{
@@ -255,12 +252,9 @@ public static class CreateBooking
 
 		if (availableSeats.Count < numberOfPassengers)
 		{
-			Console.WriteLine(
-				"Insufficient seats available for the requested number of people."
-			);
+			Console.WriteLine("Insufficient seats available for the requested number of people.");
 			return;
 		}
-
 
 		Dictionary<string, Person> seats = new();
 
@@ -269,13 +263,13 @@ public static class CreateBooking
 			Console.WriteLine($"Enter the details for passenger #{i + 1}:");
 			Console.Write("Name: ");
 			var name = Console.ReadLine();
-			Console.Write("Birthdate (dd/MM/yyyy): ");
+			Console.Write("Birthdate (dd-MM-yyyy): ");
 			DateTime birthdate;
 
 			while (
 				!DateTime.TryParseExact(
 					Console.ReadLine(),
-					"dd/MM/yyyy",
+					"dd-MM-yyyy",
 					CultureInfo.InvariantCulture,
 					DateTimeStyles.None,
 					out birthdate
@@ -286,7 +280,7 @@ public static class CreateBooking
 					Console.WriteLine("Invalid birthdate. Please enter a valid birthdate.");
 				else
 					Console.WriteLine(
-						"Invalid input. Please enter a valid birthdate in the format dd/MM/yyyy."
+						"Invalid input. Please enter a valid birthdate in the format dd-MM-yyyy."
 					);
 
 			Console.Write("Document number: ");
@@ -308,20 +302,26 @@ public static class CreateBooking
 				FlightDataAccess
 					.GetFlights()
 					.First(h => h.FlightNumber == flightNum)
-					.Seats.First(h => h.Number == seat).Price *
-				(yearDelta < 3 ? 0m : yearDelta < 12 ? 0.35m : yearDelta < 18 ? 0.75m : 1.0m));
+					.Seats.First(h => h.Number == seat)
+					.Price
+				* (
+					yearDelta < 3
+						? 0m
+						: yearDelta < 12
+							? 0.35m
+							: yearDelta < 18
+								? 0.75m
+								: 1.0m
+				)
+			);
 		}
 
 		var reservationNumber = BookingLogic.GenerateUniqueReservationCode();
 
-		var booking = new Booking(
-			reservationNumber,
-			flightNum,
-			seats,
-			cost
-		);
+		var booking = new Booking(reservationNumber, flightNum, seats, cost);
 
-		foreach (var line in booking.GetLines()) Console.WriteLine(line);
+		foreach (var line in booking.GetLines())
+			Console.WriteLine(line);
 
 		Console.WriteLine("Confirm booking? (y/n)");
 		var confirmation = Console.ReadLine()?.ToLower();
@@ -338,11 +338,14 @@ public static class CreateBooking
 			Console.WriteLine("Booking confirmed!");
 
 			booking.GetLines().ForEach(Console.WriteLine);
-			Console.WriteLine("Please write down your reservation number. You will need this to cancel your booking.");
+			Console.WriteLine(
+				"Please write down your reservation number. You will need this to cancel your booking."
+			);
 		}
 		else if (confirmation == "n")
 		{
-			foreach (var seatsKey in seats.Keys) SeatLogic.UpdateSeat(flightNum, seatsKey, true);
+			foreach (var seatsKey in seats.Keys)
+				SeatLogic.UpdateSeat(flightNum, seatsKey, true);
 			Console.WriteLine("Booking cancelled.");
 		}
 
@@ -356,12 +359,12 @@ public static class CreateBooking
 
 		do
 		{
-			Console.WriteLine("Enter the travel date (dd/MM/yyyy):");
+			Console.WriteLine("Enter the travel date (dd-MM-yyyy):");
 			var travelDateInput = Console.ReadLine();
 			if (
 				!DateTime.TryParseExact(
 					travelDateInput,
-					"dd/MM/yyyy",
+					"dd-MM-yyyy",
 					CultureInfo.InvariantCulture,
 					DateTimeStyles.None,
 					out travelDate
@@ -371,9 +374,7 @@ public static class CreateBooking
 					"Invalid date format. Please enter the date in the specified format."
 				);
 			else if (travelDate.Date < DateTime.Today.Date)
-				Console.WriteLine(
-					"Travel date must be in the future. Please enter a valid date."
-				);
+				Console.WriteLine("Travel date must be in the future. Please enter a valid date.");
 			else
 				isValidDate = true;
 		} while (!isValidDate);

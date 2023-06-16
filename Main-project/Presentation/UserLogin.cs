@@ -22,19 +22,25 @@ internal static class UserLogin
 		}
 
 		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
-		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
-		Console.WriteLine("loading");
-		if (booking != null)
+		if (booking == null)
+		{
+			Console.WriteLine("No booking found with that reservation number and birthdate");
+			return;
+		}
+
+		var flight = FlightDataAccess.GetFlights().FirstOrDefault(h => h.FlightNumber == booking.FlightNumber);
+		Console.WriteLine("Loading");
+		if (flight != null)
 			while (true)
 			{
 				Console.Clear();
 
 
 				Console.ForegroundColor = ConsoleColor.Green;
-				Console.WriteLine("change booking\n");
+				Console.WriteLine("Change booking\n");
 				Console.ForegroundColor = ConsoleColor.White;
 
-				Console.WriteLine("you're ticket:");
+				Console.WriteLine("Your ticket:");
 
 				Console.WriteLine("**************************************************");
 				Console.WriteLine($"*{"Booking Details:",-50}*");
@@ -74,9 +80,8 @@ internal static class UserLogin
 
 
 					case ConsoleKey.D2:
-						Console.WriteLine("return to menu.");
-						Menu.Start();
-						break;
+						Console.WriteLine("Press enter to return to the menu...");
+						return;
 
 					default:
 						Console.WriteLine("Invalid option.");
@@ -84,7 +89,6 @@ internal static class UserLogin
 				}
 			}
 
-		else
-			Console.WriteLine("No booking found with that reservation number and birthdate");
+		Console.WriteLine("No booking found with that reservation number and birthdate");
 	}
 }

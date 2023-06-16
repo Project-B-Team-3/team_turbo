@@ -12,8 +12,8 @@ public static class SeatSelector
 		Console.WriteLine("The white seats are available:");
 		Console.ForegroundColor = ConsoleColor.DarkBlue;
 		Console.WriteLine("The dark blue seats are First Class");
-		Console.ForegroundColor = ConsoleColor.Blue;
-		Console.WriteLine("The blue seats are Business Class");
+		Console.ForegroundColor = ConsoleColor.Green;
+		Console.WriteLine("The green seats are Business Class");
 		Console.ForegroundColor = ConsoleColor.White;
 		Console.WriteLine("The white seats are Economy Class");
 		foreach (var seat in BookingLogic.FlightSeats(flightNumber))
@@ -55,7 +55,7 @@ public static class SeatSelector
 		switch (seat.Class)
 		{
 			case "Business Class":
-				return ConsoleColor.Blue;
+				return ConsoleColor.Green;
 			case "First Class":
 				return ConsoleColor.DarkBlue;
 			default:
