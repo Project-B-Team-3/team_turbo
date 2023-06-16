@@ -94,20 +94,21 @@ public static class CreateBooking
             }
         }
 
-        Console.WriteLine(
-            $"Available flights to {selectedDestination} on {travelDate.ToShortDateString()}:"
-        );
-        for (var i = 0; i < filteredFlights.Count; i++)
-        {
-            var flight = filteredFlights[i];
-            Console.WriteLine($"{i + 1}. Flight {flight.FlightNumber}");
-            Console.WriteLine(
-                $"   Departure: {flight.DepartureCity} ({flight.DepartureTime.ToString("HH:mm", CultureInfo.InvariantCulture)})"
-            );
-            Console.WriteLine($"   Destination: {flight.DestinationCity}");
-            Console.WriteLine($"   Seats Available: {flight.Seats.Count(s => s.Available)}");
-            Console.WriteLine();
-        }
+		Console.WriteLine(
+			$"Available flights to {selectedDestination} on {travelDate.ToShortDateString()}:"
+		);
+		for (var i = 0; i < filteredFlights.Count; i++)
+		{
+			var flight = filteredFlights[i];
+			Console.WriteLine($"{i + 1}. Flight {flight.FlightNumber}");
+			Console.WriteLine(
+				$"   Departure: {flight.DepartureCity} ({flight.DepartureTime.ToString("HH:mm", CultureInfo.InvariantCulture)})"
+			);
+			Console.WriteLine($"   Destination: {flight.DestinationCity}");
+			Console.WriteLine($"   Seats Available: {flight.Seats.Count(s => s.Available)}");
+			Console.WriteLine($"   Price of the flight: {flight.Price}");
+			Console.WriteLine();
+		}
 
         Console.WriteLine("Enter the number corresponding to your desired flight:");
 
