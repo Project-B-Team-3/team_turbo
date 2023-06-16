@@ -254,6 +254,8 @@ public static class AdminPanel
 				$"| {id++,5} | {catering.Name,-30} | {catering.Description,-120} | {catering.Price,-10} | {(catering.IsHalal ? "Yes" : "No"),-10} |");
 			Console.WriteLine(line);
 		}
+
+		Console.ReadKey();
 	}
 
 
