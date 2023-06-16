@@ -23,7 +23,7 @@ internal static class UserLogin
 
 		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
 		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
-		Console.WriteLine("loading");
+		Console.WriteLine("Loading");
 		if (booking != null)
 			while (true)
 			{
@@ -31,10 +31,10 @@ internal static class UserLogin
 
 
 				Console.ForegroundColor = ConsoleColor.Green;
-				Console.WriteLine("change booking\n");
+				Console.WriteLine("Change booking\n");
 				Console.ForegroundColor = ConsoleColor.White;
 
-				Console.WriteLine("you're ticket:");
+				Console.WriteLine("Your ticket:");
 
 				Console.WriteLine("**************************************************");
 				Console.WriteLine($"*{"Booking Details:",-50}*");
