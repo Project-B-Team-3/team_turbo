@@ -318,7 +318,6 @@ public static class AdminPanel
 					if (confirmInput == "y")
 					{
 						CateringDataAccess.DeleteCatering(selectedCatering);
-						Console.WriteLine("Catering deleted successfully!");
 					}
 					else
 					{
