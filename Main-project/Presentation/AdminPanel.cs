@@ -55,10 +55,7 @@ public static class AdminPanel
 					break;
 			}
 
-			Console.WriteLine("Resetting screen...");
-			Console.WriteLine("\nPress any key to continue...");
 			Console.Clear();
-			Console.ReadKey(true);
 		}
 	}
 
@@ -199,18 +196,13 @@ public static class AdminPanel
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("Catering Update Panel\n");
 			Console.ForegroundColor = ConsoleColor.White;
-
-			Console.WriteLine("The list of available caterings is:");
-
-			List<Catering> caterings = CateringDataAccess.GetCatering();
-			DisplayCaterings(caterings);
-
-
+			
 			Console.WriteLine("\nSelect an option:\n" +
-			                  "[1] Add a new catering item\n" +
-			                  "[2] Change a catering item\n" +
-			                  "[3] Delete a catering item\n" +
-			                  "[4] Return to Admin");
+			                  "[1] Show a list of the current catering items\n"+
+			                  "[2] Add a new catering item\n" +
+			                  "[3] Change a catering item\n" +
+			                  "[4] Delete a catering item\n" +
+			                  "[5] Return to Admin");
 
 
 			var input = Console.ReadKey(true);
@@ -218,21 +210,25 @@ public static class AdminPanel
 			switch (input.Key)
 			{
 				case ConsoleKey.D1:
+					Console.WriteLine("The list of available caterings is:");
+					DisplayCaterings();
+					break;
+				case ConsoleKey.D2:
 					Console.WriteLine("Add a new catering item");
 					AddCatering();
 					break;
 
-				case ConsoleKey.D2:
+				case ConsoleKey.D3:
 					Console.WriteLine("Change a catering item");
 					ChangeCaterings();
 					break;
 
-				case ConsoleKey.D3:
+				case ConsoleKey.D4:
 					Console.WriteLine("Delete a catering item");
 					DeleteCatering();
 					break;
 
-				case ConsoleKey.D4:
+				case ConsoleKey.D5:
 					Console.WriteLine("return to Admin.");
 					return;
 
@@ -243,8 +239,9 @@ public static class AdminPanel
 		}
 	}
 
-	public static void DisplayCaterings(List<Catering> caterings)
+	public static void DisplayCaterings()
 	{
+		List<Catering> caterings = CateringDataAccess.GetCatering();
 		var line = new string('-', 196);
 		Console.WriteLine(line);
 		Console.WriteLine($"| {"ID",-5} | {"Name",-30} | {"Description",-120} | {"Price",-10} | {"Is Halal",-10} |");
@@ -265,8 +262,7 @@ public static class AdminPanel
 		Console.Clear();
 		Console.WriteLine("Add New Catering Option:");
 
-		List<Catering> caterings = CateringDataAccess.GetCatering();
-		DisplayCaterings(caterings);
+		DisplayCaterings();
 
 		Console.WriteLine("Enter the name of the catering:");
 		var name = Console.ReadLine();
@@ -302,7 +298,7 @@ public static class AdminPanel
 			Console.WriteLine("Select Catering to Delete:");
 
 			List<Catering> caterings = CateringDataAccess.GetCatering();
-			DisplayCaterings(caterings);
+			DisplayCaterings();
 
 			Console.WriteLine("\nEnter the number of the catering to delete (0 to exit):");
 			var input = Console.ReadLine();
@@ -355,7 +351,7 @@ public static class AdminPanel
 			Console.WriteLine("Select Catering to Update:");
 
 			List<Catering> caterings = CateringDataAccess.GetCatering();
-			DisplayCaterings(caterings);
+			DisplayCaterings();
 
 			Console.WriteLine("\nEnter the number of the catering to update (0 to exit):");
 			var input = Console.ReadLine();

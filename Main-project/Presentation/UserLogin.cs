@@ -22,9 +22,13 @@ internal static class UserLogin
 		}
 
 		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
-		var flight = FlightDataAccess.GetFlights().First(h => h.FlightNumber == booking.FlightNumber);
+		if(booking == null){
+			Console.WriteLine("No booking found with that reservation number and birthdate");
+			return;
+		}
+		var flight = FlightDataAccess.GetFlights().FirstOrDefault(h => h.FlightNumber == booking.FlightNumber);
 		Console.WriteLine("Loading");
-		if (booking != null)
+		if (flight != null)
 			while (true)
 			{
 				Console.Clear();
@@ -74,9 +78,8 @@ internal static class UserLogin
 
 
 					case ConsoleKey.D2:
-						Console.WriteLine("return to menu.");
-						Menu.Start();
-						break;
+						Console.WriteLine("Press enter to return to the menu...");
+						return;
 
 					default:
 						Console.WriteLine("Invalid option.");
@@ -84,7 +87,6 @@ internal static class UserLogin
 				}
 			}
 
-		else
-			Console.WriteLine("No booking found with that reservation number and birthdate");
+		Console.WriteLine("No booking found with that reservation number and birthdate");
 	}
 }
