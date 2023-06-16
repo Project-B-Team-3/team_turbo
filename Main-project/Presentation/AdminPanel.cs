@@ -234,8 +234,7 @@ public static class AdminPanel
 
 				case ConsoleKey.D4:
 					Console.WriteLine("return to Admin.");
-					Admin();
-					break;
+					return;
 
 				default:
 					Console.WriteLine("Invalid option.");
