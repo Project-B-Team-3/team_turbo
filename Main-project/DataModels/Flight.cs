@@ -1,6 +1,4 @@
 using Main_project.Logic;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace Main_project.DataModels

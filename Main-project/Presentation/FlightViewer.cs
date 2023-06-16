@@ -22,6 +22,7 @@ namespace Main_project.Presentation
             else
             {
                 Console.WriteLine("Upcoming flights:");
+                
 
                 for (var i = 0; i < flights.Count; i++)
                 {
