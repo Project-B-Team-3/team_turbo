@@ -196,9 +196,9 @@ public static class AdminPanel
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine("Catering Update Panel\n");
 			Console.ForegroundColor = ConsoleColor.White;
-			
+
 			Console.WriteLine("\nSelect an option:\n" +
-			                  "[1] Show a list of the current catering items\n"+
+			                  "[1] Show a list of the current catering items\n" +
 			                  "[2] Add a new catering item\n" +
 			                  "[3] Change a catering item\n" +
 			                  "[4] Delete a catering item\n" +
@@ -241,7 +241,7 @@ public static class AdminPanel
 
 	public static void DisplayCaterings()
 	{
-		List<Catering> caterings = CateringDataAccess.GetCatering();
+		var caterings = CateringDataAccess.GetCatering();
 		var line = new string('-', 196);
 		Console.WriteLine(line);
 		Console.WriteLine($"| {"ID",-5} | {"Name",-30} | {"Description",-120} | {"Price",-10} | {"Is Halal",-10} |");
@@ -297,7 +297,7 @@ public static class AdminPanel
 			Console.Clear();
 			Console.WriteLine("Select Catering to Delete:");
 
-			List<Catering> caterings = CateringDataAccess.GetCatering();
+			var caterings = CateringDataAccess.GetCatering();
 			DisplayCaterings();
 
 			Console.WriteLine("\nEnter the number of the catering to delete (0 to exit):");
@@ -350,7 +350,7 @@ public static class AdminPanel
 			Console.Clear();
 			Console.WriteLine("Select Catering to Update:");
 
-			List<Catering> caterings = CateringDataAccess.GetCatering();
+			var caterings = CateringDataAccess.GetCatering();
 			DisplayCaterings();
 
 			Console.WriteLine("\nEnter the number of the catering to update (0 to exit):");
@@ -562,7 +562,7 @@ public static class AdminPanel
 	{
 		Console.Clear();
 		Console.WriteLine("Loading the list");
-		List<Flight> flights = BookingLogic.GetAllFlights();
+		var flights = BookingLogic.GetAllFlights();
 		switch (sortBy)
 		{
 			case "FlightNumber":

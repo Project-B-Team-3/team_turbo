@@ -22,10 +22,12 @@ internal static class UserLogin
 		}
 
 		var booking = BookingLogic.GetBookingByReservationNumber(reservationNumber, birthdate);
-		if(booking == null){
+		if (booking == null)
+		{
 			Console.WriteLine("No booking found with that reservation number and birthdate");
 			return;
 		}
+
 		var flight = FlightDataAccess.GetFlights().FirstOrDefault(h => h.FlightNumber == booking.FlightNumber);
 		Console.WriteLine("Loading");
 		if (flight != null)

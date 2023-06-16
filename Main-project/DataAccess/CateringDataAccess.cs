@@ -34,7 +34,7 @@ public static class CateringDataAccess
 
 	public static void DeleteCatering(Catering catering)
 	{
-		List<Catering> caterings = GetCatering();
+		var caterings = GetCatering();
 
 		var index = caterings.FindIndex(c => c.Name == catering.Name);
 
@@ -54,7 +54,7 @@ public static class CateringDataAccess
 
 	public static void UpdateCatering(Catering catering)
 	{
-		List<Catering> caterings = GetCatering();
+		var caterings = GetCatering();
 
 		var index = caterings.FindIndex(c => c.Name == catering.Name);
 
