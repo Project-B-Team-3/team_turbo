@@ -106,6 +106,7 @@ public static class CreateBooking
 			);
 			Console.WriteLine($"   Destination: {flight.DestinationCity}");
 			Console.WriteLine($"   Seats Available: {flight.Seats.Count(s => s.Available)}");
+			Console.WriteLine($"   Price of the flight: {flight.Price}");
 			Console.WriteLine();
 		}
 
